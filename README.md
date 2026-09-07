@@ -2,13 +2,14 @@
 
 The public marketing site for **SampleLantern**, a native macOS sample-library
 manager. This is a small, static Astro site — no backend, no database, no
-build-time dependency on the macOS app in the parent repository.
+dependency on the macOS app, which lives in a separate repository.
 
 Currently in **founding-beta mode**: the site explains the product, sets
 expectations for the pre-release build, and routes interested producers to an
-application — not a public download or checkout. See
-[`../docs/commercial/`](../docs/commercial/) for the commercial docs this site
-is built from.
+application — not a public download or checkout. This site's copy is built
+from that app repository's `docs/commercial/` folder (numbered 00–14) — refer
+back to those docs before changing any product claim, price, or scope
+statement here.
 
 ## Stack
 
@@ -125,7 +126,7 @@ operations guide. If Cloudflare Web Analytics (or similar) is added later:
 - **Beta application URLs**: `tallyFormUrl` in `site.ts`
 - **Demo video URL**: `demoVideoUrl` in `site.ts`
 - **Legal copy**: `src/pages/privacy.astro`, `terms.astro`, `refunds.astro`
-- **Commercial source docs this site is built from**: `../docs/commercial/`
+- **Commercial source docs this site is built from**: `docs/commercial/` in the SampleLantern app repository (not this repo)
 
 ## Deployment
 
