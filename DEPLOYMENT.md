@@ -1,9 +1,18 @@
-# Deployment — GitHub → Cloudflare Pages → Porkbun
+# Deployment — GitHub → Cloudflare → Porkbun
 
 Target domain: **samplelantern.com** (canonical apex; `www` redirects to it).
 
-This site is a static Astro build — there is no server, no environment
-variable required at runtime, and no Cloudflare Worker needed.
+This site is a static Astro build — there is no server and no environment
+variable required at runtime.
+
+**Note on Cloudflare product:** this project was created under Cloudflare's
+newer **Workers Builds** pipeline (deploys via `wrangler deploy` to a Worker
+with static assets) rather than the classic separate "Pages" product. Both
+serve this static site identically from the visitor's perspective; the
+difference only shows up in build logs and dashboard navigation. The steps
+below note where that matters. If you're setting this up fresh and Cloudflare
+still offers a plain "Pages" option, either works — Pages has marginally
+simpler `_redirects` support (see step 8).
 
 ## 1. Push the repository to GitHub
 
@@ -18,18 +27,20 @@ git commit -m "Update SampleLantern website"
 git push
 ```
 
-## 2. Connect the GitHub repo to Cloudflare Pages
+## 2. Connect the GitHub repo to Cloudflare
 
-1. Cloudflare dashboard → **Workers & Pages** → **Create application** →
-   **Pages** → **Connect to Git**.
-2. Select the GitHub repository (authorize Cloudflare's GitHub App if this is
-   the first project).
-3. Choose the project name (e.g. `samplelantern`).
+1. Cloudflare dashboard → **Workers & Pages** → **Create application**.
+2. Pick **Pages** → **Connect to Git** for the classic static-hosting product,
+   or let Cloudflare route you through **Workers Builds** if that's what your
+   account currently defaults to (this project is on Workers Builds). Either
+   way, select the GitHub repository and authorize Cloudflare's GitHub App if
+   this is the first project.
+3. Choose the project/Worker name (this project is named `samplelantern`).
 
 ## 3. Choose the production branch
 
 Set the production branch to `main` (or whichever branch you treat as
-canonical). Cloudflare Pages will build a preview deployment for every other
+canonical). Cloudflare will build a preview deployment for every other
 branch and pull request automatically — leave this on, it's useful for
 reviewing copy changes before they go live.
 
@@ -81,6 +92,21 @@ The `.node-version` file pins the Node major version so Cloudflare doesn't
 silently move to a newer Node (and thus a newer bundled npm) that could
 reintroduce the same mismatch.
 
+### About the auto-added Cloudflare adapter, KV, and Images bindings
+
+On a Workers Builds project, `wrangler deploy` detects an Astro project with
+no Cloudflare adapter configured and transiently runs `astro add cloudflare`
+inside the ephemeral build container before building — that's what produces
+build-log lines like `[@astrojs/cloudflare] Enabling image processing...` and
+`Enabling sessions with Cloudflare KV...`, and why the deploy step shows
+`env.SESSION` (KV) and `env.IMAGES` bindings. This is expected, harmless, and
+not something to fix: it doesn't change `astro.config.mjs` in the repo (that
+still says `output: "static"`, no adapter, no bindings used anywhere in the
+code), and the actual output remains a plain static `dist/` — the bindings
+just sit unused. You may also see a one-time warning that the config's
+Worker name doesn't match the dashboard's Worker name; Cloudflare resolves
+that itself via an automated pull request, which is safe to merge.
+
 ## 5. Deploy
 
 Cloudflare builds and deploys automatically on push. The first deploy will be
@@ -89,18 +115,21 @@ attaching the real domain.
 
 ## 6. Attach samplelantern.com
 
-In the Pages project → **Custom domains** → **Add a custom domain**:
+On a Workers Builds project: Worker → **Settings** → **Domains & Routes** →
+**Add** → **Custom Domain**. On classic Pages: Pages project → **Custom
+domains** → **Add a custom domain**. Either way:
 
 1. Add `samplelantern.com` (apex).
 2. Add `www.samplelantern.com` as a second custom domain on the same
-   project. Cloudflare will typically offer to redirect it to the apex — take
-   that option if presented. If not, this repo already ships a
-   [`public/_redirects`](public/_redirects) file that performs the same
-   301 redirect at the edge as a fallback.
+   Worker/project.
 3. Follow Cloudflare's on-screen instructions for the exact DNS records to
    create — Cloudflare generates these per-project and per-domain-status
    (whether the zone is already on Cloudflare or not), so copy them from the
    dashboard rather than assuming a fixed CNAME/A-record target here.
+
+Both domains will now serve the site directly — set up the www→apex redirect
+separately in step 8, since attaching a domain here does not by itself
+redirect one to the other.
 
 ## 7. Porkbun DNS configuration
 
@@ -125,8 +154,27 @@ delegated to Cloudflare:
 
 ## 8. www → apex redirect
 
-Covered in step 6 — either Cloudflare's custom-domain redirect option or the
-shipped `public/_redirects` file. Verify after DNS propagates:
+Set this up as a zone-level **Redirect Rule**, which works the same way
+regardless of whether the origin is Workers or Pages — it runs at Cloudflare's
+edge before the request ever reaches your deployment:
+
+1. Cloudflare dashboard → select the `samplelantern.com` zone → **Rules** →
+   **Redirect Rules** → **Create rule**.
+2. Match: hostname equals `www.samplelantern.com`.
+3. Action: **Dynamic redirect**, target URL
+   `concat("https://samplelantern.com", http.request.uri.path)`, status
+   **301**, preserve query string on.
+4. Deploy the rule.
+
+Don't use a `public/_redirects` file for this on a Workers Builds project —
+Workers Static Assets only allows relative-path redirects there (absolute,
+cross-host URLs like `https://www.samplelantern.com/* https://samplelantern.com/:splat`
+are rejected at deploy time with `Invalid _redirects configuration: ... Only
+relative URLs are allowed`, which is what broke the first deploy of this
+site). Classic Pages projects don't have this restriction and can use
+`_redirects` for this instead, if you'd rather do it that way there.
+
+Verify after DNS propagates and the redirect rule is live:
 
 ```bash
 curl -I https://www.samplelantern.com

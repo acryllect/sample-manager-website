@@ -50,7 +50,7 @@ src/
                         # ScreenshotFrame, ConfigNotice, Logo
   pages/                # one file per route (see "Routes" below)
   styles/global.css     # design tokens (color/type/spacing) + base styles
-public/                 # favicon, OG image, robots.txt, _redirects
+public/                 # favicon, OG image, robots.txt
 ```
 
 ## Configuration
