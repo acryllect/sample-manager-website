@@ -1,0 +1,52 @@
+---
+const points = [
+  {
+    title: "Index in place",
+    body: "Reference Library mode indexes your files where they already live. It does not need to move them into proprietary storage.",
+  },
+  {
+    title: "Analysis stays on your Mac",
+    body: "BPM, key, type, and category analysis run locally. No sample audio is uploaded for inference.",
+  },
+  {
+    title: "Non-destructive by default",
+    body: "Search, tagging, and organizing don't rewrite your folders. Export is an explicit, separate action.",
+  },
+];
+---
+
+<section class="trust section" id="privacy">
+  <div class="container">
+    <div class="section-heading">
+      <p class="eyebrow">Local by design</p>
+      <h2>Your sample audio stays on your Mac.</h2>
+      <p class="lede">
+        SampleLantern indexes your files where they already live and performs its
+        analysis locally. Keep your usual source-audio backup in place regardless.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+      {
+        points.map((point) => (
+          <div class="trust-point">
+            <h3>{point.title}</h3>
+            <p>{point.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .trust-point h3 {
+    font-size: 1.0625rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .trust-point p {
+    font-size: 0.9375rem;
+    max-width: none;
+  }
+</style>

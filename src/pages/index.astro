@@ -1,0 +1,344 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import WorkflowStep from "../components/WorkflowStep.astro";
+import FeatureCard from "../components/FeatureCard.astro";
+import TrustSection from "../components/TrustSection.astro";
+import BetaOffer from "../components/BetaOffer.astro";
+import FitSection from "../components/FitSection.astro";
+import FAQ from "../components/FAQ.astro";
+import DemoFrame from "../components/DemoFrame.astro";
+import ScreenshotFrame from "../components/ScreenshotFrame.astro";
+import { siteConfig } from "../config/site";
+
+const whatWorksToday = [
+  {
+    title: "Reference-mode indexing",
+    body: "Index existing folders and drives without moving your source files.",
+  },
+  {
+    title: "Local analysis",
+    body: "BPM, key, type, and category detection, with explicit uncertainty instead of fabricated guesses.",
+  },
+  {
+    title: "Fuzzy and structured search",
+    body: "Search in plain language, typos included, or narrow with bpm:/key:/type: filters.",
+  },
+  {
+    title: "Find Similar and Sonic Map",
+    body: "Turn one close result into the right one, or explore a visual map of related sounds.",
+  },
+  {
+    title: "Waveform audition",
+    body: "Loudness-normalized preview so candidates are easier to compare fairly.",
+  },
+  {
+    title: "Crates and collections",
+    body: "Nested crates, smart collections, tags, ratings, and duplicate review.",
+  },
+  {
+    title: "Non-destructive export",
+    body: "Move a chosen sample into your production workflow without altering the source.",
+  },
+];
+
+const applicationSteps = [
+  "Apply with your Mac, library, storage, and workflow details.",
+  "If the beta can responsibly support your setup, receive an invitation and the full terms.",
+  `Pay ${siteConfig.foundingPrice} through hosted checkout.`,
+  "Receive the private notarized build and founder onboarding.",
+  "Use it on a real library and take part in short structured check-ins.",
+];
+
+const faqItems = [
+  {
+    q: "Why is the beta paid?",
+    a: "<p>The experiment is whether the current retrieval workflow creates enough real value to buy. Payment also keeps the cohort small and serious. In return, the limitations are explicit and support is direct.</p>",
+  },
+  {
+    q: `Is ${siteConfig.foundingPrice} a subscription?`,
+    a: `<p>No. It is a one-time founding-beta purchase under the published terms. See <a href="/terms">terms</a>.</p>`,
+  },
+  {
+    q: "Will I need a license key?",
+    a: "<p>Not during the controlled first cohort. Access and build delivery are handled directly by the founder.</p>",
+  },
+  {
+    q: "Does it move my samples?",
+    a: '<p>The founding beta uses Reference Library mode and indexes files where they already live. See the <a href="/support">support hub</a> for details.</p>',
+  },
+  {
+    q: "How do updates work?",
+    a: "<p>The founder sends a new notarized build with release notes and safe update instructions. Automatic updates come later, after paid demand is validated.</p>",
+  },
+  {
+    q: "What if it doesn't work for my setup?",
+    a: '<p>Review the <a href="/refunds">refund policy</a>, <a href="/known-issues">known issues</a>, and <a href="/system-requirements">system requirements</a> before checkout. Contact <a href="mailto:' +
+      siteConfig.supportEmail +
+      '">' +
+      siteConfig.supportEmail +
+      "</a> if installation or the core workflow is blocked.</p>",
+  },
+];
+---
+
+<BaseLayout
+  title={`${siteConfig.productName} founding beta — Find the sounds you already own`}
+  description={`Apply for a small ${siteConfig.foundingPrice} paid beta of a private Mac sample library for producers, sound designers, and composers with substantial local libraries.`}
+>
+  <Hero />
+
+  <section class="section" id="problem">
+    <div class="container-narrow" style="text-align:center;">
+      <p class="eyebrow">The problem</p>
+      <h2>Your library is bigger than your memory.</h2>
+      <p class="lede" style="margin-inline:auto;">
+        You remember the sound — dark, metallic, short — but not the pack,
+        filename, or drive. {siteConfig.productName} helps you search, audition,
+        compare, and organize the sounds you already own, so the library becomes
+        usable again.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--tight" id="proof">
+    <div class="container">
+      <div class="section-heading" style="margin-inline:auto; text-align:center;">
+        <p class="eyebrow">See it work</p>
+        <h2>From remembered sound to usable result.</h2>
+        <p class="lede" style="margin-inline:auto;">
+          Add an existing folder in Reference mode. Search in ordinary language
+          or narrow by BPM, key, type, and format. Audition, find similar sounds,
+          explore Sonic Map, and export the one that fits.
+        </p>
+      </div>
+      <DemoFrame caption="Captured from the exact founding-beta build once release candidates are ready." />
+    </div>
+  </section>
+
+  <section class="section" id="product">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Core workflow</p>
+        <h2>Search, audition, and finish — without leaving the library.</h2>
+      </div>
+
+      <WorkflowStep number={1} title="Search the way you hear it">
+        <p>
+          Try a phrase such as <code>dark metallic impact</code>. Misspell a
+          word and keep moving — search is fuzzy and typo-tolerant, with
+          structured filters when you need precision.
+        </p>
+        <div>
+          <span class="chip">bpm:118-124</span>
+          <span class="chip">key:Amin</span>
+          <span class="chip">type:loop</span>
+        </div>
+        <Fragment slot="media">
+          <ScreenshotFrame
+            id="S01"
+            caption="Search results for “dark metallic impact,” waveform visible."
+          />
+        </Fragment>
+      </WorkflowStep>
+
+      <WorkflowStep number={2} title="Audition and compare quickly" reverse>
+        <p>
+          Hear results at comparable loudness with waveform-scrub auditioning
+          and loudness-normalized preview, so candidates are easier to judge
+          fairly.
+        </p>
+        <Fragment slot="media">
+          <ScreenshotFrame
+            id="S06"
+            caption="Waveform audition with playback controls and metadata."
+          />
+        </Fragment>
+      </WorkflowStep>
+
+      <WorkflowStep number={3} title="Finish the workflow">
+        <p>
+          Move or export the chosen sample into your production workflow.
+          Everything stays non-destructive by default — export is a separate,
+          explicit action.
+        </p>
+        <Fragment slot="media">
+          <ScreenshotFrame id="S08" caption="From search result to project." />
+        </Fragment>
+      </WorkflowStep>
+    </div>
+  </section>
+
+  <section class="section" id="discovery">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Discovery</p>
+        <h2>When one sound is close, find its neighbors.</h2>
+      </div>
+
+      <WorkflowStep number={4} title="Find Similar">
+        <p>
+          Choose a promising result and find similar material across your
+          whole library — not just one folder.
+        </p>
+        <Fragment slot="media">
+          <ScreenshotFrame
+            id="S04"
+            caption="A source item and its related result set."
+          />
+        </Fragment>
+      </WorkflowStep>
+
+      <WorkflowStep number={5} title="Explore the Sonic Map" reverse>
+        <p>
+          Open Sonic Map to browse related clusters visually, refine relevance
+          with thumbs-up and thumbs-down, and lasso the sounds worth keeping
+          into a shortlist.
+        </p>
+        <Fragment slot="media">
+          <ScreenshotFrame
+            id="S03"
+            caption="Sonic Map — clusters, a selected point, and a shortlist."
+          />
+        </Fragment>
+      </WorkflowStep>
+    </div>
+  </section>
+
+  <TrustSection />
+
+  <section class="section" id="whats-today">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">What works today</p>
+        <h2>A substantial core product — not a feature promise.</h2>
+        <p class="lede">
+          Every item below is part of the current founding-beta build.
+        </p>
+      </div>
+      <div class="grid grid-3">
+        {
+          whatWorksToday.map((f) => (
+            <FeatureCard title={f.title}>
+              <p>{f.body}</p>
+            </FeatureCard>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight boundary" id="boundary">
+    <div class="container-narrow">
+      <div class="section-heading" style="text-align:center; margin-inline:auto;">
+        <p class="eyebrow">Founding-beta boundary</p>
+        <h2>Small by design. Honest about what's next.</h2>
+        <p class="lede" style="margin-inline:auto;">
+          This is pre-release software for a controlled first cohort. Updates
+          may require downloading a new build manually. The first beta is{" "}
+          {siteConfig.supportedArchitecture} on {siteConfig.supportedMacOS}{" "}
+          and uses Reference Library mode.
+        </p>
+      </div>
+      <div class="card boundary-card">
+        <p>It does not currently include:</p>
+        <ul>
+          <li>A public trial or automated license activation</li>
+          <li>Automatic updates</li>
+          <li>Intel support</li>
+          <li>Windows support</li>
+          <li>A DAW plug-in</li>
+          <li>Cloud sync</li>
+          <li>Managed Library mode</li>
+        </ul>
+        <p class="boundary-links">
+          <a href="/known-issues">Read known issues</a> &middot;{" "}
+          <a href="/system-requirements">Review supported setup</a> &middot;{" "}
+          <a href="/support">Read the support hub</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <BetaOffer />
+
+  <FitSection />
+
+  <section class="section" id="process">
+    <div class="container-narrow">
+      <div class="section-heading">
+        <p class="eyebrow">Process</p>
+        <h2>How joining works</h2>
+      </div>
+      <ol class="process-list">
+        {applicationSteps.map((step) => <li>{step}</li>)}
+      </ol>
+      <p class="process-note">
+        Applying does not commit you to purchase.
+      </p>
+      <a href="/apply" class="btn btn-primary">Apply for the founding beta</a>
+    </div>
+  </section>
+
+  <FAQ items={faqItems} />
+</BaseLayout>
+
+<style>
+  .boundary-card ul {
+    columns: 2;
+    column-gap: var(--space-8);
+  }
+
+  .boundary-links {
+    max-width: none;
+    font-size: 0.9375rem;
+    margin-top: var(--space-6);
+    margin-bottom: 0;
+  }
+
+  .process-list {
+    counter-reset: step;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  .process-list li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 2.5rem;
+    font-size: 0.9375rem;
+  }
+
+  .process-list li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: -0.1rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: var(--bg-elevated-2);
+    border: 1px solid var(--border);
+    color: var(--accent-strong);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .process-note {
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+  }
+
+  @media (max-width: 640px) {
+    .boundary-card ul {
+      columns: 1;
+    }
+  }
+</style>

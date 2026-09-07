@@ -1,0 +1,101 @@
+---
+interface FaqItem {
+  q: string;
+  /** Answer HTML — authored in-repo only, never from user input. */
+  a: string;
+}
+
+interface Props {
+  items: FaqItem[];
+  title?: string;
+  eyebrow?: string;
+}
+
+const { items, title = "Frequently asked questions", eyebrow = "FAQ" } = Astro.props;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: items.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.a.replace(/<[^>]+>/g, ""),
+    },
+  })),
+};
+---
+
+<section class="faq section" id="faq">
+  <div class="container-narrow">
+    <div class="section-heading">
+      <p class="eyebrow">{eyebrow}</p>
+      <h2>{title}</h2>
+    </div>
+
+    <div class="faq-list">
+      {
+        items.map((item) => (
+          <details class="faq-item">
+            <summary>{item.q}</summary>
+            <div class="faq-answer" set:html={item.a} />
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+
+<style>
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--border-subtle);
+    padding-block: var(--space-4);
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-primary);
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: "+";
+    color: var(--accent);
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .faq-item[open] summary::after {
+    content: "−";
+  }
+
+  .faq-answer {
+    margin-top: var(--space-3);
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+    max-width: 60ch;
+  }
+
+  .faq-answer :global(a) {
+    color: var(--accent-strong);
+  }
+</style>

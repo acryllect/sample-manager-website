@@ -1,0 +1,84 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import FeatureCard from "../components/FeatureCard.astro";
+import { siteConfig } from "../config/site";
+
+const links = [
+  {
+    title: "System requirements",
+    body: "The exact hardware and macOS version the founding beta supports.",
+    href: "/system-requirements",
+  },
+  {
+    title: "Known issues",
+    body: "What's confirmed broken or unfinished in the current build, dated.",
+    href: "/known-issues",
+  },
+  {
+    title: "Refund policy",
+    body: "What to expect if the beta doesn't work for your setup.",
+    href: "/refunds",
+  },
+];
+---
+
+<BaseLayout
+  title="Support"
+  description={`Support hub for the ${siteConfig.productName} founding beta: supported setup, known issues, Reference Library mode, and how to reach the founder directly.`}
+>
+  <section class="section section--tight">
+    <div class="container-narrow">
+      <p class="eyebrow">Support</p>
+      <h1>Support hub</h1>
+      <p class="lede">
+        During the founding beta, support is direct: you're talking to the
+        person building {siteConfig.productName}, not a queue.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="grid grid-3">
+        {
+          links.map((link) => (
+            <FeatureCard title={link.title}>
+              <p>{link.body}</p>
+              <a href={link.href}>Read more &rarr;</a>
+            </FeatureCard>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="reference-mode">
+    <div class="container-narrow">
+      <h2>What Reference Library mode means</h2>
+      <p>
+        The founding beta indexes your files where they already live —
+        Reference Library mode never copies your samples into a separate
+        managed store. {siteConfig.productName} reads your folders, analyzes
+        the audio locally, and keeps a searchable catalog of what it found.
+        Moving, renaming, or deleting a source file outside the app can make
+        that entry unavailable until you relink or rescan the folder.
+      </p>
+      <p>
+        Managed Library mode — where {siteConfig.productName} copies files
+        into its own storage — is not part of the founding beta.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="container-narrow">
+      <h2>Contact</h2>
+      <p>
+        Email <a href={`mailto:${siteConfig.supportEmail}`}>{siteConfig.supportEmail}</a>{" "}
+        for anything not covered on this page — installation issues, library
+        safety questions, or feedback on the founding-beta build. Response
+        target is one business day.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,57 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  /** ISO date string shown as "Last updated" */
+  lastUpdated?: string;
+}
+
+const { title, description, lastUpdated } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="container-narrow legal section">
+    <h1>{title}</h1>
+    {
+      lastUpdated && (
+        <p class="last-updated mono">Last updated {lastUpdated}</p>
+      )
+    }
+    <div class="legal-body">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .legal h1 {
+    margin-bottom: var(--space-2);
+  }
+
+  .last-updated {
+    color: var(--text-tertiary);
+    font-size: 0.8125rem;
+    margin-bottom: var(--space-8);
+  }
+
+  .legal-body :global(h2) {
+    margin-top: var(--space-12);
+    font-size: 1.375rem;
+  }
+
+  .legal-body :global(h3) {
+    margin-top: var(--space-8);
+    font-size: 1.125rem;
+  }
+
+  .legal-body :global(p),
+  .legal-body :global(li) {
+    max-width: none;
+  }
+
+  .legal-body :global(a) {
+    color: var(--accent-strong);
+  }
+</style>

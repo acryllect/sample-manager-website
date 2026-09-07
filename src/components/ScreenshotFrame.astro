@@ -1,0 +1,103 @@
+---
+interface Props {
+  /** Screenshot id from docs/commercial/03-DEMO-AND-SCREENSHOTS.md, e.g. "S01" */
+  id: string;
+  /** What the screenshot shows, used as the placeholder label and image alt text */
+  caption: string;
+  /** Path under /public once the real capture exists, e.g. "/screenshots/s01-search.png" */
+  src?: string;
+}
+
+const { id, caption, src } = Astro.props;
+---
+
+<figure class="shot-frame">
+  <div class="shot-shell">
+    {
+      src ? (
+        <img src={src} alt={caption} loading="lazy" />
+      ) : (
+        <div class="shot-placeholder">
+          <div class="shot-bars" aria-hidden="true">
+            {Array.from({ length: 24 }).map((_, i) => (
+              <span style={`--h:${18 + ((i * 37) % 60)}%`} />
+            ))}
+          </div>
+          <span class="shot-id mono">{id}</span>
+        </div>
+      )
+    }
+  </div>
+  <figcaption>
+    {caption}
+    {!src && <span class="pending-tag">— screenshot pending release build</span>}
+  </figcaption>
+</figure>
+
+<style>
+  .shot-frame {
+    margin: 0;
+  }
+
+  .shot-shell {
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-elevated);
+  }
+
+  .shot-shell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .shot-placeholder {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: var(--space-6);
+    background:
+      radial-gradient(ellipse at 30% 20%, var(--accent-glow) 0%, transparent 55%),
+      var(--bg-elevated);
+  }
+
+  .shot-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    width: 100%;
+    height: 60%;
+    opacity: 0.5;
+  }
+
+  .shot-bars span {
+    flex: 1;
+    height: var(--h);
+    background: linear-gradient(to top, var(--accent-dim), transparent);
+    border-radius: 2px 2px 0 0;
+  }
+
+  .shot-id {
+    position: absolute;
+    top: var(--space-3);
+    left: var(--space-4);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.04em;
+  }
+
+  figcaption {
+    margin-top: var(--space-3);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+  }
+
+  .pending-tag {
+    color: var(--text-tertiary);
+    font-size: 0.8125rem;
+  }
+</style>

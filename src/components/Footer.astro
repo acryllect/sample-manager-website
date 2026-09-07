@@ -1,0 +1,159 @@
+---
+import Logo from "./Logo.astro";
+import { siteConfig } from "../config/site";
+
+const year = new Date().getFullYear();
+
+const columns = [
+  {
+    title: "Product",
+    links: [
+      { href: "/#product", label: "How it works" },
+      { href: "/demo", label: "Demo" },
+      { href: "/apply", label: "Founding beta" },
+    ],
+  },
+  {
+    title: "Support",
+    links: [
+      { href: "/support", label: "Support hub" },
+      { href: "/system-requirements", label: "System requirements" },
+      { href: "/known-issues", label: "Known issues" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { href: "/privacy", label: "Privacy" },
+      { href: "/terms", label: "Terms" },
+      { href: "/refunds", label: "Refunds" },
+    ],
+  },
+];
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <Logo size={24} />
+      <p class="footer-tagline">{siteConfig.tagline}</p>
+      <p class="footer-meta">
+        <a href={`mailto:${siteConfig.supportEmail}`}>{siteConfig.supportEmail}</a>
+      </p>
+    </div>
+
+    <div class="footer-columns">
+      {
+        columns.map((col) => (
+          <div class="footer-column">
+            <h2>{col.title}</h2>
+            <ul>
+              {col.links.map((link) => (
+                <li>
+                  <a href={link.href}>{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <p>
+      &copy; {year} {siteConfig.legalSeller}. {siteConfig.productName} is independent
+      software for macOS.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--border-subtle);
+    padding-block: var(--space-16) var(--space-8);
+    margin-top: var(--space-24);
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1.4fr 2fr;
+    gap: var(--space-16);
+    margin-bottom: var(--space-12);
+  }
+
+  .footer-brand p {
+    max-width: 28ch;
+  }
+
+  .footer-tagline {
+    margin-top: var(--space-4);
+    font-size: 0.9375rem;
+  }
+
+  .footer-meta a {
+    font-size: 0.875rem;
+  }
+
+  .footer-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
+
+  .footer-column h2 {
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-tertiary);
+    font-weight: 600;
+    margin-bottom: var(--space-4);
+  }
+
+  .footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .footer-column a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9375rem;
+  }
+
+  .footer-column a:hover {
+    color: var(--accent-strong);
+  }
+
+  .footer-bottom {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: var(--space-6);
+  }
+
+  .footer-bottom p {
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+    margin: 0;
+  }
+
+  @media (max-width: 720px) {
+    .footer-inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+    .footer-columns {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 420px) {
+    .footer-columns {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+  }
+</style>

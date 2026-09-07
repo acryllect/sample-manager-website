@@ -1,0 +1,52 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+import ConfigNotice from "../components/ConfigNotice.astro";
+import { siteConfig } from "../config/site";
+---
+
+<LegalLayout
+  title="Founding Beta Terms"
+  description={`Purchase and founding-beta terms for ${siteConfig.productName} — final copy pending legal review.`}
+>
+  <ConfigNotice title="TODO: FINAL LEGAL COPY" kind="legal">
+    <p>
+      This page is a placeholder. The final Purchase / Founding Beta Terms
+      have not been approved and are not published here. Accepted applicants
+      will receive the reviewed terms before checkout, and this page will be
+      updated to match.
+    </p>
+  </ConfigNotice>
+
+  <h2>What these terms will cover</h2>
+  <p>Once finalized, this page will state, in binding legal language:</p>
+  <ul>
+    <li>What the {siteConfig.foundingPrice} founding purchase includes</li>
+    <li>
+      The exact eventual-v1 entitlement (which versions and updates are
+      included, and which are not)
+    </li>
+    <li>Device and usage limits for the license</li>
+    <li>Beta status, disclosed defects, and manual-update expectations</li>
+    <li>Refund eligibility — see the separate <a href="/refunds">refund policy</a></li>
+    <li>The legal seller of record and applicable jurisdiction</li>
+  </ul>
+
+  <h2>Working position (not yet approved)</h2>
+  <p>
+    The current internal working position — pending founder and legal
+    confirmation — is that the founding purchase includes the private beta
+    and a license to {siteConfig.productName} v1.x when released, including
+    v1.x updates, for one user on up to two personally controlled Macs.
+    Future major versions are not automatically included. This paragraph is
+    descriptive only and is not itself a binding term.
+  </p>
+
+  <h2>Legal seller</h2>
+  <p>{siteConfig.legalSeller}. Full seller and registration details will appear in the finalized terms.</p>
+
+  <h2>Contact</h2>
+  <p>
+    Questions before these terms are finalized: {" "}
+    <a href={`mailto:${siteConfig.supportEmail}`}>{siteConfig.supportEmail}</a>
+  </p>
+</LegalLayout>

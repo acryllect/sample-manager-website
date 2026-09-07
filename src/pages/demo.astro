@@ -1,0 +1,102 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import DemoFrame from "../components/DemoFrame.astro";
+import { siteConfig } from "../config/site";
+
+const beats = [
+  { time: "0–4s", copy: "You own the sound. You just can't find it." },
+  { time: "4–8s", copy: "One library for the sounds you already own." },
+  { time: "8–17s", copy: "Search what it sounds like." },
+  { time: "17–25s", copy: "Typos, phrases, filters. Keep moving." },
+  { time: "25–35s", copy: "Close? Find its neighbors." },
+  { time: "35–45s", copy: "Explore the library by sound." },
+  { time: "45–54s", copy: "Narrow by tempo, key, type, and more." },
+  { time: "54–61s", copy: "See duplicates across packs and drives." },
+  { time: "61–68s", copy: "Found. Auditioned. In the project." },
+  { time: "68–72s", copy: "On-device analysis. No sample uploads." },
+];
+---
+
+<BaseLayout
+  title="75-second demo"
+  description={`Watch the full ${siteConfig.productName} retrieval workflow: search, audition, similarity, Sonic Map, and export — from the exact founding-beta build once captured.`}
+>
+  <section class="section section--tight">
+    <div class="container-narrow" style="text-align:center;">
+      <p class="eyebrow">75-second demo</p>
+      <h1>One remembered sound, found and used.</h1>
+      <p class="lede" style="margin-inline:auto;">
+        This is the exact workflow the founding beta ships: search, audition,
+        similarity, Sonic Map, and export — captured from the real
+        notarized build on a real library, not a mockup.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <DemoFrame caption="Runtime: 75 seconds. Fully understandable muted, with captions." />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-narrow">
+      <div class="section-heading">
+        <p class="eyebrow">What the demo proves</p>
+        <h2>Beat by beat</h2>
+      </div>
+      <ol class="beat-list">
+        {
+          beats.map((beat) => (
+            <li>
+              <span class="beat-time mono">{beat.time}</span>
+              <span class="beat-copy">{beat.copy}</span>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="beat-note">
+        Captured on {siteConfig.supportedArchitecture}, {siteConfig.supportedMacOS},
+        using Reference Library mode and only the export formats cleared for
+        the founding-beta build.
+      </p>
+      <a href="/apply" class="btn btn-primary">Apply for the founding beta</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .beat-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .beat-list li {
+    display: flex;
+    gap: var(--space-4);
+    padding-block: var(--space-2);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .beat-time {
+    flex-shrink: 0;
+    width: 5rem;
+    color: var(--text-tertiary);
+    font-size: 0.8125rem;
+  }
+
+  .beat-copy {
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+  }
+
+  .beat-note {
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-6);
+  }
+</style>

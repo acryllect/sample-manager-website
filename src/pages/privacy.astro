@@ -1,0 +1,45 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+import ConfigNotice from "../components/ConfigNotice.astro";
+import { siteConfig } from "../config/site";
+---
+
+<LegalLayout
+  title="Privacy Policy"
+  description={`How ${siteConfig.productName} handles data — final policy pending legal review.`}
+>
+  <ConfigNotice title="TODO: FINAL LEGAL COPY" kind="legal">
+    <p>
+      This page is a placeholder. The final Privacy Policy has not been
+      approved and is not published here. It will be written to reflect the
+      exact behavior of the shipping founding-beta build and reviewed before
+      any purchase is accepted.
+    </p>
+  </ConfigNotice>
+
+  <h2>What this policy will cover</h2>
+  <p>Once finalized, this page will describe, in binding legal language:</p>
+  <ul>
+    <li>What data the website and application collect, if any</li>
+    <li>How sample-library analysis is performed and where it runs</li>
+    <li>Whether and how any diagnostic or support data is transmitted</li>
+    <li>Third-party services involved in payment and beta-build delivery</li>
+    <li>Data retention, deletion, and your rights as a data subject</li>
+    <li>How to contact {siteConfig.legalSeller} about this policy</li>
+  </ul>
+
+  <h2>Current product posture (informational, not legal text)</h2>
+  <p>
+    The founding-beta build performs sample analysis locally and does not
+    upload sample audio for processing. The website does not load
+    third-party analytics or advertising scripts by default; see the
+    project README for how that could change and how it would be disclosed
+    here first.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    Questions before this policy is finalized: {" "}
+    <a href={`mailto:${siteConfig.supportEmail}`}>{siteConfig.supportEmail}</a>
+  </p>
+</LegalLayout>

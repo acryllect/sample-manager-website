@@ -1,0 +1,129 @@
+---
+import { siteConfig } from "../config/site";
+
+interface Props {
+  /** Optional caption shown below the frame */
+  caption?: string;
+}
+
+const { caption } = Astro.props;
+const { demoVideoUrl } = siteConfig;
+
+const isDirectVideo = demoVideoUrl && /\.(mp4|webm)(\?|$)/i.test(demoVideoUrl);
+---
+
+<figure class="demo-frame">
+  <div class="frame-shell">
+    {
+      demoVideoUrl ? (
+        isDirectVideo ? (
+          <video controls preload="metadata" playsinline>
+            <source src={demoVideoUrl} />
+          </video>
+        ) : (
+          <iframe
+            src={demoVideoUrl}
+            title={`${siteConfig.productName} — 75-second demo`}
+            allow="fullscreen"
+            loading="lazy"
+          />
+        )
+      ) : (
+        <div class="placeholder">
+          <span class="placeholder-glow" aria-hidden="true"></span>
+          <svg
+            class="play-icon"
+            width="52"
+            height="52"
+            viewBox="0 0 52 52"
+            fill="none"
+            aria-hidden="true"
+          >
+            <circle cx="26" cy="26" r="25" stroke="currentColor" stroke-width="1.5" />
+            <path d="M21 17l16 9-16 9V17z" fill="currentColor" />
+          </svg>
+          <p class="placeholder-title">Demo pending release-candidate capture</p>
+          <p class="placeholder-copy">
+            The 75-second workflow demo is captured from the exact notarized
+            founding-beta build, on a real library — not a mockup. It will appear
+            here once that capture is complete.
+          </p>
+        </div>
+      )
+    }
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .demo-frame {
+    margin: 0;
+  }
+
+  .frame-shell {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-card);
+  }
+
+  .frame-shell video,
+  .frame-shell iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .placeholder {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-8);
+    color: var(--text-secondary);
+  }
+
+  .placeholder-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse at 50% 40%,
+      var(--accent-glow) 0%,
+      transparent 60%
+    );
+    pointer-events: none;
+  }
+
+  .play-icon {
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-4);
+    position: relative;
+  }
+
+  .placeholder-title {
+    position: relative;
+    color: var(--text-primary);
+    font-weight: 600;
+    margin: 0 0 var(--space-2);
+  }
+
+  .placeholder-copy {
+    position: relative;
+    max-width: 32rem;
+    font-size: 0.9375rem;
+    margin: 0;
+  }
+
+  figcaption {
+    margin-top: var(--space-3);
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+    text-align: center;
+  }
+</style>

@@ -1,0 +1,72 @@
+---
+interface Props {
+  number: number | string;
+  title: string;
+  /** Optional inverts the layout so media sits on the left */
+  reverse?: boolean;
+}
+
+const { number, title, reverse = false } = Astro.props;
+---
+
+<div class:list={["step", { reverse }]}>
+  <div class="step-copy">
+    <span class="step-number mono">{String(number).padStart(2, "0")}</span>
+    <h3>{title}</h3>
+    <div class="step-desc">
+      <slot />
+    </div>
+  </div>
+  <div class="step-media">
+    <slot name="media" />
+  </div>
+</div>
+
+<style>
+  .step {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: var(--space-12);
+    align-items: center;
+    padding-block: var(--space-12);
+  }
+
+  .step + .step {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .step.reverse {
+    grid-template-columns: 1.1fr 1fr;
+  }
+
+  .step.reverse .step-copy {
+    order: 2;
+  }
+
+  .step-number {
+    display: block;
+    color: var(--accent);
+    font-size: 0.8125rem;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-3);
+  }
+
+  .step-desc :global(p) {
+    max-width: 42ch;
+  }
+
+  .step-desc :global(.chip) {
+    margin-top: var(--space-2);
+  }
+
+  @media (max-width: 860px) {
+    .step,
+    .step.reverse {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+    .step.reverse .step-copy {
+      order: 0;
+    }
+  }
+</style>

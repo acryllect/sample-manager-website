@@ -1,0 +1,92 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { siteConfig } from "../config/site";
+---
+
+<LegalLayout
+  title="Known issues"
+  description={`Confirmed limitations in the current ${siteConfig.productName} founding-beta build, dated and updated as fixes ship.`}
+  lastUpdated={siteConfig.knownIssuesUpdated}
+>
+  <p>
+    This list covers confirmed, current limitations of the founding-beta
+    build — not a general roadmap. It is updated as issues are fixed or new
+    ones are found. If you hit something not listed here, tell us:{" "}
+    <a href={`mailto:${siteConfig.supportEmail}`}>{siteConfig.supportEmail}</a>.
+  </p>
+
+  <h2>Scope limitations</h2>
+  <ul>
+    <li>
+      <strong>Managed Library mode is disabled.</strong> An internal audit
+      found a data-safety issue where an interrupted Managed-mode import
+      could resume incorrectly and report false completion. Reference
+      Library mode does not have this issue and is the only mode available
+      in the founding beta.
+    </li>
+    <li>
+      <strong>MP3 export is disabled.</strong> Third-party licensing for the
+      bundled MP3 encoder has not been cleared for commercial distribution.
+      WAV, AIFF, FLAC, and M4A export remain available. MP3 import is
+      unaffected.
+    </li>
+    <li>
+      <strong>Multi-item drag-and-drop is not yet available.</strong>{" "}
+      Dragging one sample at a time into your DAW or Finder is supported;
+      dragging multiple selected items at once needs further work.
+    </li>
+    <li>
+      <strong>No automatic updates.</strong> New builds during the beta are
+      sent manually by the founder with update instructions.
+    </li>
+  </ul>
+
+  <h2>External drives</h2>
+  <p>
+    Reference libraries on external SSDs are supported and are the expected
+    setup for large libraries, but the drive-safety test matrix is not yet
+    exhaustive:
+  </p>
+  <ul>
+    <li>
+      Hands-on testing across eject, reconnect, permission revocation,
+      sleep/wake, a changed mount path, and swapping in a same-named
+      replacement volume is ongoing rather than fully automated.
+    </li>
+    <li>
+      If a drive disconnects mid-analysis, the in-flight file's result may
+      wait for that specific operation to finish before the app visibly
+      pauses.
+    </li>
+    <li>
+      Free-disk-space is checked before an operation starts, but if space
+      changes mid-operation on a nearly-full removable volume, behavior
+      under that specific condition is still being verified.
+    </li>
+  </ul>
+
+  <h2>Performance at large scale</h2>
+  <ul>
+    <li>
+      Batch edits (tags, ratings, color labels) across very large
+      multi-selections may be slower than in later releases. Ordinary
+      selections are unaffected; a safe limit or warning applies to
+      pathological cases.
+    </li>
+    <li>
+      Extremely long individual audio files — beyond roughly 30 minutes or
+      requiring more than 1&nbsp;GB of decoded audio — are rejected by a
+      safety guardrail rather than processed. This does not affect ordinary
+      samples and loops.
+    </li>
+  </ul>
+
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Sonic Map is rendered on a canvas surface, and full VoiceOver support
+      for that view is not yet complete. Search, library management, and
+      audition are keyboard- and VoiceOver-accessible.
+    </li>
+  </ul>
+</LegalLayout>

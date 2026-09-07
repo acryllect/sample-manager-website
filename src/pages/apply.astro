@@ -1,0 +1,109 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ConfigNotice from "../components/ConfigNotice.astro";
+import { siteConfig } from "../config/site";
+
+const { betaOpen, tallyFormUrl } = siteConfig;
+---
+
+<BaseLayout
+  title={`Apply for the ${siteConfig.productName} founding beta`}
+  description={`This programme is for Apple-silicon Mac producers, sound designers, and composers with substantial local sample libraries. Accepted customers pay ${siteConfig.foundingPrice} once for private beta access, manual beta updates, direct founder support, and the eventual v1 release.`}
+>
+  <section class="section section--tight apply-hero">
+    <div class="container-narrow" style="text-align:center;">
+      <p class="eyebrow">Founding beta application</p>
+      <h1>Apply for the {siteConfig.productName} founding beta</h1>
+      <p class="lede" style="margin-inline:auto;">
+        This programme is for Apple-silicon Mac producers, sound designers, and
+        composers with substantial local sample libraries. Accepted customers pay{" "}
+        {siteConfig.foundingPrice} once for private beta access, manual beta
+        updates, direct founder support, and the eventual v1 release.
+      </p>
+      <p class="requirement-line mono">
+        {siteConfig.supportedArchitecture} &middot; {siteConfig.supportedMacOS} &middot; Reference Library mode
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container-narrow">
+      {
+        !betaOpen ? (
+          <ConfigNotice title="Applications are not yet open">
+            <p>
+              The founding-beta program is not accepting applications yet — the
+              release-candidate build, checkout, and policy pages are still
+              being finalized. Check back soon, or watch{" "}
+              <a href="/demo">the demo page</a> for the workflow preview.
+            </p>
+            <p>
+              Support: <a href={`mailto:${siteConfig.supportEmail}`}>{siteConfig.supportEmail}</a>
+            </p>
+          </ConfigNotice>
+        ) : !tallyFormUrl ? (
+          <ConfigNotice title="Applications opening soon">
+            <p>
+              The application form is being finalized. When it opens, this page
+              will show the short qualification form directly — no account
+              required to apply.
+            </p>
+            <p>
+              Support: <a href={`mailto:${siteConfig.supportEmail}`}>{siteConfig.supportEmail}</a>
+            </p>
+          </ConfigNotice>
+        ) : (
+          <div class="tally-embed">
+            <iframe
+              src={tallyFormUrl}
+              title={`${siteConfig.productName} founding-beta application`}
+              loading="lazy"
+            />
+          </div>
+        )
+      }
+
+      <div class="apply-notes">
+        <h2>Before you apply</h2>
+        <ul>
+          <li>Applying does not commit you to purchase.</li>
+          <li>
+            Accepted applicants receive scope, known issues, purchase terms,
+            and the refund policy before checkout.
+          </li>
+          <li>
+            The first cohort is deliberately small so setup and feedback can
+            be handled personally.
+          </li>
+        </ul>
+        <p>
+          <a href="/system-requirements">Review system requirements</a> &middot;{" "}
+          <a href="/known-issues">Read known issues</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .requirement-line {
+    color: var(--text-tertiary);
+    font-size: 0.8125rem;
+  }
+
+  .tally-embed iframe {
+    width: 100%;
+    min-height: 640px;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--bg-elevated);
+  }
+
+  .apply-notes {
+    margin-top: var(--space-12);
+  }
+
+  .apply-notes h2 {
+    font-size: 1.125rem;
+  }
+</style>

@@ -1,0 +1,88 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { siteConfig } from "../config/site";
+---
+
+<LegalLayout
+  title="System requirements"
+  description={`Current founding-beta system requirements for ${siteConfig.productName}: Apple silicon, macOS 14+, and Reference Library mode.`}
+>
+  <h2>Founding-beta requirements</h2>
+  <p>These are the only configurations the current founding-beta build supports.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th scope="row">Processor</th>
+        <td>{siteConfig.supportedArchitecture} (M-series). Intel Macs are not supported.</td>
+      </tr>
+      <tr>
+        <th scope="row">Operating system</th>
+        <td>{siteConfig.supportedMacOS}</td>
+      </tr>
+      <tr>
+        <th scope="row">Library mode</th>
+        <td>Reference Library mode only — files are indexed where they already live.</td>
+      </tr>
+      <tr>
+        <th scope="row">Distribution</th>
+        <td>Direct download (DMG), Developer ID signed and notarized. Not distributed through the Mac App Store.</td>
+      </tr>
+      <tr>
+        <th scope="row">Account</th>
+        <td>None required.</td>
+      </tr>
+      <tr>
+        <th scope="row">Internet connection</th>
+        <td>Not required for day-to-day use. Analysis and search run on-device.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Not currently supported</h2>
+  <p>These may be reconsidered after the founding beta, based on evidence — they are not part of the current programme:</p>
+  <ul>
+    <li>Intel Macs</li>
+    <li>Windows</li>
+    <li>Mac App Store distribution</li>
+    <li>Managed Library mode</li>
+    <li>Automatic updates</li>
+    <li>DAW plug-in (AU/VST) companion</li>
+    <li>Cloud sync across Macs</li>
+  </ul>
+
+  <h2>Storage and library expectations</h2>
+  <p>
+    The founding beta is built for substantial local libraries — typically
+    10,000 or more samples across folders and drives. There is no fixed
+    library-size limit for the beta, but very large selections and edits may
+    be slower than they will be in later releases; see{" "}
+    <a href="/known-issues">known issues</a> for specifics.
+  </p>
+</LegalLayout>
+
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--space-6) 0 var(--space-8);
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--border-subtle);
+    font-size: 0.9375rem;
+  }
+
+  th {
+    color: var(--text-tertiary);
+    font-weight: 500;
+    width: 40%;
+    white-space: nowrap;
+  }
+
+  td {
+    color: var(--text-secondary);
+  }
+</style>
