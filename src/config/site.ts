@@ -17,6 +17,15 @@ export const siteConfig = {
   supportEmail: "support@samplelantern.com",
   legalSeller: "Alessandro Pelosio",
 
+  /** Founder identity — used for first-person, direct-from-the-founder copy */
+  founderName: "Alessandro Pelosio",
+  founderFirstName: "Alessandro",
+  founderRole: "Producer, sound engineer, and solo developer",
+  /** Path under /public once a photo exists, e.g. "/founder.jpg". Leave empty for the placeholder mark. */
+  founderImage: "",
+  founderBioShort:
+    "I'm Alessandro — a producer and sound engineer. I started building SampleLantern around the same problem I kept running into in real sessions: I had plenty of sounds, but finding the right one was taking too long.",
+
   /** Founding beta commercial terms */
   foundingPrice: "€79",
   foundingPriceNumeric: 79,

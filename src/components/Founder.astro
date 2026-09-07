@@ -1,0 +1,101 @@
+---
+import { siteConfig } from "../config/site";
+
+const { productName, founderName, founderRole, founderImage, founderBioShort } = siteConfig;
+
+const initials = founderName
+  .split(" ")
+  .map((word) => word[0])
+  .join("")
+  .slice(0, 2)
+  .toUpperCase();
+---
+
+<section class="founder section section--tight" id="founder">
+  <div class="container">
+    <div class="founder-grid">
+      <div class="founder-portrait">
+        {
+          founderImage ? (
+            <img src={founderImage} alt={founderName} loading="lazy" />
+          ) : (
+            <div class="founder-placeholder" aria-hidden="true">
+              <span class="founder-initials mono">{initials}</span>
+            </div>
+          )
+        }
+      </div>
+
+      <div class="founder-copy">
+        <h2>I'm building {productName} independently.</h2>
+        <p class="lede">{founderBioShort}</p>
+        <p>
+          I'm keeping the first beta small on purpose. If something breaks or
+          a workflow doesn't make sense, you'll be talking directly to me —
+          not submitting a ticket into a support queue.
+        </p>
+        <p>
+          The goal is simple: make this genuinely useful on real libraries
+          before opening it up more widely.
+        </p>
+        <p class="founder-role mono">{founderName} &middot; {founderRole}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .founder-grid {
+    display: grid;
+    grid-template-columns: 14rem 1fr;
+    gap: var(--space-12);
+    align-items: start;
+  }
+
+  .founder-portrait img,
+  .founder-placeholder {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .founder-portrait img {
+    object-fit: cover;
+  }
+
+  .founder-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(ellipse at 35% 25%, var(--accent-glow) 0%, transparent 60%),
+      var(--bg-elevated);
+  }
+
+  .founder-initials {
+    font-size: 2rem;
+    color: var(--accent-strong);
+    letter-spacing: 0.02em;
+  }
+
+  .founder-copy h2 {
+    margin-bottom: var(--space-3);
+  }
+
+  .founder-role {
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+    margin-top: var(--space-2);
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 720px) {
+    .founder-grid {
+      grid-template-columns: 1fr;
+    }
+    .founder-portrait {
+      max-width: 8rem;
+    }
+  }
+</style>

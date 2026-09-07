@@ -2,19 +2,19 @@
 import { siteConfig } from "../config/site";
 
 const included = [
-  "Private access to the founding beta",
-  "Direct founder onboarding and support",
-  "Beta fixes and updates, delivered manually when necessary",
-  "The eventual v1 release under the founding-customer terms",
-  "The founding price, even if the later public price changes",
+  `The current ${siteConfig.productName} beta`,
+  "Every beta update",
+  "The eventual v1 release",
+  `Direct support from ${siteConfig.founderFirstName}`,
+  "The founding price, even if the public price rises later",
 ];
 ---
 
 <section class="offer section" id="offer">
   <div class="container-narrow">
     <div class="section-heading" style="margin-inline:auto; text-align:center;">
-      <p class="eyebrow">The founding offer</p>
-      <h2>Become a founding customer for {siteConfig.foundingPrice}.</h2>
+      <h2>Join the founding beta for {siteConfig.foundingPrice}.</h2>
+      <p class="lede" style="margin-inline:auto;">One payment. No subscription.</p>
     </div>
 
     <div class="offer-card card">
@@ -28,19 +28,15 @@ const included = [
       </ul>
 
       <p class="offer-note">
-        You are buying the working retrieval workflow and a clearly disclosed
-        pre-release relationship — not a promise that every requested feature
-        will be built.
+        This is real, working software, but it's still a beta. You may hit
+        bugs. In return, you'll be using it early and talking directly to me
+        while I finish v1.
       </p>
 
       <a href="/apply" class="btn btn-primary btn-block">Apply for the founding beta</a>
 
       <p class="offer-disclosure">
-        {siteConfig.productName} is pre-release software. The core library,
-        analysis, search, audition, organization, and discovery workflows are
-        functional, but you may encounter defects. Updates may require
-        downloading a new build manually. Review the
-        <a href="/known-issues">known issues</a>, <a href="/refunds">refund policy</a>,
+        Review the <a href="/known-issues">known issues</a>, <a href="/refunds">refund policy</a>,
         and <a href="/system-requirements">system requirements</a> before applying.
       </p>
     </div>
@@ -103,11 +99,11 @@ const included = [
   }
 
   .offer-disclosure {
-    font-size: 0.8125rem;
+    font-size: 0.75rem;
     color: var(--text-tertiary);
     margin-top: var(--space-6);
     margin-bottom: 0;
-    text-align: left;
+    text-align: center;
     max-width: none;
   }
 </style>

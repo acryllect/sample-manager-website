@@ -2,82 +2,49 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import WorkflowStep from "../components/WorkflowStep.astro";
-import FeatureCard from "../components/FeatureCard.astro";
 import TrustSection from "../components/TrustSection.astro";
+import Founder from "../components/Founder.astro";
 import BetaOffer from "../components/BetaOffer.astro";
 import FitSection from "../components/FitSection.astro";
 import FAQ from "../components/FAQ.astro";
-import DemoFrame from "../components/DemoFrame.astro";
 import ScreenshotFrame from "../components/ScreenshotFrame.astro";
 import { siteConfig } from "../config/site";
 
-const whatWorksToday = [
-  {
-    title: "Reference-mode indexing",
-    body: "Index existing folders and drives without moving your source files.",
-  },
-  {
-    title: "Local analysis",
-    body: "BPM, key, type, and category detection, with explicit uncertainty instead of fabricated guesses.",
-  },
-  {
-    title: "Fuzzy and structured search",
-    body: "Search in plain language, typos included, or narrow with bpm:/key:/type: filters.",
-  },
-  {
-    title: "Find Similar and Sonic Map",
-    body: "Turn one close result into the right one, or explore a visual map of related sounds.",
-  },
-  {
-    title: "Waveform audition",
-    body: "Loudness-normalized preview so candidates are easier to compare fairly.",
-  },
-  {
-    title: "Crates and collections",
-    body: "Nested crates, smart collections, tags, ratings, and duplicate review.",
-  },
-  {
-    title: "Non-destructive export",
-    body: "Move a chosen sample into your production workflow without altering the source.",
-  },
-];
-
 const applicationSteps = [
-  "Apply with your Mac, library, storage, and workflow details.",
-  "If the beta can responsibly support your setup, receive an invitation and the full terms.",
-  `Pay ${siteConfig.foundingPrice} through hosted checkout.`,
-  "Receive the private notarized build and founder onboarding.",
-  "Use it on a real library and take part in short structured check-ins.",
+  "Apply.",
+  "I check that the current beta supports your setup.",
+  "If it does, I'll send you the checkout and build.",
+  "Use it on your actual library and tell me where it helps or gets in the way.",
 ];
 
 const faqItems = [
   {
     q: "Why is the beta paid?",
-    a: "<p>The experiment is whether the current retrieval workflow creates enough real value to buy. Payment also keeps the cohort small and serious. In return, the limitations are explicit and support is direct.</p>",
+    a: "<p>Because I want to build this around people who have the problem badly enough to actually use it in real work. The beta is deliberately small, and paying customers get the current app, beta updates, the eventual v1 release, and direct support from me.</p>",
   },
   {
     q: `Is ${siteConfig.foundingPrice} a subscription?`,
-    a: `<p>No. It is a one-time founding-beta purchase under the published terms. See <a href="/terms">terms</a>.</p>`,
+    a: `<p>No. It's a one-time payment for the founding beta. See <a href="/terms">terms</a>.</p>`,
   },
   {
     q: "Will I need a license key?",
-    a: "<p>Not during the controlled first cohort. Access and build delivery are handled directly by the founder.</p>",
+    a: "<p>Not right now — I handle access and delivery directly while the beta is small.</p>",
   },
   {
     q: "Does it move my samples?",
-    a: '<p>The founding beta uses Reference Library mode and indexes files where they already live. See the <a href="/support">support hub</a> for details.</p>',
+    a: '<p>No. The beta uses Reference Library mode, which indexes your files where they already live. See the <a href="/support">support hub</a> for details.</p>',
   },
   {
     q: "How do updates work?",
-    a: "<p>The founder sends a new notarized build with release notes and safe update instructions. Automatic updates come later, after paid demand is validated.</p>",
+    a: "<p>I send you a new build directly when one's ready, along with notes on what changed. Automatic updates aren't built yet.</p>",
   },
   {
     q: "What if it doesn't work for my setup?",
-    a: '<p>Review the <a href="/refunds">refund policy</a>, <a href="/known-issues">known issues</a>, and <a href="/system-requirements">system requirements</a> before checkout. Contact <a href="mailto:' +
+    a: '<p>Check the <a href="/refunds">refund policy</a>, <a href="/known-issues">known issues</a>, and <a href="/system-requirements">system requirements</a> before you apply. If something\'s blocking installation or the core workflow, email me at <a href="mailto:' +
       siteConfig.supportEmail +
       '">' +
       siteConfig.supportEmail +
-      "</a> if installation or the core workflow is blocked.</p>",
+      "</a>.</p>",
   },
 ];
 ---
@@ -88,46 +55,38 @@ const faqItems = [
 >
   <Hero />
 
-  <section class="section" id="problem">
-    <div class="container-narrow" style="text-align:center;">
-      <p class="eyebrow">The problem</p>
-      <h2>Your library is bigger than your memory.</h2>
-      <p class="lede" style="margin-inline:auto;">
-        You remember the sound — dark, metallic, short — but not the pack,
-        filename, or drive. {siteConfig.productName} helps you search, audition,
-        compare, and organize the sounds you already own, so the library becomes
-        usable again.
-      </p>
+  <section class="section section--tight" id="proof">
+    <div class="container">
+      <ScreenshotFrame
+        id="S01"
+        caption="Search results for “dark metallic impact” — waveform visible, mixed locations."
+      />
     </div>
   </section>
 
-  <section class="section section--tight" id="proof">
-    <div class="container">
-      <div class="section-heading" style="margin-inline:auto; text-align:center;">
-        <p class="eyebrow">See it work</p>
-        <h2>From remembered sound to usable result.</h2>
-        <p class="lede" style="margin-inline:auto;">
-          Add an existing folder in Reference mode. Search in ordinary language
-          or narrow by BPM, key, type, and format. Audition, find similar sounds,
-          explore Sonic Map, and export the one that fits.
-        </p>
-      </div>
-      <DemoFrame caption="Captured from the exact founding-beta build once release candidates are ready." />
+  <section class="section" id="problem">
+    <div class="container-narrow" style="text-align:center;">
+      <h2>Your library is bigger than your memory.</h2>
+      <p class="lede" style="margin-inline:auto;">
+        You remember the sound — dark, metallic, short — but not whether it
+        came from a pack you bought last year, a folder on an SSD, or a
+        session from three projects ago. {siteConfig.productName} is meant to
+        make the filename and folder structure matter less.
+      </p>
     </div>
   </section>
 
   <section class="section" id="product">
     <div class="container">
       <div class="section-heading">
-        <p class="eyebrow">Core workflow</p>
-        <h2>Search, audition, and finish — without leaving the library.</h2>
+        <h2>Search, then follow the thread.</h2>
       </div>
 
-      <WorkflowStep number={1} title="Search the way you hear it">
+      <WorkflowStep number={1} title="Search what you remember">
         <p>
-          Try a phrase such as <code>dark metallic impact</code>. Misspell a
-          word and keep moving — search is fuzzy and typo-tolerant, with
-          structured filters when you need precision.
+          Try a phrase such as <code>dark metallic impact</code>. Search is
+          fuzzy and typo-tolerant, so rough wording still gets you there —
+          narrow with filters when you already know what you're after.
         </p>
         <div>
           <span class="chip">bpm:118-124</span>
@@ -136,63 +95,30 @@ const faqItems = [
         </div>
         <Fragment slot="media">
           <ScreenshotFrame
-            id="S01"
-            caption="Search results for “dark metallic impact,” waveform visible."
+            id="S02"
+            caption="bpm:118-124 key:Amin type:loop — rendered as chips, results narrowed."
           />
         </Fragment>
       </WorkflowStep>
 
-      <WorkflowStep number={2} title="Audition and compare quickly" reverse>
+      <WorkflowStep number={2} title="Find Similar" reverse>
         <p>
-          Hear results at comparable loudness with waveform-scrub auditioning
-          and loudness-normalized preview, so candidates are easier to judge
-          fairly.
-        </p>
-        <Fragment slot="media">
-          <ScreenshotFrame
-            id="S06"
-            caption="Waveform audition with playback controls and metadata."
-          />
-        </Fragment>
-      </WorkflowStep>
-
-      <WorkflowStep number={3} title="Finish the workflow">
-        <p>
-          Move or export the chosen sample into your production workflow.
-          Everything stays non-destructive by default — export is a separate,
-          explicit action.
-        </p>
-        <Fragment slot="media">
-          <ScreenshotFrame id="S08" caption="From search result to project." />
-        </Fragment>
-      </WorkflowStep>
-    </div>
-  </section>
-
-  <section class="section" id="discovery">
-    <div class="container">
-      <div class="section-heading">
-        <p class="eyebrow">Discovery</p>
-        <h2>When one sound is close, find its neighbors.</h2>
-      </div>
-
-      <WorkflowStep number={4} title="Find Similar">
-        <p>
-          Choose a promising result and find similar material across your
-          whole library — not just one folder.
+          Found something close but not quite right? Pick it, and{" "}
+          {siteConfig.productName} surfaces similar sounds across your whole
+          library — not just the folder it came from.
         </p>
         <Fragment slot="media">
           <ScreenshotFrame
             id="S04"
-            caption="A source item and its related result set."
+            caption="A source sound and its closest matches."
           />
         </Fragment>
       </WorkflowStep>
 
-      <WorkflowStep number={5} title="Explore the Sonic Map" reverse>
+      <WorkflowStep number={3} title="Explore the Sonic Map">
         <p>
-          Open Sonic Map to browse related clusters visually, refine relevance
-          with thumbs-up and thumbs-down, and lasso the sounds worth keeping
+          Browse your library visually — related sounds cluster together.
+          Refine with a thumbs up or down, then lasso the ones worth keeping
           into a shortlist.
         </p>
         <Fragment slot="media">
@@ -207,74 +133,33 @@ const faqItems = [
 
   <TrustSection />
 
-  <section class="section" id="whats-today">
-    <div class="container">
-      <div class="section-heading">
-        <p class="eyebrow">What works today</p>
-        <h2>A substantial core product — not a feature promise.</h2>
-        <p class="lede">
-          Every item below is part of the current founding-beta build.
-        </p>
-      </div>
-      <div class="grid grid-3">
-        {
-          whatWorksToday.map((f) => (
-            <FeatureCard title={f.title}>
-              <p>{f.body}</p>
-            </FeatureCard>
-          ))
-        }
-      </div>
+  <section class="section capability-line">
+    <div class="container-narrow" style="text-align:center;">
+      <p class="capability-list mono">
+        Search &middot; Find Similar &middot; Sonic Map &middot; BPM/key/type
+        analysis &middot; waveform audition &middot; crates &middot; duplicate
+        review
+      </p>
     </div>
   </section>
 
-  <section class="section section--tight boundary" id="boundary">
-    <div class="container-narrow">
-      <div class="section-heading" style="text-align:center; margin-inline:auto;">
-        <p class="eyebrow">Founding-beta boundary</p>
-        <h2>Small by design. Honest about what's next.</h2>
-        <p class="lede" style="margin-inline:auto;">
-          This is pre-release software for a controlled first cohort. Updates
-          may require downloading a new build manually. The first beta is{" "}
-          {siteConfig.supportedArchitecture} on {siteConfig.supportedMacOS}{" "}
-          and uses Reference Library mode.
-        </p>
-      </div>
-      <div class="card boundary-card">
-        <p>It does not currently include:</p>
-        <ul>
-          <li>A public trial or automated license activation</li>
-          <li>Automatic updates</li>
-          <li>Intel support</li>
-          <li>Windows support</li>
-          <li>A DAW plug-in</li>
-          <li>Cloud sync</li>
-          <li>Managed Library mode</li>
-        </ul>
-        <p class="boundary-links">
-          <a href="/known-issues">Read known issues</a> &middot;{" "}
-          <a href="/system-requirements">Review supported setup</a> &middot;{" "}
-          <a href="/support">Read the support hub</a>
-        </p>
-      </div>
-    </div>
-  </section>
+  <Founder />
 
   <BetaOffer />
 
   <FitSection />
 
-  <section class="section" id="process">
+  <section class="section section--tight" id="process">
     <div class="container-narrow">
       <div class="section-heading">
-        <p class="eyebrow">Process</p>
         <h2>How joining works</h2>
       </div>
       <ol class="process-list">
         {applicationSteps.map((step) => <li>{step}</li>)}
       </ol>
       <p class="process-note">
-        Applying does not commit you to purchase.
+        Applying does not commit you to purchase. I'll check in with you
+        after you've used it.
       </p>
       <a href="/apply" class="btn btn-primary">Apply for the founding beta</a>
     </div>
@@ -284,16 +169,13 @@ const faqItems = [
 </BaseLayout>
 
 <style>
-  .boundary-card ul {
-    columns: 2;
-    column-gap: var(--space-8);
+  .capability-line {
+    padding-block: var(--space-8);
   }
 
-  .boundary-links {
-    max-width: none;
-    font-size: 0.9375rem;
-    margin-top: var(--space-6);
-    margin-bottom: 0;
+  .capability-list {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
   }
 
   .process-list {
@@ -334,11 +216,5 @@ const faqItems = [
   .process-note {
     font-size: 0.875rem;
     color: var(--text-tertiary);
-  }
-
-  @media (max-width: 640px) {
-    .boundary-card ul {
-      columns: 1;
-    }
   }
 </style>
