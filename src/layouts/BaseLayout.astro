@@ -48,14 +48,16 @@ const canonical = new URL(Astro.url.pathname, site.siteUrl).toString();
         apply();
         if (m.addEventListener) m.addEventListener("change", apply);
       })();
+      // "js" means scripts run; "motion" means they run and the visitor allows animation. Every
+      // hidden-before-reveal state in site.css is gated behind "motion", so without JavaScript or
+      // with reduced motion the whole page is visible at once.
+      (function () {
+        var root = document.documentElement;
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+        root.classList.add("js");
+        if (!reduce.matches) root.classList.add("motion");
+      })();
     </script>
-    <noscript>
-      <style>
-        .thumbs { display: none; }
-        .tabs { display: none; }
-        [role="tabpanel"][hidden] { display: block; }
-      </style>
-    </noscript>
   </head>
   <body class="sl-page">
     <slot />
