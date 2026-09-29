@@ -1,9 +1,9 @@
 # SampleLantern website
 
 The founding paid-beta landing page for **SampleLantern**, a native macOS app for searching and
-organising large local sample libraries. One static page, plus two placeholder pages the app links
-to (`/support/`, `/privacy/`). No backend, no analytics, no cookie banner, no third-party scripts.
-Inter from Google Fonts is the only external request.
+organising large local sample libraries. One static page, plus six support and policy pages the app
+and the footer link to. No backend, no analytics, no cookie banner, no third-party scripts. Inter
+from Google Fonts is the only external request.
 
 The page has one job: let a qualified visitor decide they fit, understand the pre-release
 trade-off, and apply for a purchase invitation. It has no download link and no trial.
@@ -11,9 +11,9 @@ trade-off, and apply for a purchase invitation. It has no download link and no t
 ## Stack
 
 - [Astro](https://astro.build) as a static build tool. It ships no client framework; the only
-  JavaScript is inline: the contrast theme and the `js` / `motion` classes in `BaseLayout.astro`, and
-  one script in `index.astro` for the tour tabs and auto-advance, the animated search field, the
-  audition sweep and the scroll reveal.
+  JavaScript is inline: the contrast theme, the `js` / `motion` classes and the scroll reveal in
+  `BaseLayout.astro`, and one script in `index.astro` for the tour tabs and auto-advance, the
+  animated search field and the audition sweep.
 - The SampleLantern Web design system, copied in: `src/styles/tokens.css` (generated from the
   system's `tokens.json`) and `src/styles/bundle.css` (its `sl-*` components, with the Inter
   `@import` removed because the font is linked from `<head>`). `src/styles/site.css` holds page
@@ -39,7 +39,10 @@ pipeline described there: build command `npm run build`, output directory `dist`
 | Product name (one variable) and site facts | `src/config/site.ts` (`productName`) |
 | Every link and text placeholder | `src/config/site.ts` (`links`, `text`) |
 | Screenshot list, captions, alt text, tour tabs (order and labels) | `src/data/shots.ts` |
-| The page (sections below) | `src/pages/index.astro` |
+| The landing page (sections below) | `src/pages/index.astro` |
+| The six support and policy pages, and the 404 | `src/pages/{known-issues,supported-setup,safety,support,privacy,terms,404}.astro` |
+| The doc page layout, its sections, menu paths and the support address | `src/components/{DocPage,DocSection,Path,SupportEmail}.astro` |
+| Which placeholders each doc page prints (drives noindex and the sitemap) | `src/config/pages.ts` |
 | Header, footer, screenshot frame, waveform | `src/components/` |
 | Tokens, components, page layout | `src/styles/` |
 | App icon (72, 96, 160 and 240px; the last two come from `sips -z` on the 1024px master), Core icons | `public/assets/` |
@@ -97,8 +100,37 @@ search field, the audition playhead sweep and the card hover.
 - Sample audio is never uploaded, and the page carries no analytics. Adding either needs a
   decision and a privacy-page change first.
 
-## Legal and support pages
+## Support and policy pages
 
-`/support/` and `/privacy/` are placeholders (`[SUPPORT_PAGE_COPY]`, `[PRIVACY_PAGE_COPY]`) marked
-`noindex` and left out of the sitemap. When the final copy lands, drop `noindex` in
-`src/components/InfoPage.astro` and remove them from the sitemap filter in `astro.config.mjs`.
+| Page | Route | Link in `site.ts` |
+|---|---|---|
+| Supported setup | `/supported-setup/` | `links.supportedSetup` |
+| Known issues | `/known-issues/` | `links.knownIssues` |
+| Safety guide | `/safety/` | `links.safetyGuide` |
+| Support | `/support/` | linked directly |
+| Privacy | `/privacy/` | linked directly |
+| Founding beta terms | `/terms/` | `links.terms` |
+
+All six share `DocPage.astro`: a centred article about 680px wide (H1, a lead, then H2 sections built
+with `DocSection.astro`), and on screens 1024px and wider a sticky "On this page" list, built from
+the H2s, when a page has four or more sections. Menu paths are written with `Path.astro` (the `▸`
+separator, labels in medium weight); app button and menu labels elsewhere use `<span class="ui">`.
+The 404 page uses the same layout.
+
+The copy comes from the cockpit's fact sheet (2026-09-29). Where a fact is missing it is a
+placeholder from `text` in `site.ts`, written exactly as `[LIKE_THIS]`:
+`[BUILD_VERSION]`, `[SUPPORTED_LIBRARY_SIZE]`, `[MEMORY_REQUIREMENT]`, `[SELLER_DETAILS]`,
+`[EXACT FOUNDING ENTITLEMENT]`, `[REFUND_POLICY]`, `[PAYMENT_PROVIDER]`,
+`[APPLICATION_FORM_PROVIDER]`, `[TERMS_LEGAL_TEXT]`, `[PRIVACY_LEGAL_TEXT]`, plus `[SUPPORT_EMAIL]`
+(a `mailto:` link once it is real).
+
+### noindex and the sitemap, per page
+
+A doc page is `noindex` and left out of the sitemap while it prints an open placeholder.
+`src/config/pages.ts` lists the `text` values each page prints; `DocPage.astro` reads it for the
+`noindex` meta tag and `astro.config.mjs` reads it for the sitemap filter, and `DocPage` stops the
+build if a page prints a placeholder that is not listed. To lift both for one page, put the real
+values in `src/config/site.ts` for every placeholder listed for that page in `pages.ts` (for
+example, `/support/` and `/safety/` only need `supportEmail`). Nothing else changes: on the next
+build the page loses `noindex` and appears in `sitemap-0.xml`. Check the built `dist/sitemap-0.xml`
+and the page's `<meta name="robots">` before deploying.

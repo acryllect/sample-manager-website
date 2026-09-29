@@ -228,9 +228,42 @@ body { overflow-x: clip; }
 .footer__links a { display: inline-block; padding-block: var(--space-6); font-size: 15px; line-height: 22px; color: var(--secondary-text); text-decoration: none; }
 .footer__links a:hover { color: var(--primary-text); text-decoration: underline; }
 
-/* Placeholder pages (/support/, /privacy/, 404) */
-.info { max-width: 720px; padding-block: var(--space-64); min-height: 60vh; display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-24); }
-.info__placeholder { color: var(--secondary-text); }
+/* Support and policy pages (DocPage): a centred article about 680px wide, and on desktop a sticky
+   "On this page" list on its left when there are four or more sections. */
+.doc { padding-block: var(--space-48) var(--space-64); }
+@media (min-width: 640px) { .doc { padding-block: var(--space-64) var(--space-96); } }
+.doc__article { max-width: 680px; margin-inline: auto; }
+.doc__head { margin-bottom: var(--space-48); }
+.doc__lead { margin-top: var(--space-16); font-size: 20px; line-height: 30px; color: var(--secondary-text); text-wrap: pretty; }
+.doc__section + .doc__section { margin-top: var(--space-48); }
+.doc__h2 { margin-bottom: var(--space-16); font-size: 24px; line-height: 32px; font-weight: 600; letter-spacing: -.01em; text-wrap: balance; }
+.doc__section ul { display: grid; gap: var(--space-12); padding-left: var(--space-24); color: var(--secondary-text); }
+.doc__section li::marker { color: var(--tertiary-text); }
+.doc__section p { color: var(--secondary-text); }
+.doc__section p + p { margin-top: var(--space-16); }
+.doc__section a, .doc__lead a { color: var(--primary-text); text-decoration: underline; text-decoration-color: var(--strong-border); text-underline-offset: 3px; }
+.doc__section a:hover, .doc__lead a:hover { text-decoration-color: currentColor; }
+.doc__section code { padding: 1px var(--space-6); border-radius: var(--radius-small); background: var(--chip-fill); font-size: .9em; overflow-wrap: anywhere; }
+/* App button and menu labels: medium weight, no quotation marks. */
+.ui { font-weight: 500; color: var(--primary-text); }
+.doc__section .doc__muted { color: var(--tertiary-text); }
+.doc__notice { padding: var(--space-16) var(--space-24); border: 1px solid var(--hairline); border-radius: var(--radius-panel); background: var(--sidebar); }
+.doc__toc { display: none; }
+@media (min-width: 1024px) {
+  .doc__layout--toc { display: grid; grid-template-columns: 220px minmax(0, 680px); justify-content: center; column-gap: var(--space-48); align-items: start; }
+  .doc__layout--toc .doc__article { margin-inline: 0; width: 100%; }
+  .doc__toc { display: block; position: sticky; top: calc(var(--toolbar-height) + var(--space-32)); }
+  .doc__toc .label { margin-bottom: var(--space-12); }
+  .doc__toc ol { display: grid; gap: var(--space-4); border-left: 1px solid var(--hairline); }
+  .doc__toc a { display: block; padding: var(--space-4) var(--space-12); font-size: 15px; line-height: 22px; color: var(--secondary-text); text-decoration: none; }
+  .doc__toc a:hover { color: var(--primary-text); }
+}
+/* From 1280px the side column is wide enough for the list, so the article itself is centred on the page. */
+@media (min-width: 1280px) {
+  .doc__layout--toc { grid-template-columns: minmax(0, 1fr) 680px minmax(0, 1fr); column-gap: 0; }
+  .doc__toc { grid-column: 1; justify-self: end; width: 220px; margin-right: var(--space-48); }
+  .doc__layout--toc .doc__article { grid-column: 2; }
+}
 
 /* Header: below 800px the four links no longer fit beside Apply, so it shrinks to brand and Apply. */
 .sl-nav__links a { white-space: nowrap; }

@@ -203,7 +203,7 @@ After the domain is live, check by hand:
 
 - [ ] `https://samplelantern.com/` loads over HTTPS with a valid certificate
 - [ ] `https://www.samplelantern.com/` redirects to the apex
-- [ ] `/support/` and `/privacy/` load (the app links to both)
+- [ ] `/supported-setup/`, `/known-issues/`, `/safety/`, `/support/`, `/privacy/` and `/terms/` load (the footer and the app link to them). While a page still prints an open `[PLACEHOLDER]` it is `noindex` and absent from `/sitemap-0.xml`; see the README
 - [ ] `/robots.txt` and `/sitemap-index.xml` are reachable
 - [ ] View source on `/` — no `[BRACKETED]` placeholder is left in any `href`
       or visible text you did not intend to ship (the build log lists the open
