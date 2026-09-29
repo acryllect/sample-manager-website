@@ -1,138 +1,73 @@
 # SampleLantern website
 
-The public marketing site for **SampleLantern**, a native macOS sample-library
-manager. This is a small, static Astro site — no backend, no database, no
-dependency on the macOS app, which lives in a separate repository.
+The founding paid-beta landing page for **SampleLantern**, a native macOS app for searching and
+organising large local sample libraries. One static page, plus two placeholder pages the app links
+to (`/support/`, `/privacy/`). No backend, no analytics, no cookie banner, no third-party scripts.
+Inter from Google Fonts is the only external request.
 
-Currently in **founding-beta mode**: the site explains the product, sets
-expectations for the pre-release build, and routes interested producers to an
-application — not a public download or checkout. This site's copy is built
-from that app repository's `docs/commercial/` folder (numbered 00–14) — refer
-back to those docs before changing any product claim, price, or scope
-statement here.
+The page has one job: let a qualified visitor decide they fit, understand the pre-release
+trade-off, and apply for a purchase invitation. It has no download link and no trial.
 
 ## Stack
 
-- [Astro](https://astro.build) (static output) + TypeScript
-- Plain CSS with design tokens (no Tailwind, no component library)
-- No client-side framework — a few small `<script>` blocks handle the mobile
-  nav toggle; everything else is static HTML/CSS
-- [`@astrojs/sitemap`](https://docs.astro.build/en/guides/integrations-guide/sitemap/)
-  for `sitemap-index.xml`
+- [Astro](https://astro.build) as a static build tool. It ships no client framework; the only
+  JavaScript is a few inline lines for the gallery, the tabs and the contrast theme.
+- The SampleLantern Web design system, copied in: `src/styles/tokens.css` (generated from the
+  system's `tokens.json`) and `src/styles/bundle.css` (its `sl-*` components, with the Inter
+  `@import` removed because the font is linked from `<head>`). `src/styles/site.css` holds page
+  layout only.
 
-## Local development
+## Run, build, test, deploy
 
 ```bash
 npm install
-npm run dev
+npm run dev       # http://localhost:4321
+npm run build     # astro check (types) + astro build -> dist/
+npm run preview   # serve dist/ locally
 ```
 
-Opens at `http://localhost:4321`.
-
-Other scripts:
-
-```bash
-npm run build    # astro check (typecheck) + astro build -> dist/
-npm run preview  # serve the built dist/ locally
-npm run check    # typecheck only
-```
-
-## Project structure
-
-```
-src/
-  config/site.ts       # single source of truth — see "Configuration" below
-  layouts/
-    BaseLayout.astro   # HTML shell, meta/OG/Twitter tags, header + footer
-    LegalLayout.astro  # narrow prose layout for legal/support pages
-  components/          # Header, Footer, Hero, WorkflowStep, FeatureCard,
-                        # TrustSection, BetaOffer, FitSection, FAQ, DemoFrame,
-                        # ScreenshotFrame, ConfigNotice, Logo
-  pages/                # one file per route (see "Routes" below)
-  styles/global.css     # design tokens (color/type/spacing) + base styles
-public/                 # favicon, OG image, robots.txt
-```
-
-## Configuration
-
-**Everything brand- and commercial-specific lives in
-[`src/config/site.ts`](src/config/site.ts).** No page hardcodes the product
-name, price, domain, or external URLs — update that one file and every page
-picks it up.
-
-Key fields and what flipping them does:
-
-| Field | Effect |
-|---|---|
-| `productName`, `tagline`, `domain`, `siteUrl` | Brand strings and canonical/OG URLs everywhere |
-| `supportEmail`, `legalSeller` | Contact links in the footer, support page, and legal placeholders |
-| `foundingPrice` | The €79 figure shown in the hero, offer card, and FAQ |
-| `betaOpen` | Controls the `/apply` page: `false` shows "applications are not yet open"; `true` moves to the next check below |
-| `tallyFormUrl` | When `betaOpen` is `true` and this is set, `/apply` embeds the Tally form. Empty shows "applications opening soon" |
-| `demoVideoUrl` | When set, `/` and `/demo` embed the video (direct `.mp4`/`.webm` or an iframe embed URL). Empty shows the placeholder frame |
-| `checkoutUrl` | **Intentionally unused by any page.** Founding-beta checkout is sent privately to accepted applicants, never linked publicly. Kept here only so a future founder-only tool has one place to read it from |
-| `supportedMacOS`, `supportedArchitecture` | System-requirements copy across the site |
-| `analyticsEnabled` | Currently unused — no analytics script is installed. See "Analytics" below before wiring anything to this flag |
-
-## Content-update workflow
-
-- **Copy changes**: edit the relevant file in `src/pages/` or the component it
-  pulls from. Most homepage sections are just arrays of strings at the top of
-  `src/pages/index.astro`.
-- **Screenshots**: once real founding-beta screenshots exist, drop them under
-  `public/screenshots/` and pass `src="/screenshots/xyz.png"` to the relevant
-  `<ScreenshotFrame>` call (matching `id` values to
-  `docs/commercial/03-DEMO-AND-SCREENSHOTS.md`). Without `src`, the component
-  renders a clearly-marked placeholder — never a fabricated UI mockup.
-- **Demo video**: set `demoVideoUrl` in `site.ts` once the 75-second demo is
-  captured from a real release-candidate build.
-- **Legal pages** (`/privacy`, `/terms`, `/refunds`): each currently shows a
-  `TODO: FINAL LEGAL COPY` notice (see `src/components/ConfigNotice.astro`).
-  Replace the placeholder content in `src/pages/privacy.astro`,
-  `terms.astro`, and `refunds.astro` with approved copy once the founder and
-  legal review is complete — do not remove the notice until real copy
-  replaces the placeholder sections.
-- **Known issues**: `src/pages/known-issues.astro` lists only issues that are
-  documented in the commercial docs / engineering audit. Update
-  `knownIssuesUpdated` in `site.ts` whenever this page's content changes.
-
-## Analytics
-
-No third-party analytics, tracking pixel, or advertising script is installed,
-by design — see `docs/commercial/02-GTM-FOUNDATION.md` and the founder
-operations guide. If Cloudflare Web Analytics (or similar) is added later:
-
-1. Gate it behind the `analyticsEnabled` flag in `site.ts`.
-2. Document what it collects here and reflect that in `/privacy` once that
-   page has approved copy.
-3. Do not add Meta Pixel, Google Analytics, Hotjar, FullStory, or similar —
-   see the project brief for why.
-
-## Routes
-
-| Route | Purpose |
-|---|---|
-| `/` | Founding-beta landing page |
-| `/apply` | Application entry point (Tally embed once configured) |
-| `/demo` | 75-second demo (placeholder until captured) |
-| `/support` | Support hub: setup, known issues, Reference mode, contact |
-| `/system-requirements` | Current founding-beta hardware/OS requirements |
-| `/known-issues` | Dated list of confirmed current limitations |
-| `/privacy`, `/terms`, `/refunds` | Legal pages — placeholders pending approval |
+There is no automated test suite. Before shipping, run `npm run build` and walk the checklist in
+[DEPLOYMENT.md](DEPLOYMENT.md#10-deployment-smoke-test). Deploys come from the GitHub to Cloudflare
+pipeline described there: build command `npm run build`, output directory `dist`.
 
 ## Where things live
 
-- **Brand/commercial config**: `src/config/site.ts`
-- **Beta application URLs**: `tallyFormUrl` in `site.ts`
-- **Demo video URL**: `demoVideoUrl` in `site.ts`
-- **Legal copy**: `src/pages/privacy.astro`, `terms.astro`, `refunds.astro`
-- **Commercial source docs this site is built from**: `docs/commercial/` in the SampleLantern app repository (not this repo)
+| What | Where |
+|---|---|
+| Product name (one variable) and site facts | `src/config/site.ts` (`productName`) |
+| Every link and text placeholder | `src/config/site.ts` (`links`, `text`) |
+| Screenshot list, captions, alt text, tour tabs | `src/data/shots.ts` |
+| The page | `src/pages/index.astro` |
+| Header, footer, screenshot frame, waveform | `src/components/` |
+| Tokens, components, page layout | `src/styles/` |
+| App icon (resized), Core icons | `public/assets/` |
 
-## Deployment
+## Open placeholders
 
-See [`DEPLOYMENT.md`](DEPLOYMENT.md) for the full GitHub → Cloudflare Pages →
-Porkbun DNS walkthrough. Short version:
+Everything written `[LIKE_THIS]` is an open placeholder from the approved copy. It stays exactly as
+written until the real value exists, so nothing ships by accident. `npm run build` prints the ones
+still open. The application link goes through `applyHref()`, which adds `utm_*` campaign
+parameters only once the URL is real, and never any personal data.
 
-- **Build command**: `npm run build`
-- **Output directory**: `dist`
-- **Root directory** (if this repo also contains the macOS app): `website`
+## Screenshots and the demo video
+
+Until a capture exists, each screenshot is a labelled placeholder (shot ID and state). The page
+never mocks an app screen in HTML. To ship a capture, put a 16:10 crop under `public/screenshots/`
+and set `src` on that shot in `src/data/shots.ts`. Captures come from the notarized paid-beta
+build with the demo library. The demo video uses `links.demoVideo`, `links.demoPoster` and
+`links.demoCaptions`; it plays muted with captions on and is never behind a form.
+
+## Design-system rules this page follows
+
+- Dark only. `data-theme="contrast"` is set on `<html>` when `prefers-contrast: more` matches.
+- LanternGlow appears exactly twice: behind the main gallery screenshot and behind the closing
+  call to action.
+- Core icons are provisional and used sparingly: folder, file, similar, search, chevron down.
+- Sample audio is never uploaded, and the page carries no analytics. Adding either needs a
+  decision and a privacy-page change first.
+
+## Legal and support pages
+
+`/support/` and `/privacy/` are placeholders (`[SUPPORT_PAGE_COPY]`, `[PRIVACY_PAGE_COPY]`) marked
+`noindex` and left out of the sitemap. When the final copy lands, drop `noindex` in
+`src/components/InfoPage.astro` and remove them from the sitemap filter in `astro.config.mjs`.

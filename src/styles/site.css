@@ -1,0 +1,192 @@
+/* Page layout for the founding-beta landing page. Colours, type, space, radii and shadows come from
+   tokens.css; components come from bundle.css. Nothing here invents a value the design system owns. */
+
+html { scroll-padding-top: calc(var(--toolbar-height) + var(--space-16)); }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+body { overflow-x: clip; }
+
+.sl-page :where(h1, h2, h3, p, ul, ol, figure) { margin: 0; }
+.sl-page :where(ul, ol) { padding: 0; }
+.sl-page :where(ul, ol)[role="list"] { list-style: none; }
+.sl-page :where(code) { font-family: var(--font-mono); }
+
+/* One focus ring everywhere: 2px solid, 2px offset. */
+.sl-page :where(a, button, summary, video, [tabindex]):focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* The glow (LanternGlow) reaches past its element. Later sections and the footer sit above it. */
+main > section:not(.gallery), .footer { position: relative; z-index: 1; }
+.gallery { position: relative; z-index: 0; }
+.gallery, .cta { overflow-x: clip; }
+
+.text-small { font-size: 15px; line-height: 22px; }
+.section-intro { margin-bottom: var(--space-48); }
+.after-content { margin-top: var(--space-48); }
+.sl-actions--center { justify-content: center; }
+
+/* Pill: a quiet label (not a Tag, which means sound metadata). */
+.pill { display: inline-flex; align-items: center; justify-content: center; padding: var(--space-4) var(--space-16); border: 1px solid var(--hairline); border-radius: var(--radius-pill); background: var(--sidebar); color: var(--secondary-text); font-size: 15px; line-height: 22px; text-align: center; }
+
+/* ScreenshotFrame placeholder: labelled with the shot ID and state, never a mock of the app. */
+.shot-ph { box-sizing: border-box; width: calc(100% - var(--space-24)); height: calc(100% - var(--space-24)); margin: var(--space-12); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-8); padding: var(--space-16); border: 1px dashed var(--strong-border); border-radius: var(--radius-control); text-align: center; }
+.shot-ph__id { font-size: 13px; line-height: 16px; font-weight: 500; letter-spacing: .02em; color: var(--secondary-text); }
+.shot-ph__state { max-width: 44ch; font-size: 15px; line-height: 22px; color: var(--tertiary-text); text-wrap: balance; }
+
+/* 2. Hero */
+.hero { padding: var(--space-32) 0 var(--space-48); text-align: center; }
+@media (min-width: 640px) { .hero { padding-top: var(--space-64); padding-bottom: 80px; } }
+.hero .sl-heading { gap: var(--space-16); }
+.hero .sl-heading__lead { max-width: 48rem; margin-top: var(--space-8); }
+.hero .sl-actions { margin-top: var(--space-32); }
+.hero__req { margin-top: var(--space-24); color: var(--tertiary-text); }
+.hero__print { max-width: 60ch; margin: var(--space-8) auto 0; color: var(--tertiary-text); }
+@media (max-width: 639px) {
+  /* Phones: tighten the hero so the first product visual reaches the fold. */
+  .pill { padding-block: var(--space-4); font-size: 13px; line-height: 18px; }
+  .hero { padding-bottom: var(--space-32); }
+  .hero .sl-heading { gap: var(--space-12); }
+  .hero .sl-actions { margin-top: var(--space-24); }
+  .hero__req { margin-top: var(--space-16); }
+}
+
+/* 3. Gallery */
+.gallery { padding-bottom: var(--space-64); }
+@media (min-width: 640px) { .gallery { padding-bottom: var(--space-96); } }
+/* The caption sits inside the glow's fade, so it steps up to secondary-text to stay above 4.5:1. */
+.sl-shot > .gallery__caption { text-align: center; color: var(--secondary-text); min-height: 22px; }
+.thumbs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--space-12); max-width: 720px; margin: var(--space-24) auto 0; }
+.thumb { display: grid; place-items: center; width: 100%; aspect-ratio: 16 / 10; padding: 0; overflow: hidden; border: 0; border-radius: var(--radius-control); background: var(--inset); box-shadow: inset 0 0 0 1px var(--hairline); color: var(--secondary-text); font: 500 13px/16px var(--font-sans); cursor: pointer; }
+.thumb:hover { background: var(--control); color: var(--primary-text); }
+.thumb[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--primary-text); color: var(--primary-text); }
+.thumb > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* 4. Pain */
+.pain__query { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: var(--space-24); align-items: center; max-width: 1040px; margin-inline: auto; }
+.pain__typed { display: flex; align-items: center; min-height: 48px; padding: var(--space-8) var(--space-16); border: 1px solid var(--hairline); border-radius: var(--radius-panel); background: var(--sidebar); overflow-wrap: anywhere; }
+@media (max-width: 900px) { .pain__query { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 640px) {
+  .sl-search--large { height: auto; min-height: 48px; flex-wrap: wrap; padding-block: var(--space-8); }
+  .sl-search--large .sl-search__text { white-space: normal; }
+}
+
+/* 5. Tour */
+.tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-4); width: fit-content; max-width: 100%; margin: 0 auto var(--space-32); padding: var(--space-4); border: 1px solid var(--hairline); border-radius: var(--radius-panel); background: var(--sidebar); }
+.tab { height: 36px; padding: 0 var(--space-16); border: 0; border-radius: var(--radius-control); background: transparent; color: var(--secondary-text); font: 500 15px/20px var(--font-sans); cursor: pointer; }
+.tab:hover { background: var(--control-strong); color: var(--primary-text); }
+.tab[aria-selected="true"] { background: var(--control); color: var(--primary-text); box-shadow: inset 0 0 0 1px var(--strong-border); }
+.tour__panel .sl-shot > figcaption, .tour__video > figcaption, .privacy .sl-shot > figcaption { text-align: center; }
+.tour__video { max-width: 880px; margin: var(--space-64) auto 0; }
+
+/* 6. What works now */
+.cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-16); }
+@media (min-width: 640px) {
+  .cards { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .card { grid-column: span 3; }
+  .card:nth-child(n + 5) { grid-column: span 2; }
+}
+@media (min-width: 1024px) {
+  .cards { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .card { grid-column: span 3; }
+  .card:nth-child(n + 5) { grid-column: span 4; }
+}
+.card { display: flex; flex-direction: column; gap: var(--space-24); padding: var(--space-24); border: 1px solid var(--hairline); border-radius: var(--radius-panel); background: var(--sidebar); }
+.card__title { font-size: 20px; line-height: 26px; font-weight: 600; text-wrap: balance; }
+.art { display: flex; align-items: center; justify-content: center; min-height: 128px; padding: var(--space-16); border-radius: var(--radius-control); background: var(--canvas); box-shadow: inset 0 0 0 1px var(--hairline); }
+.art > .sl-search, .art > .sl-wave { flex: 1; }
+.art > .sl-tags { justify-content: center; }
+.art--icon, .art--stack { flex-direction: column; gap: var(--space-12); text-align: center; }
+.art__path { font-family: var(--font-ui); font-size: 13px; line-height: 18px; color: var(--primary-text); overflow-wrap: anywhere; }
+.art__waves { display: flex; flex-direction: column; gap: var(--space-4); align-items: center; }
+.tile { display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--radius-control); background: var(--control); box-shadow: inset 0 0 0 1px var(--hairline); }
+.tile > img { width: 20px; height: 20px; }
+
+/* 7. Beta boundary */
+.boundary { margin-top: var(--space-96); }
+.boundary__groups { display: grid; gap: var(--space-32); max-width: 1040px; margin-inline: auto; }
+.group-label { margin-bottom: var(--space-12); font-size: 20px; line-height: 26px; font-weight: 600; }
+.tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-12); }
+/* 6 tiles make 3 x 2 and 8 tiles make 4 x 2, so no row ends with a lone tile. */
+@media (min-width: 800px) { .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } .tiles--muted { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.chip-tile { display: grid; place-items: center; min-height: 52px; padding: var(--space-12) var(--space-16); border: 1px solid var(--hairline); border-radius: var(--radius-control); background: var(--control); font-size: 15px; line-height: 22px; text-align: center; }
+.tiles--muted .chip-tile { background: transparent; color: var(--secondary-text); }
+
+/* 8. Privacy panel */
+.panel { padding: var(--space-32) var(--space-16); border: 1px solid var(--hairline); border-radius: var(--radius-panel); background: var(--sidebar); }
+@media (min-width: 640px) { .panel { padding: var(--space-64) var(--space-48); } }
+.panel .sl-shot { max-width: 960px; margin-inline: auto; }
+.pills { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-8); margin: var(--space-32) 0 var(--space-24); }
+.panel .pill { background: var(--control); }
+
+/* 9. Offer */
+.offer { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-48); max-width: 1040px; margin-inline: auto; padding: var(--space-32) var(--space-24); border: 1px solid var(--hairline); border-radius: var(--radius-panel); background: var(--sidebar); }
+@media (min-width: 800px) { .offer { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--space-64); padding: var(--space-64) var(--space-48); } }
+.offer__price { display: flex; align-items: baseline; gap: var(--space-12); margin-bottom: var(--space-16); }
+.offer__amount { font-size: 40px; line-height: 44px; font-weight: 600; letter-spacing: -.02em; }
+.offer__once { font-size: 20px; line-height: 30px; color: var(--secondary-text); }
+@media (min-width: 640px) { .offer__amount { font-size: 64px; line-height: 68px; } }
+.offer__main .sl-heading__title { font-size: 30px; line-height: 36px; letter-spacing: -.01em; }
+.offer__note { margin: var(--space-16) 0 var(--space-32); color: var(--secondary-text); max-width: var(--measure); }
+.offer__lead { margin-bottom: var(--space-12); font-weight: 500; }
+.offer__list ul { display: grid; gap: var(--space-12); padding-left: var(--space-24); }
+.offer__list li::marker { color: var(--tertiary-text); }
+@media (min-width: 800px) { .offer__list { padding-left: var(--space-48); border-left: 1px solid var(--hairline); } }
+
+/* 10. Fit */
+.fit__cols { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-24); max-width: 1040px; margin-inline: auto; }
+@media (min-width: 800px) { .fit__cols { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: var(--space-48); align-items: start; } }
+.fit__list { border-top: 1px solid var(--hairline); }
+.fit__list li { padding-block: var(--space-16); border-bottom: 1px solid var(--hairline); }
+.fit__not { padding: var(--space-24); border: 1px solid var(--hairline); border-radius: var(--radius-panel); background: var(--sidebar); color: var(--secondary-text); }
+
+/* 11. Process */
+.steps { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-24); counter-reset: step; max-width: 720px; margin-inline: auto; }
+.steps li { display: flex; align-items: flex-start; gap: var(--space-16); counter-increment: step; }
+.steps li::before { content: counter(step); flex: none; display: grid; place-items: center; width: 32px; height: 32px; border-radius: var(--radius-control); background: var(--control); box-shadow: inset 0 0 0 1px var(--hairline); font-weight: 600; font-variant-numeric: tabular-nums; }
+@media (min-width: 1024px) {
+  .steps { grid-template-columns: repeat(5, minmax(0, 1fr)); max-width: none; }
+  .steps li { flex-direction: column; gap: var(--space-12); }
+}
+.process__note { margin-top: var(--space-48); text-align: center; color: var(--secondary-text); }
+
+/* 12. FAQ */
+.faq__list { max-width: 760px; margin-inline: auto; border-top: 1px solid var(--hairline); }
+.faq details { border-bottom: 1px solid var(--hairline); }
+.faq summary { display: flex; align-items: center; justify-content: space-between; gap: var(--space-16); padding-block: var(--space-16); font-weight: 500; cursor: pointer; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary:hover { color: var(--secondary-text); }
+.faq summary > img { flex: none; transition: transform .15s ease; }
+.faq details[open] summary > img { transform: rotate(180deg); }
+.faq details p { max-width: var(--measure); padding-bottom: var(--space-24); color: var(--secondary-text); }
+
+/* 13. Final call to action. Every line stays primary-text: they sit over the glow. */
+.cta { padding-bottom: 128px; }
+.cta .sl-glow { max-width: 640px; margin-inline: auto; }
+.cta__inner { display: flex; flex-direction: column; align-items: center; gap: var(--space-12); padding-block: var(--space-32); text-align: center; }
+.cta__inner .sl-heading__title { margin-bottom: var(--space-12); text-wrap: balance; }
+.cta__inner .sl-actions { margin-top: var(--space-24); }
+.cta__line { color: var(--primary-text); }
+
+/* 14. Footer */
+.footer { padding-block: var(--space-32); border-top: 1px solid var(--hairline); background: var(--dock); }
+.footer__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-16) var(--space-32); }
+.footer__brand { display: flex; align-items: center; gap: var(--space-8); font-size: 15px; line-height: 22px; color: var(--secondary-text); }
+.footer__links { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-24); }
+.footer__links a { display: inline-block; padding-block: var(--space-6); font-size: 15px; line-height: 22px; color: var(--secondary-text); text-decoration: none; }
+.footer__links a:hover { color: var(--primary-text); text-decoration: underline; }
+
+/* Placeholder pages (/support/, /privacy/, 404) */
+.info { max-width: 720px; padding-block: var(--space-64); min-height: 60vh; display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-24); }
+.info__placeholder { color: var(--secondary-text); }
+
+/* Header: below 800px the four links no longer fit beside Apply, so it shrinks to brand and Apply. */
+.sl-nav__links a { white-space: nowrap; }
+@media (max-width: 800px) {
+  .sl-nav__links { display: none; }
+  .sl-nav .sl-button { margin-left: auto; }
+}
+
+/* Header on the narrowest phones: brand and Apply must both fit. */
+@media (max-width: 420px) {
+  .sl-nav__inner { gap: var(--space-8); }
+  .sl-nav__brand { font-size: 16px; }
+  .sl-nav .sl-button { padding: 0 var(--space-8); font-size: 14px; }
+}

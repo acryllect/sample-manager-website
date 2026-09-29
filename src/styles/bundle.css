@@ -1,0 +1,92 @@
+/* Synced from the SampleLantern Web design system (project/components/bundle.css). The Inter @import was
+   removed: the font is linked from <head> in BaseLayout.astro, the site's only external request. */
+
+/* Page ground. Put .sl-page on <body>. */
+.sl-page { margin:0; background:var(--canvas); color:var(--primary-text); font-family:var(--font-sans); font-size:17px; line-height:26px; font-optical-sizing:auto; -webkit-font-smoothing:antialiased; }
+.sl-container { max-width:var(--page-max); margin:0 auto; padding-inline:var(--space-16); }
+.sl-section { padding-block:var(--space-64); }
+@media (min-width:640px) { .sl-section { padding-block:var(--space-96); } }
+@media (min-width:1024px) { .sl-container { padding-inline:var(--space-32); } }
+
+/* Focus: one ring everywhere */
+.sl-button:focus-visible, .sl-nav a:focus-visible, .sl-search:focus-within { outline:2px solid var(--focus); outline-offset:2px; }
+
+/* Button */
+.sl-button { display:inline-flex; align-items:center; justify-content:center; gap:var(--space-6); height:var(--control-height-primary); padding:0 var(--space-16); border:0; border-radius:var(--radius-control); background:var(--control); color:var(--primary-text); font-family:var(--font-sans); font-size:15px; line-height:20px; font-weight:500; text-decoration:none; white-space:nowrap; cursor:pointer; }
+.sl-button:hover { background:var(--control-strong); }
+.sl-button:active { background:var(--inset); }
+.sl-button > img { width:16px; height:16px; flex:none; }
+.sl-button--primary { background:var(--cta-fill); color:var(--on-cta); }
+.sl-button--primary:hover { background:var(--cta-hover); }
+.sl-button--primary:active { background:var(--cta-pressed); }
+.sl-button:disabled, .sl-button[aria-disabled="true"] { opacity:.4; pointer-events:none; }
+.sl-actions { display:flex; flex-wrap:wrap; gap:var(--space-12); }
+
+/* Tag: the app's SL/Tag chip */
+.sl-tag { display:inline-flex; align-items:center; height:var(--chip-height); padding:0 var(--space-8); border-radius:var(--radius-pill); background:var(--chip-fill); color:var(--primary-text); font-family:var(--font-ui); font-size:12px; line-height:16px; white-space:nowrap; }
+.sl-tag__count { color:var(--secondary-text); }
+.sl-tag--auto { background:transparent; box-shadow:inset 0 0 0 1px var(--strong-border); color:var(--secondary-text); }
+.sl-tags { display:flex; flex-wrap:wrap; gap:var(--space-8); }
+
+/* SearchField: the app's search field with SL/Query tokens */
+.sl-search { display:flex; align-items:center; gap:var(--space-6); min-width:0; height:var(--control-height); padding:0 var(--space-8); background:var(--inset); border:1px solid var(--hairline); border-radius:var(--radius-control); color:var(--primary-text); font-family:var(--font-ui); font-size:13px; line-height:18px; }
+.sl-search > img { width:16px; height:16px; flex:none; }
+.sl-search__text { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.sl-token { display:inline-flex; align-items:center; gap:var(--space-4); flex:none; height:var(--chip-height); padding:0 var(--space-6); border-radius:var(--radius-small); background:var(--chip-fill); box-shadow:inset 0 0 0 1px var(--strong-border); font-size:12px; line-height:16px; white-space:nowrap; }
+.sl-token__field { color:var(--tertiary-text); }
+.sl-token__value { color:var(--primary-text); font-weight:500; }
+.sl-search--large { height:48px; gap:var(--space-8); padding:0 var(--space-16); border-radius:var(--radius-panel); font-size:17px; line-height:26px; }
+.sl-search--large > img { width:20px; height:20px; }
+.sl-search--large .sl-token { height:30px; padding:0 var(--space-8); font-size:15px; line-height:22px; }
+
+/* Waveform: the app's transport and row waveforms */
+.sl-wave { display:flex; align-items:center; gap:2px; height:40px; padding:0 var(--space-8); background:var(--inset); border-radius:var(--radius-control); overflow:hidden; }
+.sl-wave > i { flex:none; width:3px; height:calc(var(--h) * 100%); border-radius:1px; background:var(--wave-bar); }
+.sl-wave > i.is-played { background:var(--playing); }
+.sl-wave > b { flex:none; align-self:stretch; width:2px; margin-block:4px; background:var(--primary-text); }
+.sl-wave--compact { height:22px; gap:1px; padding:0; background:transparent; }
+.sl-wave--compact > i { width:2px; }
+
+/* ScreenshotFrame */
+.sl-shot { margin:0; display:flex; flex-direction:column; gap:var(--space-12); }
+.sl-shot__window { aspect-ratio:16 / 10; max-width:100%; border-radius:var(--radius-panel); overflow:hidden; background:var(--inset); box-shadow:0 0 0 1px var(--hairline), var(--shadow-window); }
+.sl-shot__window > img, .sl-shot__window > video { display:block; width:100%; height:100%; object-fit:cover; }
+.sl-shot > figcaption { font-size:15px; line-height:22px; color:var(--tertiary-text); }
+
+/* Nav */
+.sl-nav { position:sticky; top:env(safe-area-inset-top, 0px); z-index:10; background:var(--toolbar); border-bottom:1px solid var(--hairline); }
+.sl-nav__inner { max-width:var(--page-max); margin:0 auto; height:var(--toolbar-height); padding-inline:var(--space-16); display:flex; align-items:center; gap:var(--space-16); }
+.sl-nav__brand { display:flex; align-items:center; gap:var(--space-8); color:var(--primary-text); text-decoration:none; font-size:17px; line-height:22px; font-weight:600; }
+.sl-nav__brand > img { width:32px; height:32px; }
+.sl-nav__links { display:flex; gap:var(--space-4); margin-left:auto; }
+.sl-nav__links a { padding:var(--space-6) var(--space-12); border-radius:var(--radius-control); color:var(--secondary-text); text-decoration:none; font-size:15px; line-height:20px; font-weight:500; }
+.sl-nav__links a:hover { background:var(--control-strong); color:var(--primary-text); }
+.sl-nav__links a[aria-current="page"] { color:var(--primary-text); }
+.sl-nav .sl-button { height:32px; padding:0 var(--space-12); }
+@media (max-width:640px) { .sl-nav__links { display:none; } .sl-nav .sl-button { margin-left:auto; } }
+
+/* SectionHeading */
+.sl-heading { display:flex; flex-direction:column; gap:var(--space-12); }
+.sl-heading__eyebrow { margin:0; font-size:13px; line-height:16px; font-weight:500; letter-spacing:.02em; color:var(--tertiary-text); }
+.sl-heading__title { margin:0; font-size:44px; line-height:48px; font-weight:600; letter-spacing:-.015em; text-wrap:balance; color:var(--primary-text); }
+.sl-heading__lead { margin:var(--space-12) 0 0; max-width:var(--measure); font-size:20px; line-height:30px; color:var(--secondary-text); text-wrap:pretty; }
+.sl-heading--center { align-items:center; text-align:center; }
+.sl-heading--center .sl-heading__lead { margin-inline:auto; }
+.sl-heading--hero .sl-heading__title { font-size:64px; line-height:68px; letter-spacing:-.02em; }
+@media (max-width:640px) { .sl-heading__title { font-size:32px; line-height:38px; } .sl-heading--hero .sl-heading__title { font-size:40px; line-height:44px; } }
+
+/* FeatureBlock */
+.sl-features { display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap:var(--space-32); }
+.sl-feature { display:flex; flex-direction:column; gap:var(--space-12); }
+.sl-feature__icon { width:40px; height:40px; display:grid; place-items:center; border-radius:var(--radius-control); background:var(--control); box-shadow:inset 0 0 0 1px var(--hairline); }
+.sl-feature__icon > img { width:20px; height:20px; }
+.sl-feature__title { margin:0; font-size:20px; line-height:26px; font-weight:600; color:var(--primary-text); }
+.sl-feature__text { margin:0; max-width:var(--measure); font-size:17px; line-height:26px; color:var(--secondary-text); }
+
+/* LanternGlow: the app icon's warm light, behind one element */
+.sl-glow { position:relative; isolation:isolate; }
+.sl-glow::before { content:""; position:absolute; z-index:-1; inset:-40% -28%; background:radial-gradient(closest-side, color-mix(in srgb, var(--lantern-glow) 42%, transparent), color-mix(in srgb, var(--lantern-glow) 22%, transparent) 50%, color-mix(in srgb, var(--lantern-glow) 7%, transparent) 78%, transparent); pointer-events:none; }
+
+/* App-recreation type */
+.sl-query { font-family:var(--font-mono); font-size:15px; line-height:22px; font-variant-numeric:tabular-nums; color:var(--primary-text); }
+@media (prefers-reduced-motion:reduce) { .sl-page * { transition:none !important; animation:none !important; } }

@@ -55,9 +55,10 @@ reviewing copy changes before they go live.
 | Node version | Pinned via the committed [`.node-version`](.node-version) file — Cloudflare Pages reads this automatically. Don't remove it; see the troubleshooting note below for why it matters here. |
 
 No environment variables are required for the build itself. The site's
-runtime configuration (`betaOpen`, `tallyFormUrl`, `demoVideoUrl`, etc.) lives
-in `src/config/site.ts` and is baked in at build time — change it, commit,
-and redeploy rather than reaching for env vars.
+runtime configuration (the application, demo, policy and support links, and the
+cohort state) lives in `src/config/site.ts` and is baked in at build time —
+change it, commit, and redeploy rather than reaching for env vars. Values still
+written as `[BRACKETED]` are open placeholders; the build logs the list.
 
 ### Troubleshooting: `npm ci` fails with "Missing: X from lock file"
 
@@ -202,18 +203,15 @@ After the domain is live, check by hand:
 
 - [ ] `https://samplelantern.com/` loads over HTTPS with a valid certificate
 - [ ] `https://www.samplelantern.com/` redirects to the apex
-- [ ] `/apply`, `/demo`, `/support`, `/system-requirements`, `/known-issues`,
-      `/privacy`, `/terms`, `/refunds` all load (no 404s)
+- [ ] `/support/` and `/privacy/` load (the app links to both)
 - [ ] `/robots.txt` and `/sitemap-index.xml` are reachable
-- [ ] View source on `/` — confirm `betaOpen`, `tallyFormUrl`, and
-      `checkoutUrl` reflect what you intend to expose publicly (this repo
-      defaults to `betaOpen: false` and an empty `checkoutUrl`, meaning no
-      public checkout is ever exposed regardless of this flag)
-- [ ] No console errors in the browser devtools on `/`
+- [ ] View source on `/` — no `[BRACKETED]` placeholder is left in any `href`
+      or visible text you did not intend to ship (the build log lists the open
+      ones), and no link points at a download or a public checkout
+- [ ] The only third-party request is Inter from Google Fonts
 
 ## Ongoing deploys
 
 Every push to the production branch redeploys automatically. To update
-copy, screenshots, the demo video, or flip `betaOpen`/`tallyFormUrl` when the
-application opens: edit the relevant file, commit, push — no manual
-Cloudflare step required.
+copy, screenshots, the demo video, or the application link once it exists:
+edit the relevant file, commit, push — no manual Cloudflare step required.

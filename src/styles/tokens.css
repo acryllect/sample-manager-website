@@ -1,0 +1,92 @@
+/* Generated from the SampleLantern Web design system (project/tokens.json, synced 2026-09-28).
+   Do not edit by hand: re-sync from the design system. Dark is the only theme; "contrast" is the
+   app's Increase contrast palette, applied by data-theme="contrast" (set from JS) or, with JS off,
+   by prefers-contrast: more. */
+:root {
+  color-scheme: dark;
+  --inset: #0d0e0f;
+  --canvas: #131415;
+  --sidebar: #161719;
+  --toolbar: #18191b;
+  --dock: #1b1c1f;
+  --control: #212225;
+  --control-strong: #2c2e31;
+  --chip-fill: #1f2124;
+  --selected: #1b3354;
+  --hairline: #2a2c2f;
+  --strong-border: #3d4045;
+  --focus: #5aa2ff;
+  --primary-text: #f3f4f6;
+  --secondary-text: #b3b8bf;
+  --tertiary-text: #8e949c;
+  --on-prominent: #ffffff;
+  --cta-fill: #ffffff;
+  --cta-hover: var(--primary-text);
+  --cta-pressed: var(--secondary-text);
+  --on-cta: var(--canvas);
+  --prominent-fill: #5aa2ff;
+  --prominent-hover: #65aeff;
+  --prominent-pressed: #1b3354;
+  --playing: #3dd68c;
+  --wave-bar: #6a7079;
+  --uncertain: #f2b33d;
+  --unavailable: #f08c6e;
+  --map-rhythm: #dd2f95;
+  --map-tonal: #8e79e7;
+  --map-texture: #6adacd;
+  --map-other: #f2c14e;
+  --lantern-core: #fef5df;
+  --lantern-glow: #f2d9a6;
+  --font-sans: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-ui: -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-96: 96px;
+  --space-128: 128px;
+  --radius-small: 4px;
+  --radius-control: 6px;
+  --radius-panel: 10px;
+  --radius-pill: 999px;
+  --shadow-window: 0 24px 64px #00000059;
+  --shadow-popover: 0 12px 32px #00000080;
+  --toolbar-height: 52px;
+  --control-height: 28px;
+  --control-height-primary: 40px;
+  --chip-height: 22px;
+  --page-max: 1200px;
+  --measure: 65ch;
+}
+:root[data-theme="contrast"] {
+  --control-strong: #66686b;
+  --selected: #4a6488;
+  --hairline: #696c6f;
+  --strong-border: #696d72;
+  --focus: #86baff;
+  --secondary-text: #e2e8ef;
+  --tertiary-text: #e1e8f1;
+  --prominent-fill: #2e76d0;
+  --prominent-hover: #2570bc;
+  --wave-bar: #b1b7c1;
+}
+@media (prefers-contrast: more) {
+  :root:not([data-theme]) {
+    --control-strong: #66686b;
+    --selected: #4a6488;
+    --hairline: #696c6f;
+    --strong-border: #696d72;
+    --focus: #86baff;
+    --secondary-text: #e2e8ef;
+    --tertiary-text: #e1e8f1;
+    --prominent-fill: #2e76d0;
+    --prominent-hover: #2570bc;
+    --wave-bar: #b1b7c1;
+  }
+}
