@@ -567,13 +567,15 @@ const steps = [
                 if (hadFocus) tabs.filter(function (t) { return t.tabIndex === 0; })[0].focus();
               }
             };
-            // The progress bar on the active tab is a CSS animation; when it ends, move on.
+            // The progress bar on the active tab is a CSS animation; when it ends, move on. After the
+            // last tab the pass ends back on the first.
             list.addEventListener("animationend", function (e) {
               if (e.animationName !== "tab-progress" || auto.stopped) return;
               var i = tabs.indexOf(e.target);
               if (i < 0) return;
-              if (i < tabs.length - 1) select(tabs[i + 1], false);
-              else stopAuto();
+              if (i < tabs.length - 1) { select(tabs[i + 1], false); return; }
+              stopAuto();
+              select(tabs[0], false);
             });
             ["pointerdown", "click", "keydown", "focusin"].forEach(function (name) { list.addEventListener(name, stopAuto); });
             if (pause) {
