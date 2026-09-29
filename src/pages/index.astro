@@ -110,7 +110,7 @@ const steps = [
                 ))
               }
             </div>
-            <button type="button" class="sl-button tour__pause" data-tour-pause>Pause</button>
+            <button type="button" class="sl-button tour__pause" data-tour-pause aria-label="Pause the tour">Pause</button>
           </div>
           <div class="tour__stage">
             {
@@ -437,12 +437,22 @@ const steps = [
           var timer = 0;
           var done = false;
 
-          // Hold the finished height so typing never moves the page, then rewind to empty.
-          field.style.minHeight = getComputedStyle(field).height;
-          toks.bpm.hidden = true;
-          toks.key.hidden = true;
-          typed.textContent = "";
-          typed.hidden = true;
+          // Show the finished state, hold its height so typing never moves the page, then rewind to
+          // empty. All in one task, so nothing paints in between.
+          var rewind = function () {
+            toks.bpm.hidden = false;
+            toks.key.hidden = false;
+            typed.textContent = finalText;
+            typed.hidden = false;
+            caret.hidden = true;
+            field.style.minHeight = "";
+            field.style.minHeight = getComputedStyle(field).height;
+            toks.bpm.hidden = true;
+            toks.key.hidden = true;
+            typed.textContent = "";
+            typed.hidden = true;
+          };
+          rewind();
 
           finishSearch = function () {
             clearTimeout(timer);
@@ -458,6 +468,7 @@ const steps = [
           var type = function () {
             var si = 0;
             var ci = 0;
+            rewind(); // fonts have loaded by now, so the held height is the real one
             caret.hidden = false;
             var tick = function () {
               if (done) return;
@@ -569,6 +580,7 @@ const steps = [
               pause.addEventListener("click", function () {
                 auto.userPaused = !auto.userPaused;
                 pause.textContent = auto.userPaused ? "Play" : "Pause";
+                pause.setAttribute("aria-label", auto.userPaused ? "Play the tour" : "Pause the tour");
                 sync();
               });
             }

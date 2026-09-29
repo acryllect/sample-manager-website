@@ -84,7 +84,7 @@ body { overflow-x: clip; }
 .hero__shot { margin-top: var(--space-64); }
 
 /* Search */
-.search-demo { max-width: 720px; margin-inline: auto; }
+.search-demo { box-sizing: border-box; max-width: 720px; margin-inline: auto; }
 .search-demo__inner { display: flex; flex: 1; align-items: center; gap: var(--space-8); min-width: 0; }
 .search-demo__inner > img { width: 20px; height: 20px; flex: none; }
 .search-demo__caret { flex: none; width: 2px; height: 24px; margin-left: -4px; border-radius: 1px; background: var(--primary-text); }
