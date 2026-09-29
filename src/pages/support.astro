@@ -1,5 +1,46 @@
 ---
-import InfoPage from "../components/InfoPage.astro";
+import DocPage from "../components/DocPage.astro";
+import DocSection from "../components/DocSection.astro";
+import Path from "../components/Path.astro";
+import SupportEmail from "../components/SupportEmail.astro";
+import { links } from "../config/site";
 ---
 
-<InfoPage title="Support" placeholder="[SUPPORT_PAGE_COPY]" />
+<DocPage title="Support" path="/support/">
+  <Fragment slot="lead">Founding customers get direct support from the founder.</Fragment>
+
+  <DocSection id="contact" title="Contact">
+    <ul>
+      <li>Email <SupportEmail />.</li>
+      <li>If you can't finish setting up, or can't use the core workflow, you'll get a reply the same business day.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="what-to-include" title="What to include">
+    <ul>
+      <li>Your Mac model and macOS version.</li>
+      <li>Roughly how many sounds you have, and where they live (on your Mac, an external drive, iCloud).</li>
+      <li>What you did, what you expected, and what happened. A screenshot helps.</li>
+      <li>A diagnostics file.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="diagnostics" title="Diagnostics">
+    <ul>
+      <li>In SampleLantern: <Path steps={["Settings|⌘,", "Privacy & Data", "Diagnostics", "Export Diagnostics…"]} />.</li>
+      <li>It includes app, macOS and catalog versions, running jobs and error codes. It never includes file or sample names, paths, searches or audio. It's a plain text file you can read before sending.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="before-you-write" title="Before you write">
+    <ul>
+      <li><a href={links.knownIssues}>Known issues</a></li>
+      <li><a href={links.supportedSetup}>Supported setup</a></li>
+      <li><a href={links.safetyGuide}>Safety guide</a></li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="refunds-and-purchase-terms" title="Refunds and purchase terms">
+    <p>The refund policy and the purchase terms are in the <a href={links.terms}>founding beta terms</a>.</p>
+  </DocSection>
+</DocPage>

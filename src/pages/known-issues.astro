@@ -1,0 +1,55 @@
+---
+import DocPage from "../components/DocPage.astro";
+import DocSection from "../components/DocSection.astro";
+import Path from "../components/Path.astro";
+import SupportEmail from "../components/SupportEmail.astro";
+import { text } from "../config/site";
+---
+
+<DocPage title="Known issues" path="/known-issues/">
+  <Fragment slot="lead">What doesn't work yet, or works differently than you might expect, in build {text.buildVersion}. If something here blocks your work, email <SupportEmail />.</Fragment>
+
+  <DocSection id="updates" title="Updates">
+    <ul>
+      <li>Updates are manual. The founder sends each new build with release notes. There's no automatic updater yet.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="your-library" title="Your library">
+    <ul>
+      <li>Files you add, move or delete in a folder aren't picked up automatically. Right-click the source in the sidebar and choose <span class="ui">Rescan</span>, or choose <Path steps={["File", "Rescan All Libraries|⌘R"]} />.</li>
+      <li><span class="ui">Add sounds</span> takes one folder at a time.</li>
+      <li>The shortlist is cleared when you quit. Put sounds in a crate to keep them.</li>
+      <li>Notes are edited one sound at a time and aren't searchable yet.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="export" title="Export">
+    <ul>
+      <li>Export converts to WAV, AIFF or FLAC. To take a sound out unchanged, drag it out of the list, or use <span class="ui">Copy Original File</span>.</li>
+      <li>Exports have at most two channels.</li>
+      <li>Files longer than 30 minutes, or larger than 1 GB once decoded, can't be exported.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="the-app" title="The app">
+    <ul>
+      <li>The Back and Forward buttons are shown but don't work yet.</li>
+      <li>The library window is dark only. The Appearance setting doesn't change it yet.</li>
+      <li>Some settings mention features that aren't in this beta, such as the Sonic Map and the Review Queue.</li>
+      <li>Some messages, and the default name of a catalog backup, still use the app's working name, Strata.</li>
+      <li>English only.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="still-being-tested" title="Still being tested">
+    <ul>
+      <li>External drives that sleep, spin down or disconnect while SampleLantern is working are being tested on more hardware.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="not-in-this-beta" title="Not in this beta">
+    <p class="doc__muted">Explore by sound (the map) · smart collections · duplicate finder · review queue · matching to a project's tempo and key · Managed Library mode · MP3 and AAC export · custom analysis models · Intel Macs · public trial · licence activation · automatic updates · DAW plug-in · cloud sync</p>
+    <p>Some of these are planned. <a href="/#beta-scope">See what comes next on the home page.</a></p>
+  </DocSection>
+</DocPage>

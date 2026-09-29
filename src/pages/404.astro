@@ -1,5 +1,9 @@
 ---
-import InfoPage from "../components/InfoPage.astro";
+import DocPage from "../components/DocPage.astro";
+import { site } from "../config/site";
 ---
 
-<InfoPage title="Page not found" placeholder="That page does not exist." />
+<DocPage title="Page not found" noindex>
+  <Fragment slot="lead">That page does not exist.</Fragment>
+  <p><a class="sl-button" href="/">Back to {site.productName}</a></p>
+</DocPage>

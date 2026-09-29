@@ -1,0 +1,68 @@
+---
+/**
+ * Shell for the support and policy pages: header, footer, a centred article about 680px wide (H1,
+ * a lead, then DocSection H2s), and on desktop a sticky "On this page" list when there are four or
+ * more sections. The page is noindex while it prints an open placeholder (see config/pages.ts).
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "./Header.astro";
+import Footer from "./Footer.astro";
+import { site } from "../config/site";
+import { docPages, hasOpenPlaceholder } from "../config/pages";
+
+interface Props {
+  title: string;
+  /** Route, for pages listed in config/pages.ts. */
+  path?: string;
+  /** Pages outside the registry (the 404) set this themselves. */
+  noindex?: boolean;
+}
+const { title, path, noindex: forceNoindex } = Astro.props;
+
+const lead = await Astro.slots.render("lead");
+const body = await Astro.slots.render("default");
+
+const toc = [...body.matchAll(/<h2 class="doc__h2" id="([^"]+)">([^<]+)<\/h2>/g)].map((m) => ({ id: m[1], title: m[2] }));
+
+// The registry must list every placeholder the page prints, or the build stops.
+if (path) {
+  const listed = new Set(docPages[path] ?? []);
+  for (const found of new Set([...(lead + body).matchAll(/\[[A-Z_ ]+\]/g)].map((m) => m[0]))) {
+    if (!listed.has(found)) throw new Error(`${path} prints ${found}, which is not listed for it in src/config/pages.ts`);
+  }
+} else if (!forceNoindex) {
+  throw new Error(`DocPage "${title}" needs a path listed in src/config/pages.ts, or noindex`);
+}
+const noindex = forceNoindex ?? hasOpenPlaceholder(path!);
+const description = lead.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim() || site.description;
+---
+
+<BaseLayout title={`${title} · ${site.productName}`} description={description} noindex={noindex}>
+  <Header />
+  <main class="doc sl-container">
+    <div class:list={["doc__layout", { "doc__layout--toc": toc.length >= 4 }]}>
+      {
+        toc.length >= 4 && (
+          <nav class="doc__toc" aria-label="On this page">
+            <p class="label">On this page</p>
+            <ol role="list">
+              {toc.map((t) => (
+                <li>
+                  <a href={`#${t.id}`}><Fragment set:html={t.title} /></a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )
+      }
+      <article class="doc__article">
+        <header class="doc__head">
+          <h1 class="sl-heading__title">{title}</h1>
+          <p class="doc__lead"><Fragment set:html={lead} /></p>
+        </header>
+        <Fragment set:html={body} />
+      </article>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

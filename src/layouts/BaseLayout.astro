@@ -61,5 +61,29 @@ const canonical = new URL(Astro.url.pathname, site.siteUrl).toString();
   </head>
   <body class="sl-page">
     <slot />
+    <script is:inline>
+      // Scroll reveal: fade up once as an element enters. Items above the viewport (a reload part-way
+      // down, an anchor jump) are shown at once. Without motion or without IntersectionObserver
+      // nothing is ever hidden.
+      (function () {
+        var root = document.documentElement;
+        if (!root.classList.contains("motion")) return;
+        var reveals = document.querySelectorAll("[data-reveal]");
+        var show = function (el) { el.classList.add("is-in"); };
+        if (!("IntersectionObserver" in window)) {
+          Array.prototype.forEach.call(reveals, show);
+          return;
+        }
+        var revealer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting || e.boundingClientRect.top < 0) {
+              show(e.target);
+              revealer.unobserve(e.target);
+            }
+          });
+        }, { rootMargin: "0px 0px -8% 0px" });
+        Array.prototype.forEach.call(reveals, function (el) { revealer.observe(el); });
+      })();
+    </script>
   </body>
 </html>

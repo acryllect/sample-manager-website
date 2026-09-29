@@ -1,5 +1,52 @@
 ---
-import InfoPage from "../components/InfoPage.astro";
+import DocPage from "../components/DocPage.astro";
+import DocSection from "../components/DocSection.astro";
+import Path from "../components/Path.astro";
+import SupportEmail from "../components/SupportEmail.astro";
+import { site, text } from "../config/site";
+
+const { productName } = site;
 ---
 
-<InfoPage title="Privacy" placeholder="[PRIVACY_PAGE_COPY]" />
+<DocPage title="Privacy" path="/privacy/">
+  <Fragment slot="lead">Your sounds and your library stay on your Mac.</Fragment>
+
+  <DocSection id="the-app" title="The app">
+    <ul>
+      <li>{productName} analyses your sounds on your Mac. The analysis model ships inside the app.</li>
+      <li>The app makes no network requests of its own: no account, no analytics, no telemetry, no crash reporting, no update checks.</li>
+      <li>Your catalog never leaves your Mac unless you export it.</li>
+      <li>The app counts which of its features you use, on your Mac only. You can see, save or reset the counts in <Path steps={["Settings", "Privacy & Data", "Usage Summary…"]} />. Nothing is sent.</li>
+      <li>A diagnostics file is only shared if you send it. It contains no file names, paths, searches or audio.</li>
+      <li>When you press <span class="ui">Download</span> on a file in iCloud or another cloud folder, macOS or your cloud app fetches it, as it would from Finder.</li>
+      <li>{productName} can ask to show a notification when a scan finishes. It's optional.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="this-website" title="This website">
+    <ul>
+      <li>No cookies, no analytics, no tracking.</li>
+      <li>The site loads the Inter typeface from Google Fonts, so your browser requests it from Google's servers.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="applying-and-buying" title="Applying and buying">
+    <ul>
+      <li>The application form is run by {text.applicationFormProvider}.</li>
+      <li>Payment is handled by {text.paymentProvider}. {productName} never sees your card details.</li>
+      <li>If you email support, your message and address are kept to help you.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="who-is-responsible" title="Who is responsible">
+    <p>{text.sellerDetails}</p>
+  </DocSection>
+
+  <DocSection id="your-rights" title="Your rights and the legal details">
+    <p>{text.privacyLegalText}</p>
+  </DocSection>
+
+  <DocSection id="contact" title="Contact">
+    <p><SupportEmail /></p>
+  </DocSection>
+</DocPage>

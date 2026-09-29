@@ -1,0 +1,55 @@
+---
+import DocPage from "../components/DocPage.astro";
+import DocSection from "../components/DocSection.astro";
+import { site, text } from "../config/site";
+---
+
+<DocPage title="Supported setup" path="/supported-setup/">
+  <Fragment slot="lead">What the founding beta runs on and works with. This page applies to build {text.buildVersion}.</Fragment>
+
+  <DocSection id="your-mac" title="Your Mac">
+    <ul>
+      <li>A Mac with Apple silicon. Intel Macs aren't supported.</li>
+      <li>macOS 14 Sonoma or later.</li>
+      <li>Memory: {text.memoryRequirement}</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="disk-space" title="Disk space">
+    <ul>
+      <li>About 60 MB for the analysis model that ships inside the app, plus the catalog. Your audio is never copied.</li>
+      <li>OGG files are converted to a cached copy so they can play, which uses extra space.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="audio-files" title="Audio files">
+    <ul>
+      <li>Imports WAV, AIFF, FLAC, MP3, M4A, CAF and OGG.</li>
+      <li>Files longer than 30 minutes, or larger than 1 GB once decoded, can't be analysed or exported in the beta.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="export" title="Export">
+    <ul>
+      <li>WAV, AIFF or FLAC, at the original sample rate, 44.1 kHz or 48 kHz, in 16 or 24-bit.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="where-your-sounds-live" title="Where your sounds live">
+    <ul>
+      <li>Folders on your Mac: supported.</li>
+      <li>External drives: supported. When a drive is disconnected, its sounds stay in your library marked Offline, and play again once you reconnect it.</li>
+      <li>iCloud Drive, Dropbox, OneDrive and similar: supported. Files that aren't downloaded show as In iCloud or Cloud only, and nothing downloads until you press <span class="ui">Download</span>.</li>
+      <li>Network drives (NAS, SMB): not supported in the beta. They may work, but they aren't tested.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="library" title="Library">
+    <ul>
+      <li>Reference Library mode only: {site.productName} indexes your folders where they are.</li>
+      <li>Libraries up to {text.supportedLibrarySize} sounds.</li>
+      <li><span class="ui">Add sounds</span> takes one folder at a time. Add more folders one after another.</li>
+      <li>English only.</li>
+    </ul>
+  </DocSection>
+</DocPage>

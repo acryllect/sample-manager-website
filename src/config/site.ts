@@ -3,7 +3,9 @@
  *
  * The product name is set from this one variable. Every value written as [BRACKETED] is an open
  * placeholder from the approved copy: it stays exactly as written until the real value exists, so
- * nothing ships by accident. The build lists the ones still open (see openPlaceholders).
+ * nothing ships by accident. The build lists the ones still open (see openPlaceholders). Which
+ * placeholders each support or policy page prints is in pages.ts; a page stays noindex until its
+ * own are filled.
  */
 
 export const productName = "SampleLantern";
@@ -18,25 +20,36 @@ export const site = {
     "Apply for a small €59 paid beta of a private Mac sample library for producers, sound designers, and composers with substantial local libraries.",
 } as const;
 
-/** Open placeholders. Replace the value with the real one; leave the [BRACKET] until then. */
+/** Links. The first four are still open placeholders: replace the value with the real one, and leave
+ *  the [BRACKET] until then. The other four are the site's own pages. */
 export const links = {
   application: "[APPLICATION_URL]",
   demoVideo: "[DEMO_VIDEO_URL]",
   demoPoster: "[DEMO_POSTER]",
   demoCaptions: "[DEMO_CAPTIONS_URL]",
-  knownIssues: "[KNOWN_ISSUES_URL]",
-  supportedSetup: "[SUPPORTED_SETUP_URL]",
-  safetyGuide: "[SAFETY_GUIDE_URL]",
-  terms: "[TERMS_URL]",
+  knownIssues: "/known-issues/",
+  supportedSetup: "/supported-setup/",
+  safetyGuide: "/safety/",
+  terms: "/terms/",
 } as const;
 
 export const text = {
   supportEmail: "[SUPPORT_EMAIL]",
   cohortStatus: "[COHORT_STATUS]",
   nextReviewDate: "[NEXT_REVIEW_DATE]",
+  buildVersion: "[BUILD_VERSION]",
+  supportedLibrarySize: "[SUPPORTED_LIBRARY_SIZE]",
+  memoryRequirement: "[MEMORY_REQUIREMENT]",
+  sellerDetails: "[SELLER_DETAILS]",
+  foundingEntitlement: "[EXACT FOUNDING ENTITLEMENT]",
+  refundPolicy: "[REFUND_POLICY]",
+  paymentProvider: "[PAYMENT_PROVIDER]",
+  applicationFormProvider: "[APPLICATION_FORM_PROVIDER]",
+  termsLegalText: "[TERMS_LEGAL_TEXT]",
+  privacyLegalText: "[PRIVACY_LEGAL_TEXT]",
 } as const;
 
-const isPlaceholder = (value: string) => /^\[[A-Z_ ]+\]$/.test(value);
+export const isPlaceholder = (value: string) => /^\[[A-Z_ ]+\]$/.test(value);
 
 /**
  * The application link. Campaign parameters are appended only once the URL is real, so a

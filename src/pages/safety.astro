@@ -1,0 +1,79 @@
+---
+import DocPage from "../components/DocPage.astro";
+import DocSection from "../components/DocSection.astro";
+import Path from "../components/Path.astro";
+import SupportEmail from "../components/SupportEmail.astro";
+import { site } from "../config/site";
+
+const { productName } = site;
+---
+
+<DocPage title="Safety guide" path="/safety/">
+  <Fragment slot="lead">How {productName} treats your audio files and your catalog, and how to keep both safe.</Fragment>
+
+  <DocSection id="what-it-never-does" title="What SampleLantern never does">
+    <ul>
+      <li>It never renames, moves, overwrites or deletes your audio files.</li>
+      <li><span class="ui">Remove Source</span> removes a source's ratings, tags and analysis from {productName}. The audio files on disk are never touched.</li>
+      <li>Exports write new files to a folder you pick. Originals are never touched.</li>
+      <li>Dragging a sound out of {productName} copies it.</li>
+      <li>If you stop an import, what was already indexed stays. <span class="ui">Discard</span> removes only the catalog entries; source files are unchanged.</li>
+      <li>The one time {productName} asks for a file to change on disk is <span class="ui">Download</span>, for a file in iCloud or another cloud folder: macOS fetches it to your Mac, as it would if you opened it in Finder.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="keep-your-usual-backup" title="Keep your usual backup">
+    <ul>
+      <li>{productName} doesn't back up audio. Keep your own backup of your sample folders and drives, with Time Machine or another tool.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="back-up-your-catalog" title="Back up your catalog">
+    <ul>
+      <li>Your catalog holds your tags, ratings, crates, notes and analysis, and the locations of your files. It never contains audio.</li>
+      <li>To back it up: <Path steps={["Settings|⌘,", "Privacy & Data", "Database", "Back Up…"]} />. Each backup is verified when it's made.</li>
+      <li>To restore: <Path steps={["Settings", "Privacy & Data", "Database", "Restore…"]} />. {productName} first makes a verified backup of the current catalog, so a restore can be undone.</li>
+      <li>Before an update changes the catalog's format, {productName} saves a verified copy of the old catalog automatically.</li>
+      <li>The catalog lives in <code>~/Library/Application Support/Strata/</code>.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="when-a-drive-is-disconnected" title="When a drive is disconnected">
+    <ul>
+      <li>Its sounds stay in your library, marked Offline. Reconnect the drive, then choose <span class="ui">Check again</span>.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="when-a-folder-moves" title="When a folder moves">
+    <ul>
+      <li>If you rename a folder on the same drive, {productName} follows it.</li>
+      <li>If you move it somewhere else, the source shows as Missing. Right-click it and choose <span class="ui">Locate folder…</span>.</li>
+      <li>If you move or rename files inside a source, <span class="ui">Rescan</span> finds them again and keeps their ratings and tags.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="permissions" title="Permissions">
+    <ul>
+      <li>If macOS blocks access to a folder, the source offers <span class="ui">Grant access…</span>. You can also give {productName} Full Disk Access in <Path steps={["System Settings", "Privacy & Security"]} />.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="updating-the-beta" title="Updating the beta">
+    <ul>
+      <li>Follow the steps in each build's release notes. Your catalog stays where it is.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="uninstalling" title="Uninstalling">
+    <ul>
+      <li>Quit {productName} and delete the app. Your catalog stays in <code>~/Library/Application Support/Strata/</code> until you delete that folder. Your audio files aren't affected either way.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="if-something-goes-wrong" title="If something goes wrong">
+    <ul>
+      <li>If {productName} quits unexpectedly more than once, it opens with background work paused and asks whether to resume it.</li>
+      <li>Email <SupportEmail /> and attach a diagnostics file (see <a href="/support/#diagnostics">Support</a>).</li>
+    </ul>
+  </DocSection>
+</DocPage>

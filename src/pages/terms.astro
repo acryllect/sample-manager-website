@@ -1,0 +1,45 @@
+---
+import DocPage from "../components/DocPage.astro";
+import DocSection from "../components/DocSection.astro";
+import { site, text, links } from "../config/site";
+
+const { productName } = site;
+---
+
+<DocPage title="Founding beta terms" path="/terms/">
+  <Fragment slot="lead">What you get for your founding-beta purchase, and the terms it's sold under.</Fragment>
+
+  <DocSection id="what-youre-buying" title="What you're buying">
+    <ul>
+      <li>€59, paid once. Not a subscription.</li>
+      <li>Private access to the founding beta, direct support from the founder, beta fixes and updates delivered manually, and the v1 release when it ships.</li>
+      <li>The founding price, regardless of the later public price.</li>
+    </ul>
+  </DocSection>
+
+  <DocSection id="pre-release-software" title="Pre-release software">
+    <p class="doc__notice">
+      {productName} is pre-release software. The core library, analysis, search, audition, organisation, and discovery workflows are functional, but you may encounter defects. Updates may require downloading a new build manually. Initial support is Apple silicon on macOS 14+, using Reference Library mode. Review the <a href={links.knownIssues}>known issues</a>, refund policy, <a href={links.supportedSetup}>system requirements</a>, and purchase terms before paying.
+    </p>
+  </DocSection>
+
+  <DocSection id="the-v1-release" title="The v1 release">
+    <p>{text.foundingEntitlement}</p>
+  </DocSection>
+
+  <DocSection id="payment" title="Payment">
+    <p>Payment is processed by {text.paymentProvider}.</p>
+  </DocSection>
+
+  <DocSection id="refunds" title="Refunds">
+    <p>{text.refundPolicy}</p>
+  </DocSection>
+
+  <DocSection id="terms-of-use" title="Terms of use, warranty and liability">
+    <p>{text.termsLegalText}</p>
+  </DocSection>
+
+  <DocSection id="seller" title="Seller">
+    <p>{text.sellerDetails}</p>
+  </DocSection>
+</DocPage>

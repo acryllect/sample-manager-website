@@ -406,25 +406,6 @@ const steps = [
       try {
         var motion = root.classList.contains("motion");
 
-        // Scroll reveal: fade up once as an element enters. Items above the viewport (a reload
-        // part-way down, an anchor jump) are shown at once.
-        if (motion) {
-          var reveals = document.querySelectorAll("[data-reveal]");
-          if (!hasIO) {
-            each(reveals, function (el) { el.classList.add("is-in"); });
-          } else {
-            var revealer = new IntersectionObserver(function (entries) {
-              entries.forEach(function (e) {
-                if (e.isIntersecting || e.boundingClientRect.top < 0) {
-                  e.target.classList.add("is-in");
-                  revealer.unobserve(e.target);
-                }
-              });
-            }, { rootMargin: "0px 0px -8% 0px" });
-            each(reveals, function (el) { revealer.observe(el); });
-          }
-        }
-
         // Animated search field: types bpm:118-124, key:Amin, then warm percussion, once.
         var field = document.querySelector("[data-search-demo]");
         var finishSearch = function () {};

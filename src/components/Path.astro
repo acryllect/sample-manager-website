@@ -1,0 +1,17 @@
+---
+/**
+ * A keyboard path through the app's menus, set as inline text with the ▸ separator. Each label is in
+ * medium weight (`.ui`). A step can carry its shortcut after a bar: "Settings|⌘," prints
+ * Settings (⌘,).
+ */
+interface Props {
+  steps: string[];
+}
+const { steps } = Astro.props;
+const parts = steps.map((step) => {
+  const [label, key] = step.split("|");
+  return { label, key };
+});
+---
+
+<span class="path">{parts.map((p, i) => <><span class="ui">{p.label}</span>{p.key && <> ({p.key})</>}{i < parts.length - 1 && " ▸ "}</>)}</span>

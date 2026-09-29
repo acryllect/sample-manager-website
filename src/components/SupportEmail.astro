@@ -1,0 +1,7 @@
+---
+/** The support address: plain text while it is still the [SUPPORT_EMAIL] placeholder, a mailto link once it is real. */
+import { text, isPlaceholder } from "../config/site";
+const email = text.supportEmail;
+---
+
+{isPlaceholder(email) ? email : <a href={`mailto:${email}`}>{email}</a>}
