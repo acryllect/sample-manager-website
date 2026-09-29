@@ -2,7 +2,7 @@
  * Product screenshots. Until a capture exists (`src` empty) the page draws a labelled
  * ScreenshotFrame placeholder, never a mock of the app. To ship a capture, put the 16:10 crop under
  * public/screenshots/ and set `src` (for example "/screenshots/S01.jpg"). Crop it at 2400 x 1500:
- * the hero window is about 1,140 CSS px wide, so that is a sharp 2x. Only S01 loads eagerly; every
+ * the hero window is 1,200 CSS px wide, so that is a sharp 2x. Only S01 loads eagerly; every
  * other shot lazy-loads. Each shot appears once on the page: S01 hero, S05 S02 S06 S04 S10 S08 in
  * the tour, S09 in the privacy section. Alt text is written now.
  */

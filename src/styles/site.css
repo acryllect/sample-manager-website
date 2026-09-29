@@ -65,7 +65,7 @@ body { overflow-x: clip; }
    text can sit under it, and a mask fades it in from the top edge. */
 .hero__shot { position: relative; isolation: isolate; }
 .halo { position: absolute; z-index: -1; inset: 0 calc(var(--halo-reach) * -1) calc(var(--halo-reach) * -1); overflow: hidden; pointer-events: none; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 96px); mask-image: linear-gradient(to bottom, transparent, #000 96px); }
-.halo::before { content: ""; position: absolute; inset: 0 var(--halo-reach) var(--halo-reach); border-radius: var(--radius-panel); box-shadow: 0 0 calc(var(--halo-reach) * .75) calc(var(--halo-reach) * .125) color-mix(in srgb, var(--lantern-glow) calc(var(--halo-strength) * 1.6), transparent); }
+.halo::before { content: ""; position: absolute; inset: 0 var(--halo-reach) var(--halo-reach); border-radius: var(--radius-panel); box-shadow: 0 0 calc(var(--halo-reach) * .75) calc(var(--halo-reach) * .125) color-mix(in srgb, var(--lantern-glow) calc(var(--halo-strength) * 2.4), transparent); }
 /* Closing icon: a small radial glow that ends 8px above the heading. */
 .cta__icon { position: relative; isolation: isolate; width: 80px; height: 80px; margin-bottom: 48px; }
 .cta__icon > img { display: block; width: 80px; height: 80px; }
@@ -99,7 +99,7 @@ body { overflow-x: clip; }
 
 /* How it works */
 .tabs-row { display: none; }
-.js .tabs-row { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; row-gap: var(--space-12); margin-bottom: var(--space-32); }
+.js .tabs-row { display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; justify-items: center; row-gap: var(--space-12); margin-bottom: var(--space-32); }
 @media (min-width: 1000px) { .js .tabs-row { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); column-gap: var(--space-16); } .js .tabs { grid-column: 2; } .tour__pause { grid-column: 3; justify-self: start; } }
 .tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-4); width: fit-content; max-width: 100%; padding: var(--space-4); border: 1px solid var(--hairline); border-radius: var(--radius-panel); background: var(--sidebar); }
 .tab { position: relative; height: 36px; padding: 0 var(--space-16); border: 0; border-radius: var(--radius-control); background: transparent; color: var(--secondary-text); font: 500 15px/20px var(--font-sans); cursor: pointer; }
