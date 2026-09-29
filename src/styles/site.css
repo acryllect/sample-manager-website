@@ -139,7 +139,8 @@ body { overflow-x: clip; }
 @media (prefers-reduced-motion: no-preference) { .card:hover { transform: translateY(-2px); } }
 .card__title { font-size: 17px; line-height: 24px; font-weight: 600; text-wrap: balance; }
 .card__desc { margin-top: var(--space-4); font-size: 15px; line-height: 22px; color: var(--secondary-text); text-wrap: pretty; }
-.art { display: flex; align-items: center; justify-content: center; min-height: 88px; }
+/* One art height for every card (the Find similar stack is the tallest), so titles line up across a row. */
+.art { display: flex; align-items: center; justify-content: center; min-height: 124px; }
 .art > .sl-search, .art > .sl-wave { flex: 1; }
 .art > .sl-tags { justify-content: center; }
 .art--icon, .art--stack { flex-direction: column; gap: var(--space-8); text-align: center; }
