@@ -1,12 +1,15 @@
 /**
  * Product screenshots. Until a capture exists (`src` empty) the page draws a labelled
  * ScreenshotFrame placeholder, never a mock of the app. To ship a capture, put the 16:10 crop under
- * public/screenshots/ and set `src` (for example "/screenshots/S01.jpg"). Alt text is written now.
+ * public/screenshots/ and set `src` (for example "/screenshots/S01.jpg"). Crop it at 2400 x 1500:
+ * the hero window is about 1,140 CSS px wide, so that is a sharp 2x. Only S01 loads eagerly; every
+ * other shot lazy-loads. Each shot appears once on the page: S01 hero, S05 S02 S06 S04 S10 S08 in
+ * the tour, S09 in the privacy section. Alt text is written now.
  */
 
 export interface Shot {
   id: string;
-  /** Short name, used on thumbnails and tabs. */
+  /** Short name for the shot. */
   title: string;
   /** The state the capture must show. Printed on the placeholder. */
   state: string;
@@ -74,15 +77,12 @@ export const shots: Record<string, Shot> = {
   },
 };
 
-/** Main gallery, in thumbnail order. */
-export const galleryIds = ["S01", "S02", "S05", "S06", "S08"] as const;
-
 /** Tabbed tour: tab label and the shot it switches to. */
 export const tour = [
-  { label: "Add a folder", shot: "S09" },
+  { label: "Add sounds", shot: "S05" },
   { label: "Search", shot: "S02" },
   { label: "Audition", shot: "S06" },
-  { label: "Find Similar", shot: "S04" },
+  { label: "Find similar", shot: "S04" },
   { label: "Crates", shot: "S10" },
   { label: "Drag out", shot: "S08" },
 ] as const;

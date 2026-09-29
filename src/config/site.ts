@@ -15,7 +15,7 @@ export const site = {
   year: 2026,
   title: `${productName} founding beta: Find the sounds you already own`,
   description:
-    "Apply for a small €79 paid beta of a private Mac sample library for producers, sound designers, and composers with substantial local libraries.",
+    "Apply for a small €59 paid beta of a private Mac sample library for producers, sound designers, and composers with substantial local libraries.",
 } as const;
 
 /** Open placeholders. Replace the value with the real one; leave the [BRACKET] until then. */
@@ -31,8 +31,6 @@ export const links = {
 } as const;
 
 export const text = {
-  foundingEntitlement: "[EXACT FOUNDING ENTITLEMENT]",
-  refundPolicy: "[REFUND_POLICY]",
   supportEmail: "[SUPPORT_EMAIL]",
   cohortStatus: "[COHORT_STATUS]",
   nextReviewDate: "[NEXT_REVIEW_DATE]",

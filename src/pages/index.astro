@@ -5,57 +5,39 @@ import Footer from "../components/Footer.astro";
 import ShotWindow from "../components/ShotWindow.astro";
 import Wave from "../components/Wave.astro";
 import { site, links, text, applyHref, openPlaceholders } from "../config/site";
-import { shots, galleryIds, tour } from "../data/shots";
+import { shots, tour } from "../data/shots";
 
 const { productName } = site;
-const gallery = galleryIds.map((id) => shots[id]);
 
 const open = openPlaceholders();
 if (open.length) console.warn(`[placeholders] ${open.length} still open: ${[...new Set(open)].join(", ")}`);
 
-const beta = ["Apple silicon", "macOS 14+", "Reference Library mode", "WAV, AIFF and FLAC export", "Manual updates", "Direct founder support"];
-const notIncluded = ["Public trial", "Automated licence activation", "Automatic updates", "Intel support", "DAW plug-in", "Cloud sync", "Managed Library mode", "MP3 export"];
-const privacyPills = ["No sample upload", "No cloud inference", "Reference mode", "Processing happens locally"];
-const receive = [
-  "private access to the founding beta;",
-  "direct founder onboarding and support;",
-  "beta fixes and updates, delivered manually when necessary;",
-  null,
-  "the founding price even if the later public price changes.",
+// Each item comes from a recorded founder decision. Do not add others.
+const next = [
+  { title: "Smart collections", text: "Saved searches that keep themselves up to date." },
+  { title: "Explore by sound", text: "A visual way to browse the sounds around the one you picked." },
+  { title: "Projects", text: "Set a tempo and key, and audition sounds matched to them." },
+  { title: "Automatic updates", text: "Updates arrive in the app. No more manual downloads." },
+];
+const included = [
+  "Private access to the founding beta",
+  "Direct onboarding and support from the founder",
+  "Beta fixes and updates, delivered manually",
+  "The v1 release, when it ships",
+  "The founding price, regardless of the later public price",
 ];
 const fit = [
   "You use an Apple-silicon Mac on macOS 14 or later.",
-  "You actively produce music, compose, or design sound.",
-  "Your local library contains 10,000+ samples or has become genuinely difficult to retrieve from.",
-  "You can test with real work, use Reference mode, and provide candid feedback.",
-  "You understand that updates are manual during the founding beta.",
+  "You produce music, compose, or design sound.",
+  "Your library has 10,000+ samples, or has become hard to search.",
+  "You'll test it on real work and give candid feedback.",
 ];
 const steps = [
-  "Apply with your Mac, library, storage, and workflow details.",
-  "If the beta can responsibly support your setup, receive an invitation and the full terms.",
-  "Pay €79 through hosted checkout.",
-  "Receive the private notarized build and founder onboarding.",
-  "Use it on a real library and take part in short structured check-ins.",
-];
-const faq = [
-  {
-    q: "Why is the beta paid?",
-    a: `The experiment is whether the current retrieval workflow creates enough real value to buy. Payment also keeps the cohort small and serious. In return, the limitations are explicit, support is direct, and the purchase includes ${text.foundingEntitlement}.`,
-  },
-  { q: "Is €79 a subscription?", a: "No. It is a one-time founding-beta purchase under the published terms." },
-  {
-    q: "Will I need a licence key?",
-    a: `Not during the controlled first cohort. Access and build delivery are handled directly. Founding customers will receive the future public entitlement without paying again under ${text.foundingEntitlement}.`,
-  },
-  {
-    q: "How do updates work?",
-    a: "The founder sends a new notarized build with release notes and safe update instructions. Automatic updates come later, after paid demand is validated.",
-  },
-  { q: "Does it move my samples?", a: "The founding beta uses Reference Library mode and indexes files where they already live." },
-  {
-    q: "What if it does not work for my setup?",
-    a: `Review ${text.refundPolicy}, known issues, and supported systems before checkout. Contact ${text.supportEmail} immediately if installation, library safety, or the core workflow is blocked.`,
-  },
+  "Apply with your Mac, library, and workflow details.",
+  "If your setup fits, you get an invitation and the full terms.",
+  "Pay €59 through hosted checkout.",
+  "Get the notarized build and personal onboarding.",
+  "Use it on real work and join short check-ins.",
 ];
 ---
 
@@ -63,252 +45,265 @@ const faq = [
   <Header />
 
   <main>
-    <!-- 2. Hero -->
+    <!-- Hero -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="sl-container">
         <div class="sl-heading sl-heading--hero sl-heading--center">
-          <p class="pill">Founding paid beta · €79 once · approximately 10 places in the first cohort</p>
-          <h1 class="sl-heading__title" id="hero-title">Find the sound. Skip the folders.</h1>
-          <p class="sl-heading__lead">
+          <h1 class="sl-heading__title" id="hero-title" data-rise style="--i:0">Find the sound. Skip the folders.</h1>
+          <p class="sl-heading__lead" data-rise style="--i:1">
             {productName} turns scattered sample packs, folders, and drives into one searchable library for your Apple-silicon Mac, without uploading your sounds.
           </p>
         </div>
-        <div class="sl-actions sl-actions--center">
+        <div class="sl-actions sl-actions--center" data-rise style="--i:2">
           <a class="sl-button sl-button--primary" href={applyHref("hero")}>Apply for an invitation</a>
           <a class="sl-button" href="#demo" data-demo-link>Watch the 75-second demo</a>
         </div>
-        <p class="text-small hero__req">Apple silicon · macOS 14+ · 10,000+ local samples or equivalent retrieval pain · Reference Library mode</p>
-        <p class="text-small hero__print">Includes private beta access, direct founder support, beta updates, and the eventual v1 release under the published founding terms.</p>
-      </div>
-    </section>
-
-    <!-- 3. Product gallery -->
-    <section class="gallery" aria-label="Product screenshots">
-      <div class="sl-container">
-        <div data-gallery>
-          <figure class="sl-shot">
-            <div class="sl-glow">
-              <div class="gallery__stage">
-                {gallery.map((shot, i) => <ShotWindow shot={shot} hidden={i > 0} eager={i === 0} />)}
-              </div>
-            </div>
-            <figcaption class="gallery__caption" data-caption aria-live="polite">{gallery[0].caption}</figcaption>
-          </figure>
-          <ul class="thumbs" role="list" aria-label="Choose a screenshot">
-            {
-              gallery.map((shot, i) => (
-                <li>
-                  <button type="button" class="thumb" data-thumb={shot.id} data-caption={shot.caption} aria-pressed={i === 0 ? "true" : "false"} aria-label={`${shot.id}: ${shot.title}`}>
-                    {shot.src ? <img src={shot.src} alt="" loading="lazy" decoding="async" /> : <span class="thumb__id">{shot.id}</span>}
-                  </button>
-                </li>
-              ))
-            }
-          </ul>
+        <p class="text-small hero__req" data-rise style="--i:3">Apple silicon · macOS 14 or later</p>
+        <div class="hero__shot" data-rise-shot>
+          <div class="halo" aria-hidden="true"></div>
+          <ShotWindow shot={shots.S01} eager />
         </div>
       </div>
     </section>
 
-    <!-- 4. Pain -->
+    <!-- Search -->
     <section class="sl-section pain" aria-labelledby="pain-title">
       <div class="sl-container">
-        <div class="sl-heading sl-heading--center section-intro">
+        <div class="sl-heading sl-heading--center section-intro" data-reveal>
           <h2 class="sl-heading__title" id="pain-title">Your library is bigger than your memory.</h2>
           <p class="sl-heading__lead">
-            You remember the sound (dark, metallic, short) but not the pack, filename, or drive. {productName} helps you search, audition, compare, and organise the sounds you already own, so the library becomes usable again.
+            You remember the sound (dark, metallic, short) but not the pack, the filename, or the drive. So search for what you remember.
           </p>
         </div>
-        <div class="pain__query">
-          <div class="sl-search sl-search--large" role="img" aria-label="Search field with the filters BPM 118 to 124 and Key A minor, followed by the text warm percussion">
-            <img src="/assets/icons/search.svg" alt="" width="20" height="20" />
-            <span class="sl-token"><span class="sl-token__field">BPM</span><span class="sl-token__value">118–124</span></span>
-            <span class="sl-token"><span class="sl-token__field">Key</span><span class="sl-token__value">Amin</span></span>
-            <span class="sl-search__text">warm percussion</span>
+        <div data-reveal>
+          <!-- The finished state is the markup. With motion allowed the script rewinds it and types it out once. -->
+          <div class="sl-search sl-search--large search-demo" role="img" aria-label="Search field with the filters BPM 118 to 124 and Key A minor, followed by the text warm percussion" data-search-demo>
+            <span class="search-demo__inner" aria-hidden="true">
+              <img src="/assets/icons/search.svg" alt="" width="20" height="20" />
+              <span class="sl-token" data-tok="bpm"><span class="sl-token__field">BPM</span><span class="sl-token__value">118–124</span></span>
+              <span class="sl-token" data-tok="key"><span class="sl-token__field">Key</span><span class="sl-token__value">Amin</span></span>
+              <span class="sl-search__text" data-typed>warm percussion</span>
+              <span class="search-demo__caret" data-caret hidden></span>
+            </span>
           </div>
-          <code class="sl-query pain__typed">bpm:118-124 key:Amin warm percussion</code>
         </div>
       </div>
     </section>
 
-    <!-- 5. How it works -->
+    <!-- How it works -->
     <section class="sl-section tour" id="how-it-works" aria-labelledby="tour-title">
       <div class="sl-container">
-        <div class="sl-heading sl-heading--center section-intro">
+        <div class="sl-heading sl-heading--center section-intro" data-reveal>
           <p class="sl-heading__eyebrow">How it works</p>
           <h2 class="sl-heading__title" id="tour-title">From remembered sound to usable result.</h2>
-          <p class="sl-heading__lead">
-            Add an existing folder in Reference mode. Search in ordinary language or narrow by BPM, key, type, format, and more. Audition the results, find similar sounds, collect the useful candidates, and move the right one into your workflow.
-          </p>
+          <p class="sl-heading__lead">Six steps from a folder of packs to a sound in your project.</p>
         </div>
 
-        <div class="tabs" role="tablist" aria-label="How it works" data-tabs>
-          {
-            tour.map((t, i) => (
-              <button type="button" role="tab" class="tab" id={`tab-${i}`} aria-controls={`panel-${i}`} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1}>
-                {t.label}
-              </button>
-            ))
-          }
-        </div>
-        {
-          tour.map((t, i) => (
-            <div role="tabpanel" id={`panel-${i}`} aria-labelledby={`tab-${i}`} hidden={i > 0} class="tour__panel">
-              <figure class="sl-shot">
-                <ShotWindow shot={shots[t.shot]} />
-                <figcaption>{shots[t.shot].caption}</figcaption>
-              </figure>
+        <div class="tour__ui" data-tour data-reveal>
+          <div class="tabs-row">
+            <div class="tabs" role="tablist" aria-label="How it works" data-tabs>
+              {
+                tour.map((t, i) => (
+                  <button type="button" role="tab" class="tab" id={`tab-${i}`} aria-controls={`panel-${i}`} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1}>
+                    {t.label}
+                  </button>
+                ))
+              }
             </div>
-          ))
-        }
+            <button type="button" class="sl-button tour__pause" data-tour-pause>Pause</button>
+          </div>
+          <div class="tour__stage">
+            {
+              tour.map((t, i) => (
+                <div role="tabpanel" id={`panel-${i}`} aria-labelledby={`tab-${i}`} class:list={["tour__panel", { "is-active": i === 0 }]}>
+                  <figure class="sl-shot">
+                    <ShotWindow shot={shots[t.shot]} />
+                    <figcaption>{shots[t.shot].caption}</figcaption>
+                  </figure>
+                </div>
+              ))
+            }
+          </div>
+        </div>
 
-        <figure class="sl-shot tour__video" id="demo">
+        <figure class="sl-shot tour__video" id="demo" data-reveal>
           <div class="sl-shot__window">
             <video controls muted playsinline preload="none" poster={links.demoPoster} aria-label="The 75-second demo" data-demo>
               <source src={links.demoVideo} />
               <track kind="captions" src={links.demoCaptions} srclang="en" label="English" default />
             </video>
           </div>
-          <figcaption>Watch the 75-second demo</figcaption>
         </figure>
-
-        <div class="sl-actions sl-actions--center after-content">
-          <a class="sl-button sl-button--primary" href={applyHref("tour")}>Apply for an invitation</a>
-        </div>
       </div>
     </section>
 
-    <!-- 6. What works now -->
+    <!-- Today and next -->
     <section class="sl-section" id="beta-scope" aria-labelledby="scope-title">
       <div class="sl-container">
-        <div class="sl-heading sl-heading--center section-intro">
-          <h2 class="sl-heading__title" id="scope-title">A substantial core product, not a feature promise.</h2>
+        <div class="sl-heading sl-heading--center section-intro" data-reveal>
+          <h2 class="sl-heading__title" id="scope-title">What you get today and what comes next.</h2>
         </div>
 
         <!-- Every item must be verified against the exact paid-beta build before publication. -->
+        <h3 class="label label--center" data-reveal>Today</h3>
         <ul class="cards" role="list">
-          <li class="card">
-            <div class="art art--icon">
-              <span class="tile"><img src="/assets/icons/folder.svg" alt="" width="20" height="20" /></span>
-              <span class="art__path">Samples / Field Recordings / Metal</span>
-            </div>
-            <h3 class="card__title">Reference-mode indexing without moving source files</h3>
-          </li>
-          <li class="card">
-            <div class="art">
-              <div class="sl-tags">
-                <span class="sl-tag sl-tag--auto">One-shot</span>
-                <span class="sl-tag sl-tag--auto">Percussion</span>
-                <span class="sl-tag sl-tag--auto">Dark</span>
-                <span class="sl-tag sl-tag--auto">Metallic</span>
+          <li data-reveal style="--i:0">
+            <div class="card">
+              <div class="art art--icon">
+                <span class="tile"><img src="/assets/icons/folder.svg" alt="" width="20" height="20" /></span>
+                <span class="art__path">Samples / Field Recordings / Metal</span>
+              </div>
+              <div class="card__text">
+                <h4 class="card__title">Indexed where they live</h4>
+                <p class="card__desc">Reference mode reads your folders in place. Files are never moved.</p>
               </div>
             </div>
-            <h3 class="card__title">Local BPM, key, type, category, and mood analysis with uncertainty handling</h3>
           </li>
-          <li class="card">
-            <div class="art">
-              <div class="sl-search" role="img" aria-label="Search field with the filter Key A minor, followed by the text warm">
-                <img src="/assets/icons/search.svg" alt="" width="16" height="16" />
-                <span class="sl-token"><span class="sl-token__field">Key</span><span class="sl-token__value">Amin</span></span>
-                <span class="sl-search__text">warm</span>
+          <li data-reveal style="--i:1">
+            <div class="card">
+              <div class="art">
+                <div class="sl-tags">
+                  <span class="sl-tag sl-tag--auto">One-shot</span>
+                  <span class="sl-tag sl-tag--auto">Percussion</span>
+                  <span class="sl-tag sl-tag--auto">Dark</span>
+                  <span class="sl-tag sl-tag--auto">Metallic</span>
+                </div>
+              </div>
+              <div class="card__text">
+                <h4 class="card__title">Analysed on your Mac</h4>
+                <p class="card__desc">BPM, key, type, and tags for every sound, with low-confidence values flagged.</p>
               </div>
             </div>
-            <h3 class="card__title">Fuzzy and structured search</h3>
           </li>
-          <li class="card">
-            <div class="art art--stack">
-              <span class="tile"><img src="/assets/icons/similar.svg" alt="" width="20" height="20" /></span>
-              <div class="art__waves">
-                <Wave compact bars={30} seed={11} />
-                <Wave compact bars={30} seed={12} />
-                <Wave compact bars={30} seed={13} />
+          <li data-reveal style="--i:2">
+            <div class="card">
+              <div class="art">
+                <div class="sl-search" role="img" aria-label="Search field with the filter Key A minor, followed by the text warm">
+                  <img src="/assets/icons/search.svg" alt="" width="16" height="16" />
+                  <span class="sl-token"><span class="sl-token__field">Key</span><span class="sl-token__value">Amin</span></span>
+                  <span class="sl-search__text">warm</span>
+                </div>
+              </div>
+              <div class="card__text">
+                <h4 class="card__title">Search that forgives typos</h4>
+                <p class="card__desc">Plain words, rough spellings, or exact filters like bpm:118-124.</p>
               </div>
             </div>
-            <h3 class="card__title">Find Similar</h3>
           </li>
-          <li class="card">
-            <div class="art">
-              <Wave bars={44} seed={21} played={17} />
-            </div>
-            <h3 class="card__title">Waveform auditioning and loudness-normalised preview</h3>
-          </li>
-          <li class="card">
-            <div class="art">
-              <div class="sl-tags">
-                <span class="sl-tag">Punchy</span>
-                <span class="sl-tag">Dark</span>
-                <span class="sl-tag">Layered</span>
-                <span class="sl-tag">Favourite</span>
+          <li data-reveal style="--i:3">
+            <div class="card">
+              <div class="art art--stack">
+                <span class="tile"><img src="/assets/icons/similar.svg" alt="" width="20" height="20" /></span>
+                <div class="art__waves">
+                  <Wave compact bars={30} seed={11} />
+                  <Wave compact bars={30} seed={12} />
+                  <Wave compact bars={30} seed={13} />
+                </div>
+              </div>
+              <div class="card__text">
+                <h4 class="card__title">Find similar</h4>
+                <p class="card__desc">Pick a close sound and get its nearest neighbours from the whole library.</p>
               </div>
             </div>
-            <h3 class="card__title">Crates, smart collections, tags, and ratings</h3>
           </li>
-          <li class="card">
-            <div class="art art--icon">
-              <span class="tile"><img src="/assets/icons/file.svg" alt="" width="20" height="20" /></span>
-              <span class="art__path">Metal_Impact_03.wav</span>
+          <li data-reveal style="--i:0">
+            <div class="card">
+              <div class="art">
+                <Wave bars={44} seed={21} played={17} sweep />
+              </div>
+              <div class="card__text">
+                <h4 class="card__title">Level-matched auditioning</h4>
+                <p class="card__desc">Optional loudness normalisation, so quiet sounds get a fair hearing.</p>
+              </div>
             </div>
-            <h3 class="card__title">Non-destructive export in WAV, AIFF and FLAC</h3>
+          </li>
+          <li data-reveal style="--i:1">
+            <div class="card">
+              <div class="art">
+                <div class="sl-tags">
+                  <span class="sl-tag">Punchy</span>
+                  <span class="sl-tag">Dark</span>
+                  <span class="sl-tag">Layered</span>
+                  <span class="sl-tag">Favourite</span>
+                </div>
+              </div>
+              <div class="card__text">
+                <h4 class="card__title">Crates, tags, and ratings</h4>
+                <p class="card__desc">Collect finds, tag and rate them, and leave your folders alone.</p>
+              </div>
+            </div>
+          </li>
+          <li data-reveal style="--i:2">
+            <div class="card">
+              <div class="art art--icon">
+                <span class="tile"><img src="/assets/icons/file.svg" alt="" width="20" height="20" /></span>
+                <span class="art__path">Metal_Impact_03.wav</span>
+              </div>
+              <div class="card__text">
+                <h4 class="card__title">WAV, AIFF, and FLAC export</h4>
+                <p class="card__desc">Exports are new files. Your originals stay as they are.</p>
+              </div>
+            </div>
           </li>
         </ul>
 
-        <!-- 7. Beta boundary -->
-        <div class="boundary">
-          <div class="sl-heading sl-heading--center section-intro">
-            <h2 class="sl-heading__title">Small by design. Honest about what is next.</h2>
-            <p class="sl-heading__lead">
-              This is pre-release software for a controlled first cohort. Updates may require downloading a new build manually. The first beta is Apple-silicon/macOS 14+ and uses Reference Library mode. It does not include a public trial, automated licence activation, automatic updates, Intel support, a DAW plug-in, or cloud sync.
-            </p>
-          </div>
-          <div class="boundary__groups">
-            <section aria-labelledby="in-beta">
-              <h3 class="group-label" id="in-beta">In the first beta</h3>
-              <ul class="tiles" role="list">{beta.map((label) => <li class="chip-tile">{label}</li>)}</ul>
-            </section>
-            <section aria-labelledby="not-in-beta">
-              <h3 class="group-label" id="not-in-beta">Not included</h3>
-              <ul class="tiles tiles--muted" role="list">{notIncluded.map((label) => <li class="chip-tile">{label}</li>)}</ul>
-            </section>
-          </div>
-          <div class="sl-actions sl-actions--center after-content">
-            <a class="sl-button" href={links.knownIssues}>Read known issues</a>
-            <a class="sl-button" href={links.supportedSetup}>Review supported setup</a>
-            <a class="sl-button" href={links.safetyGuide}>Read the safety guide</a>
-          </div>
+        <h3 class="label label--center next__label" data-reveal>Next</h3>
+        <ul class="next" role="list">
+          {
+            next.map((item, i) => (
+              <li data-reveal style={`--i:${i}`}>
+                <div class="next__item">
+                  <span class="next__tag">Planned</span>
+                  <h4 class="next__title">{item.title}</h4>
+                  <p class="next__desc">{item.text}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="next__note" data-reveal>Plans, not promises. What founding customers need most goes first.</p>
+
+        <div class="not-beta" data-reveal>
+          <h3 class="label label--center">Not in this beta</h3>
+          <p class="not-beta__line">Public trial · licence activation · Intel Macs · DAW plug-in · cloud sync · Managed Library mode · MP3 export</p>
+          <p class="not-beta__links">
+            <a class="text-link" href={links.knownIssues}>Known issues</a>
+            <a class="text-link" href={links.supportedSetup}>Supported setup</a>
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- 8. Privacy -->
+    <!-- Privacy -->
     <section class="sl-section privacy" aria-labelledby="privacy-title">
-      <div class="sl-container">
-        <div class="panel">
-          <div class="sl-heading sl-heading--center section-intro">
+      <div class="sl-container split">
+        <div data-reveal>
+          <div class="sl-heading">
             <h2 class="sl-heading__title" id="privacy-title">Your sample audio stays on your Mac.</h2>
             <p class="sl-heading__lead">
-              {productName} indexes your files where they already live and performs its analysis locally. No sample audio is uploaded. Keep your usual source-audio backup in place; the beta also includes a verified catalog backup/restore path before money is accepted.
+              {productName} indexes your files where they already live and analyses them on this Mac. No sample audio is uploaded. Keep your usual backup; {productName} can also back up and restore its own catalog of tags, ratings, crates, and analysis.
             </p>
           </div>
-          <figure class="sl-shot">
-            <ShotWindow shot={shots.S09} />
-            <figcaption>{shots.S09.caption}</figcaption>
-          </figure>
-          <ul class="pills" role="list">{privacyPills.map((label) => <li class="pill">{label}</li>)}</ul>
-          <div class="sl-actions sl-actions--center">
+          <div class="sl-actions split__actions">
             <a class="sl-button" href={links.safetyGuide}>Read the safety guide</a>
           </div>
         </div>
+        <figure class="sl-shot split__shot" data-reveal style="--i:1">
+          <ShotWindow shot={shots.S09} />
+          <figcaption>{shots.S09.caption}</figcaption>
+        </figure>
       </div>
     </section>
 
-    <!-- 9. Offer -->
+    <!-- Offer -->
     <section class="sl-section" id="offer" aria-labelledby="offer-title">
       <div class="sl-container">
-        <div class="offer">
+        <div class="offer" data-reveal>
           <div class="offer__main">
-            <p class="offer__price"><span class="offer__amount">€79</span><span class="offer__once">once</span></p>
-            <h2 class="sl-heading__title" id="offer-title">Become a founding customer for €79.</h2>
+            <p class="offer__price"><span class="offer__amount">€59</span><span class="offer__once">once</span></p>
+            <h2 class="sl-heading__title" id="offer-title">Become a founding customer.</h2>
             <p class="offer__note">
-              You are buying the working retrieval workflow and a clearly disclosed pre-release relationship, not a promise that every requested feature will be built.
+              You're buying the app as it works today and a direct line to the person building it. Not a promise that every request gets built.
             </p>
             <div class="sl-actions">
               <a class="sl-button sl-button--primary" href={applyHref("offer")}>Apply for an invitation</a>
@@ -316,77 +311,82 @@ const faq = [
             </div>
           </div>
           <div class="offer__list">
-            <p class="offer__lead">You receive:</p>
+            <h3 class="label">Included</h3>
             <ul>
-              {receive.map((item) => <li>{item ?? `the eventual v1 release under ${text.foundingEntitlement};`}</li>)}
+              {included.map((item) => <li>{item}</li>)}
             </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 10. Fit -->
-    <section class="sl-section fit" aria-labelledby="fit-title">
+    <!-- Who it's for and how joining works -->
+    <section class="sl-section who" aria-labelledby="who-title">
       <div class="sl-container">
-        <div class="sl-heading sl-heading--center section-intro">
-          <h2 class="sl-heading__title" id="fit-title">Apply if this sounds like your studio.</h2>
-        </div>
-        <div class="fit__cols">
-          <ul class="fit__list" role="list">{fit.map((item) => <li>{item}</li>)}</ul>
-          <p class="fit__not">
-            This first cohort is not suitable if you require Windows/Intel, Managed mode, a sample subscription, a drum sequencer, team features, or a DAW plug-in.
-          </p>
+        <h2 class="sl-heading__title who__title" id="who-title" data-reveal>Apply if this sounds like your studio.</h2>
+        <div class="who__cols">
+          <div data-reveal>
+            <h3 class="label">Who it's for</h3>
+            <ul class="fit__list" role="list">{fit.map((item) => <li>{item}</li>)}</ul>
+          </div>
+          <div data-reveal style="--i:1">
+            <h3 class="label">How joining works</h3>
+            <ol class="steps" role="list">{steps.map((step) => <li>{step}</li>)}</ol>
+            <p class="steps__note">Applying doesn't commit you to buy.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 11. Process -->
-    <section class="sl-section process" aria-labelledby="process-title">
-      <div class="sl-container">
-        <div class="sl-heading sl-heading--center section-intro">
-          <h2 class="sl-heading__title" id="process-title">How joining works</h2>
-        </div>
-        <ol class="steps" role="list">{steps.map((step) => <li>{step}</li>)}</ol>
-        <p class="process__note">Applying does not commit you to purchase.</p>
-      </div>
-    </section>
-
-    <!-- 12. FAQ -->
+    <!-- FAQ -->
     <section class="sl-section" id="faq" aria-labelledby="faq-title">
       <div class="sl-container faq">
-        <div class="sl-heading sl-heading--center section-intro">
+        <div class="sl-heading sl-heading--center section-intro" data-reveal>
           <h2 class="sl-heading__title" id="faq-title">FAQ</h2>
         </div>
-        <div class="faq__list">
-          {
-            faq.map((item) => (
-              <details>
-                <summary>
-                  <span>{item.q}</span>
-                  <img src="/assets/icons/chevDown.svg" alt="" width="16" height="16" />
-                </summary>
-                <p>{item.a}</p>
-              </details>
-            ))
-          }
-        </div>
-        <div class="sl-actions sl-actions--center after-content">
-          <a class="sl-button sl-button--primary" href={applyHref("faq")}>Apply for an invitation</a>
+        <div class="faq__list" data-reveal>
+          <details>
+            <summary><span>Why is the beta paid?</span><img src="/assets/icons/chevDown.svg" alt="" width="16" height="16" /></summary>
+            <p>A small paid group means every setup gets personal support, and feedback comes from real use. Your €59 covers the beta, its updates, direct support, and the v1 release.</p>
+          </details>
+          <details>
+            <summary><span>Is €59 a subscription?</span><img src="/assets/icons/chevDown.svg" alt="" width="16" height="16" /></summary>
+            <p>No. It is a one-time founding-beta purchase under the published terms.</p>
+          </details>
+          <details>
+            <summary><span>Will I need a licence key?</span><img src="/assets/icons/chevDown.svg" alt="" width="16" height="16" /></summary>
+            <p>Not during the beta: access and builds come directly from the founder. When licensing arrives with the public release, founding customers get it at no extra cost.</p>
+          </details>
+          <details>
+            <summary><span>How do updates work?</span><img src="/assets/icons/chevDown.svg" alt="" width="16" height="16" /></summary>
+            <p>The founder sends each new notarized build with release notes and update steps. Automatic updates come after the beta.</p>
+          </details>
+          <details>
+            <summary><span>Does it move my samples?</span><img src="/assets/icons/chevDown.svg" alt="" width="16" height="16" /></summary>
+            <p>No. {productName} indexes your files where they already live.</p>
+          </details>
+          <details>
+            <summary><span>What if it doesn't work for my setup?</span><img src="/assets/icons/chevDown.svg" alt="" width="16" height="16" /></summary>
+            <p>
+              Check the <a class="text-link" href={links.knownIssues}>known issues</a> and <a class="text-link" href={links.supportedSetup}>supported setup</a> before you pay, and read the <a class="text-link" href={links.terms}>refund terms</a>. If installation, library safety, or the core workflow is blocked, email {text.supportEmail} straight away.
+            </p>
+          </details>
         </div>
       </div>
     </section>
 
-    <!-- 13. Final call to action -->
+    <!-- Closing call to action -->
     <section class="sl-section cta" id="apply" aria-labelledby="cta-title">
       <div class="sl-container">
-        <div class="sl-glow">
-          <div class="cta__inner">
-            <h2 class="sl-heading__title" id="cta-title">You already own the sound. Find it.</h2>
-            <p class="cta__line">€79 founding paid beta · first cohort approximately 10 customers</p>
-            <p class="cta__line">Cohort state: {text.cohortStatus} · Next review: {text.nextReviewDate}</p>
-            <div class="sl-actions sl-actions--center">
-              <a class="sl-button sl-button--primary" href={applyHref("closing")}>Apply for an invitation</a>
-            </div>
+        <div class="cta__inner" data-reveal>
+          <div class="cta__icon">
+            <span class="icon-halo" aria-hidden="true"></span>
+            <img src="/assets/app-icon-160.png" srcset="/assets/app-icon-160.png 2x, /assets/app-icon-240.png 3x" alt="" width="80" height="80" />
+          </div>
+          <h2 class="sl-heading__title" id="cta-title">You already own the sound. Find it.</h2>
+          <p class="cta__line">First cohort: about 10 places · {text.cohortStatus} · Next review {text.nextReviewDate}</p>
+          <div class="sl-actions sl-actions--center">
+            <a class="sl-button sl-button--primary" href={applyHref("closing")}>Apply for an invitation</a>
           </div>
         </div>
       </div>
@@ -397,43 +397,203 @@ const faq = [
 
   <script is:inline>
     (function () {
-      // Gallery: thumbnails swap the main screenshot and its caption.
-      var gallery = document.querySelector("[data-gallery]");
-      if (gallery) {
-        var thumbs = gallery.querySelectorAll("[data-thumb]");
-        var windows = gallery.querySelectorAll("[data-window]");
-        var caption = gallery.querySelector("[data-caption]");
-        thumbs.forEach(function (thumb) {
-          thumb.addEventListener("click", function () {
-            windows.forEach(function (w) { w.hidden = w.getAttribute("data-window") !== thumb.getAttribute("data-thumb"); });
-            thumbs.forEach(function (t) { t.setAttribute("aria-pressed", String(t === thumb)); });
-            caption.textContent = thumb.getAttribute("data-caption");
-          });
-        });
-      }
+      var root = document.documentElement;
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+      var hasIO = "IntersectionObserver" in window;
+      var each = function (list, fn) { Array.prototype.forEach.call(list, fn); };
 
-      // Tour: a tablist with arrow-key support (Left/Right wrap, Home/End).
-      var list = document.querySelector("[data-tabs]");
-      if (list) {
-        var tabs = Array.prototype.slice.call(list.querySelectorAll('[role="tab"]'));
-        var select = function (tab, focus) {
-          tabs.forEach(function (t) {
-            var on = t === tab;
-            t.setAttribute("aria-selected", String(on));
-            t.tabIndex = on ? 0 : -1;
-            document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+      // If anything below throws, drop the motion class so nothing stays hidden.
+      try {
+        var motion = root.classList.contains("motion");
+
+        // Scroll reveal: fade up once as an element enters. Items above the viewport (a reload
+        // part-way down, an anchor jump) are shown at once.
+        if (motion) {
+          var reveals = document.querySelectorAll("[data-reveal]");
+          if (!hasIO) {
+            each(reveals, function (el) { el.classList.add("is-in"); });
+          } else {
+            var revealer = new IntersectionObserver(function (entries) {
+              entries.forEach(function (e) {
+                if (e.isIntersecting || e.boundingClientRect.top < 0) {
+                  e.target.classList.add("is-in");
+                  revealer.unobserve(e.target);
+                }
+              });
+            }, { rootMargin: "0px 0px -8% 0px" });
+            each(reveals, function (el) { revealer.observe(el); });
+          }
+        }
+
+        // Animated search field: types bpm:118-124, key:Amin, then warm percussion, once.
+        var field = document.querySelector("[data-search-demo]");
+        var finishSearch = function () {};
+        if (field && motion && hasIO) {
+          var toks = { bpm: field.querySelector('[data-tok="bpm"]'), key: field.querySelector('[data-tok="key"]') };
+          var typed = field.querySelector("[data-typed]");
+          var caret = field.querySelector("[data-caret]");
+          var steps = [["bpm:118-124 ", "bpm"], ["key:Amin ", "key"], ["warm percussion", null]];
+          var finalText = typed.textContent;
+          var timer = 0;
+          var done = false;
+
+          // Hold the finished height so typing never moves the page, then rewind to empty.
+          field.style.minHeight = getComputedStyle(field).height;
+          toks.bpm.hidden = true;
+          toks.key.hidden = true;
+          typed.textContent = "";
+          typed.hidden = true;
+
+          finishSearch = function () {
+            clearTimeout(timer);
+            done = true;
+            toks.bpm.hidden = false;
+            toks.key.hidden = false;
+            typed.textContent = finalText;
+            typed.hidden = false;
+            caret.hidden = true;
+            field.style.minHeight = "";
+          };
+
+          var type = function () {
+            var si = 0;
+            var ci = 0;
+            caret.hidden = false;
+            var tick = function () {
+              if (done) return;
+              var step = steps[si];
+              ci++;
+              var shown = step[0].slice(0, ci);
+              if (ci === step[0].length && step[1]) {
+                // The space converts the typed filter into its token.
+                typed.textContent = "";
+                typed.hidden = true;
+                toks[step[1]].hidden = false;
+                toks[step[1]].classList.add("is-new");
+                si++;
+                ci = 0;
+                timer = setTimeout(tick, 160);
+                return;
+              }
+              typed.textContent = shown;
+              typed.hidden = false;
+              if (ci === step[0].length) {
+                // Finished: the caret blinks a few times and goes.
+                caret.classList.add("is-blink");
+                done = true;
+                timer = setTimeout(function () { field.style.minHeight = ""; }, 4200);
+                return;
+              }
+              timer = setTimeout(tick, 45);
+            };
+            tick();
+          };
+
+          if (hasIO) {
+            var typer = new IntersectionObserver(function (entries) {
+              entries.forEach(function (e) {
+                if (e.intersectionRatio >= 0.5 && !done) {
+                  typer.disconnect();
+                  type();
+                }
+              });
+            }, { threshold: [0, 0.5, 1] });
+            typer.observe(field);
+          }
+        }
+
+        // Audition card: the playhead sweeps only while the waveform is in view.
+        var sweeps = document.querySelectorAll(".wave-sweep");
+        if (motion && hasIO && sweeps.length) {
+          var sweeper = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) { e.target.classList.toggle("is-live", e.isIntersecting); });
+          }, { threshold: 0.5 });
+          each(sweeps, function (el) { sweeper.observe(el); });
+        }
+
+        // Tour: a tablist with arrow-key support (Left/Right wrap, Home/End) and a one-time
+        // auto-advance that any click, key press or focus inside the tablist ends for good.
+        var list = document.querySelector("[data-tabs]");
+        var stopAuto = function () {};
+        if (list) {
+          var tabs = Array.prototype.slice.call(list.querySelectorAll('[role="tab"]'));
+          var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute("aria-controls")); });
+          var select = function (tab, focus) {
+            tabs.forEach(function (t, i) {
+              var on = t === tab;
+              t.setAttribute("aria-selected", String(on));
+              t.tabIndex = on ? 0 : -1;
+              panels[i].classList.toggle("is-active", on);
+            });
+            if (focus) tab.focus();
+          };
+          tabs.forEach(function (tab, i) {
+            tab.addEventListener("click", function () { select(tab, false); });
+            tab.addEventListener("keydown", function (e) {
+              var next = { ArrowRight: (i + 1) % tabs.length, ArrowLeft: (i + tabs.length - 1) % tabs.length, Home: 0, End: tabs.length - 1 }[e.key];
+              if (next === undefined) return;
+              e.preventDefault();
+              select(tabs[next], true);
+            });
           });
-          if (focus) tab.focus();
-        };
-        tabs.forEach(function (tab, i) {
-          tab.addEventListener("click", function () { select(tab, false); });
-          tab.addEventListener("keydown", function (e) {
-            var next = { ArrowRight: (i + 1) % tabs.length, ArrowLeft: (i + tabs.length - 1) % tabs.length, Home: 0, End: tabs.length - 1 }[e.key];
-            if (next === undefined) return;
-            e.preventDefault();
-            select(tabs[next], true);
+
+          var ui = document.querySelector("[data-tour]");
+          var pause = document.querySelector("[data-tour-pause]");
+          if (motion && hasIO && ui) {
+            var auto = { started: false, stopped: false, userPaused: false, inView: false };
+            var sync = function () {
+              if (auto.stopped) { list.removeAttribute("data-auto"); return; }
+              if (!auto.started) return;
+              list.setAttribute("data-auto", auto.inView && !auto.userPaused && !document.hidden ? "running" : "paused");
+            };
+            stopAuto = function () {
+              if (auto.stopped) return;
+              auto.stopped = true;
+              sync();
+              if (pause) {
+                var hadFocus = document.activeElement === pause;
+                pause.hidden = true;
+                if (hadFocus) tabs.filter(function (t) { return t.tabIndex === 0; })[0].focus();
+              }
+            };
+            // The progress bar on the active tab is a CSS animation; when it ends, move on.
+            list.addEventListener("animationend", function (e) {
+              if (e.animationName !== "tab-progress" || auto.stopped) return;
+              var i = tabs.indexOf(e.target);
+              if (i < 0) return;
+              if (i < tabs.length - 1) select(tabs[i + 1], false);
+              else stopAuto();
+            });
+            ["pointerdown", "click", "keydown", "focusin"].forEach(function (name) { list.addEventListener(name, stopAuto); });
+            if (pause) {
+              pause.addEventListener("click", function () {
+                auto.userPaused = !auto.userPaused;
+                pause.textContent = auto.userPaused ? "Play" : "Pause";
+                sync();
+              });
+            }
+            document.addEventListener("visibilitychange", sync);
+            new IntersectionObserver(function (entries) {
+              var e = entries[entries.length - 1];
+              auto.inView = e.intersectionRatio >= 0.5;
+              if (auto.inView) auto.started = true;
+              sync();
+            }, { threshold: [0, 0.5, 1] }).observe(ui);
+          }
+        }
+
+        // Reduced motion switched on mid-visit: show everything, stop everything.
+        if (reduce.addEventListener) {
+          reduce.addEventListener("change", function () {
+            if (!reduce.matches) return;
+            root.classList.remove("motion");
+            stopAuto();
+            finishSearch();
           });
-        });
+        }
+      } catch (err) {
+        root.classList.remove("motion");
+        if (window.console) console.error(err);
       }
 
       // "Watch the 75-second demo" jumps to the video and starts it muted.

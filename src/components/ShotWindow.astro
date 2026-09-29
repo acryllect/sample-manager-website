@@ -1,23 +1,29 @@
 ---
 /**
  * ScreenshotFrame window. Shows the real capture when shot.src is set, otherwise a labelled
- * placeholder. Never a mock of the app.
+ * placeholder. Never a mock of the app. Only the hero shot passes `eager`; the rest lazy-load.
  */
 import type { Shot } from "../data/shots";
 
 interface Props {
   shot: Shot;
-  /** Hide until the gallery or a tab selects it. */
-  hidden?: boolean;
   eager?: boolean;
 }
-const { shot, hidden = false, eager = false } = Astro.props;
+const { shot, eager = false } = Astro.props;
 ---
 
-<div class="sl-shot__window" data-window={shot.id} hidden={hidden}>
+<div class="sl-shot__window" data-window={shot.id}>
   {
     shot.src ? (
-      <img src={shot.src} alt={shot.alt} loading={eager ? "eager" : "lazy"} decoding="async" width="1600" height="1000" />
+      <img
+        src={shot.src}
+        alt={shot.alt}
+        loading={eager ? "eager" : "lazy"}
+        fetchpriority={eager ? "high" : undefined}
+        decoding="async"
+        width="2400"
+        height="1500"
+      />
     ) : (
       <div class="shot-ph" role="img" aria-label={`Placeholder for ${shot.id}. ${shot.alt}`}>
         <span class="shot-ph__id">{shot.id} · Placeholder</span>
