@@ -31,8 +31,8 @@ const { productName } = site;
   <DocSection id="back-up-your-catalog" title="Back up your catalog">
     <ul>
       <li>Your catalog holds your tags, ratings, crates, notes and analysis, and the locations of your files. It never contains audio.</li>
-      <li>To back it up: <Path steps={["Settings|⌘,", "Privacy & Data", "Database", "Back Up…"]} />. Each backup is verified when it's made.</li>
-      <li>To restore: <Path steps={["Settings", "Privacy & Data", "Database", "Restore…"]} />. {productName} first makes a verified backup of the current catalog, so a restore can be undone.</li>
+      <li>To back it up: <Path steps={["Settings|⌘,", "Privacy & Data", "Database", "Back Up…"]} /> Each backup is verified when it's made.</li>
+      <li>To restore: <Path steps={["Settings", "Privacy & Data", "Database", "Restore…"]} /> {productName} first makes a verified backup of the current catalog, so a restore can be undone.</li>
       <li>Before an update changes the catalog's format, {productName} saves a verified copy of the old catalog automatically.</li>
       <li>The catalog lives in <code>~/Library/Application Support/Strata/</code>.</li>
     </ul>
@@ -47,14 +47,14 @@ const { productName } = site;
   <DocSection id="when-a-folder-moves" title="When a folder moves">
     <ul>
       <li>If you rename a folder on the same drive, {productName} follows it.</li>
-      <li>If you move it somewhere else, the source shows as Missing. Right-click it and choose <span class="ui">Locate folder…</span>.</li>
+      <li>If you move it somewhere else, the source shows as Missing. Right-click it and choose <span class="ui">Locate folder…</span></li>
       <li>If you move or rename files inside a source, <span class="ui">Rescan</span> finds them again and keeps their ratings and tags.</li>
     </ul>
   </DocSection>
 
   <DocSection id="permissions" title="Permissions">
     <ul>
-      <li>If macOS blocks access to a folder, the source offers <span class="ui">Grant access…</span>. You can also give {productName} Full Disk Access in <Path steps={["System Settings", "Privacy & Security"]} />.</li>
+      <li>If macOS blocks access to a folder, the source offers <span class="ui">Grant access…</span> You can also give {productName} Full Disk Access in <Path steps={["System Settings", "Privacy & Security"]} />.</li>
     </ul>
   </DocSection>
 
