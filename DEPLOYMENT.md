@@ -108,6 +108,31 @@ just sit unused. You may also see a one-time warning that the config's
 Worker name doesn't match the dashboard's Worker name; Cloudflare resolves
 that itself via an automated pull request, which is safe to merge.
 
+### The committed `wrangler.jsonc` and `public/_headers`
+
+The repository now carries its own `wrangler.jsonc`, so Workers Builds deploys
+from it instead of generating a config. It names the existing Worker
+(`samplelantern`), serves `./dist` as static assets with no Worker script, and
+sets `not_found_handling: "404-page"`, so an unknown URL gets `dist/404.html`
+with a 404 status instead of an empty response. With a config present, the
+transient `astro add cloudflare` step described above should no longer run, and
+the unused `SESSION` and `IMAGES` bindings disappear; the served files are the
+same `dist/` as before. Check the first build log after this change says it used
+the committed config and deployed to `samplelantern`.
+
+`public/_headers` is copied into `dist/` and applied by Workers static assets to
+every response: `X-Content-Type-Options`, `Referrer-Policy`,
+`Permissions-Policy`, `X-Frame-Options`, and a Content Security Policy sent as
+`Content-Security-Policy-Report-Only` for now. Watch the browser console on each
+page for reported violations; once there are none, rename the header to
+`Content-Security-Policy`. HSTS is set at the Cloudflare zone (SSL/TLS → Edge
+Certificates), not in this file.
+
+`npm run build` ends with `scripts/check-placeholders.mjs`, which fails the
+build if any `[PLACEHOLDER]` is left in a link (`href`, `src`, `poster`) on any
+page, or as text outside the pages `src/config/pages.ts` still allows to print
+them (terms, privacy). A dead "Apply" button cannot deploy.
+
 ## 5. Deploy
 
 Cloudflare builds and deploys automatically on push. The first deploy will be
@@ -209,6 +234,20 @@ After the domain is live, check by hand:
       or visible text you did not intend to ship (the build log lists the open
       ones), and no link points at a download or a public checkout
 - [ ] The only third-party request is Inter from Google Fonts
+
+### Smoke checklist (run after every deploy that touches config or headers)
+
+```bash
+curl -sI https://samplelantern.com/ | head -1               # HTTP/2 200
+curl -sI https://www.samplelantern.com/ | grep -iE '^(HTTP|location)'   # 301 to https://samplelantern.com/
+curl -sI http://samplelantern.com/ | grep -iE '^(HTTP|location)'        # redirect to https://
+curl -s -o /dev/null -w '%{http_code} %{size_download}\n' https://samplelantern.com/does-not-exist/   # 404 and a non-zero size
+curl -sI https://samplelantern.com/ | grep -iE 'x-content-type-options|referrer-policy|permissions-policy|x-frame-options|content-security-policy|strict-transport-security'
+curl -s https://samplelantern.com/ | grep -o '\[[A-Z_ ]*\]' | sort -u  # expect nothing
+```
+
+- [ ] View source on `/` and each footer page: no `[` placeholder in any link, and none in visible text except the terms and privacy pages' legal placeholders
+- [ ] `/applied/` loads, is `noindex`, and is absent from `/sitemap-0.xml`
 
 ## Ongoing deploys
 

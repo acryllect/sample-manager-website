@@ -1,9 +1,18 @@
 ---
 import DocPage from "../components/DocPage.astro";
-import { site } from "../config/site";
+import { site, links, applyHref } from "../config/site";
 ---
 
 <DocPage title="Page not found" noindex>
   <Fragment slot="lead">That page does not exist.</Fragment>
   <p><a class="sl-button" href="/">Back to {site.productName}</a></p>
+  <p>Looking for the beta? <a class="text-link" href={applyHref("404")}>Apply for an invitation</a>.</p>
+  <ul>
+    <li><a class="text-link" href={links.knownIssues}>Known issues</a></li>
+    <li><a class="text-link" href={links.supportedSetup}>Supported setup</a></li>
+    <li><a class="text-link" href={links.safetyGuide}>Safety guide</a></li>
+    <li><a class="text-link" href="/support/">Support</a></li>
+    <li><a class="text-link" href="/privacy/">Privacy</a></li>
+    <li><a class="text-link" href={links.terms}>Terms</a></li>
+  </ul>
 </DocPage>

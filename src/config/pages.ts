@@ -5,7 +5,7 @@
  * else changes. DocPage fails the build if a page prints a placeholder that is not listed here, so
  * the list cannot drift from the copy.
  */
-import { text, isPlaceholder } from "./site";
+import { text, isPlaceholder } from "./site.ts";
 
 export const docPages: Record<string, readonly string[]> = {
   "/known-issues/": [text.buildVersion, text.supportEmail],
@@ -16,5 +16,11 @@ export const docPages: Record<string, readonly string[]> = {
   "/terms/": [text.foundingEntitlement, text.paymentProvider, text.refundPolicy, text.termsLegalText, text.sellerDetails],
 };
 
-/** True while the page still prints an open placeholder. */
-export const hasOpenPlaceholder = (path: string) => (docPages[path] ?? []).some(isPlaceholder);
+/** Pages that stay noindex and out of the sitemap for good: the thank-you page the application
+ *  form redirects to. */
+export const unlistedPages: readonly string[] = ["/applied/"];
+
+/** True while the page still prints an open placeholder, or always for an unlisted page. Both keep
+ *  the page noindex and out of the sitemap. */
+export const hasOpenPlaceholder = (path: string) =>
+  unlistedPages.includes(path) || (docPages[path] ?? []).some(isPlaceholder);

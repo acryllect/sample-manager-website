@@ -34,12 +34,12 @@ export const links = {
 } as const;
 
 export const text = {
-  supportEmail: "[SUPPORT_EMAIL]",
-  cohortStatus: "[COHORT_STATUS]",
-  nextReviewDate: "[NEXT_REVIEW_DATE]",
-  buildVersion: "[BUILD_VERSION]",
-  supportedLibrarySize: "[SUPPORTED_LIBRARY_SIZE]",
-  memoryRequirement: "[MEMORY_REQUIREMENT]",
+  supportEmail: "help@samplelantern.com",
+  cohortStatus: "Applications open",
+  nextReviewDate: "19 October 2026",
+  buildVersion: "0.9.0 (1)",
+  supportedLibrarySize: "100,000",
+  memoryRequirement: "8 GB or more, the least any Apple silicon Mac has",
   sellerDetails: "[SELLER_DETAILS]",
   foundingEntitlement: "[EXACT FOUNDING ENTITLEMENT]",
   refundPolicy: "[REFUND_POLICY]",

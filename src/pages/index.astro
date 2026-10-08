@@ -4,7 +4,11 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import ShotWindow from "../components/ShotWindow.astro";
 import Wave from "../components/Wave.astro";
-import { site, links, text, applyHref, openPlaceholders } from "../config/site";
+import SupportEmail from "../components/SupportEmail.astro";
+import { site, links, text, applyHref, openPlaceholders, isPlaceholder } from "../config/site";
+
+// The demo block renders only once the video exists, so nothing is requested before then.
+const hasDemo = !isPlaceholder(links.demoVideo);
 import { shots, tour } from "../data/shots";
 
 const { productName } = site;
@@ -56,7 +60,7 @@ const steps = [
         </div>
         <div class="sl-actions sl-actions--center" data-rise style="--i:2">
           <a class="sl-button sl-button--primary" href={applyHref("hero")}>Apply for an invitation</a>
-          <a class="sl-button" href="#demo" data-demo-link>Watch the 75-second demo</a>
+          {hasDemo && <a class="sl-button" href="#demo" data-demo-link>Watch the 75-second demo</a>}
         </div>
         <p class="text-small hero__req" data-rise style="--i:3">Apple silicon · macOS 14 or later</p>
         <div class="hero__shot" data-rise-shot>
@@ -126,14 +130,18 @@ const steps = [
           </div>
         </div>
 
-        <figure class="sl-shot tour__video" id="demo" data-reveal>
-          <div class="sl-shot__window">
-            <video controls muted playsinline preload="none" poster={links.demoPoster} aria-label="The 75-second demo" data-demo>
-              <source src={links.demoVideo} />
-              <track kind="captions" src={links.demoCaptions} srclang="en" label="English" default />
-            </video>
-          </div>
-        </figure>
+        {
+          hasDemo && (
+            <figure class="sl-shot tour__video" id="demo" data-reveal>
+              <div class="sl-shot__window">
+                <video controls muted playsinline preload="none" poster={links.demoPoster} aria-label="The 75-second demo" data-demo>
+                  <source src={links.demoVideo} />
+                  <track kind="captions" src={links.demoCaptions} srclang="en" label="English" default />
+                </video>
+              </div>
+            </figure>
+          )
+        }
       </div>
     </section>
 
@@ -376,7 +384,7 @@ const steps = [
           <details>
             <summary><span>What if it doesn't work for my setup?</span><img src="/assets/icons/chevDown.svg" alt="" width="16" height="16" /></summary>
             <p>
-              Check the <a class="text-link" href={links.knownIssues}>known issues</a> and <a class="text-link" href={links.supportedSetup}>supported setup</a> before you pay, and read the <a class="text-link" href={links.terms}>refund terms</a>. If installation, library safety, or the core workflow is blocked, email {text.supportEmail} straight away.
+              Check the <a class="text-link" href={links.knownIssues}>known issues</a> and <a class="text-link" href={links.supportedSetup}>supported setup</a> before you pay, and read the <a class="text-link" href={links.terms}>refund terms</a>. If installation, library safety, or the core workflow is blocked, email <SupportEmail /> straight away.
             </p>
           </details>
         </div>

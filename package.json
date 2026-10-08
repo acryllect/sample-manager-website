@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro check && astro build && npm run check:placeholders",
+    "check:placeholders": "node scripts/check-placeholders.mjs",
     "preview": "astro preview",
     "check": "astro check"
   },

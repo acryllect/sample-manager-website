@@ -1,0 +1,11 @@
+// The Worker that serves samplelantern.com: static assets only, no Worker script.
+// Committing this file replaces the config Workers Builds generated when none existed
+// (see DEPLOYMENT.md). "404-page" serves dist/404.html with a 404 status for unknown URLs.
+{
+  "name": "samplelantern",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}

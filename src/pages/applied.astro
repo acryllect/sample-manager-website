@@ -1,0 +1,12 @@
+---
+import DocPage from "../components/DocPage.astro";
+import SupportEmail from "../components/SupportEmail.astro";
+import { links } from "../config/site";
+---
+
+<DocPage title="Thanks for applying" path="/applied/">
+  <Fragment slot="lead">Thanks for applying. Your application has reached me.</Fragment>
+  <p>I score every application within two business days. If your setup fits, I send you an invitation with the scope, the known issues, the terms and the build to try on your own library for 14 days.</p>
+  <p>While you wait, the <a class="text-link" href={links.supportedSetup}>supported setup</a> and <a class="text-link" href={links.knownIssues}>known issues</a> pages show what the beta runs on and what doesn't work yet.</p>
+  <p>Questions? Email <SupportEmail />.</p>
+</DocPage>
