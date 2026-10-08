@@ -71,8 +71,8 @@ export const shots: Record<string, Shot> = {
   S10: {
     id: "S10",
     title: "Collections",
-    state: "Collections: nested crates with meaningful names",
-    alt: "SampleLantern collections showing nested crates with meaningful names.",
+    state: "Crates: three crates with meaningful names, one selected",
+    alt: "SampleLantern crates with meaningful names, one selected and its sounds listed.",
     caption: "Organise discoveries without rebuilding folders.",
   },
 };
