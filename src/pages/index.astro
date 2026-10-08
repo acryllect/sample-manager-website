@@ -21,7 +21,7 @@ const next = [
 ];
 const included = [
   "Private access to the founding beta",
-  "Direct onboarding and support from the founder",
+  "Direct onboarding and support from me",
   "Beta fixes and updates, delivered manually",
   "The v1 release, when it ships",
   "The founding price, regardless of the later public price",
@@ -34,9 +34,9 @@ const fit = [
 ];
 const steps = [
   "Apply with your Mac, library, and workflow details.",
-  "If your setup fits, you get an invitation and the full terms.",
-  "Pay €59 through hosted checkout.",
-  "Get the notarized build and personal onboarding.",
+  "If your setup fits, you get an invitation, the full terms, and the notarized build.",
+  "Try it on your own library for 14 days, with personal onboarding.",
+  "To keep it, pay €59 through hosted checkout.",
   "Use it on real work and join short check-ins.",
 ];
 ---
@@ -303,7 +303,7 @@ const steps = [
             <p class="offer__price"><span class="offer__amount">€59</span><span class="offer__once">once</span></p>
             <h2 class="sl-heading__title" id="offer-title">Become a founding customer.</h2>
             <p class="offer__note">
-              You're buying the app as it works today and a direct line to the person building it. Not a promise that every request gets built.
+              I'm Alessandro Pelosio, and I build {productName} on my own. You're buying the app as it works today and a direct line to me. Not a promise that every request gets built.
             </p>
             <div class="sl-actions">
               <a class="sl-button sl-button--primary" href={applyHref("offer")}>Apply for an invitation</a>
@@ -332,7 +332,7 @@ const steps = [
           <div data-reveal style="--i:1">
             <h3 class="label">How joining works</h3>
             <ol class="steps" role="list">{steps.map((step) => <li>{step}</li>)}</ol>
-            <p class="steps__note">Applying doesn't commit you to buy.</p>
+            <p class="steps__note">Applying and trying don't commit you to buy.</p>
           </div>
         </div>
       </div>
@@ -350,20 +350,28 @@ const steps = [
             <p>A small paid group means every setup gets personal support, and feedback comes from real use. Your €59 covers the beta, its updates, direct support, and the v1 release.</p>
           </details>
           <details>
+            <summary><span>Can I try it before paying?</span><img src="/assets/icons/chevDown.svg" alt="" width="16" height="16" /></summary>
+            <p>Yes. Once you're invited, you get the full app to try on your own library for 14 days. If you keep it, €59 covers every beta update, direct support from me, and the v1 release.</p>
+          </details>
+          <details>
             <summary><span>Is €59 a subscription?</span><img src="/assets/icons/chevDown.svg" alt="" width="16" height="16" /></summary>
             <p>No. It is a one-time founding-beta purchase under the published terms.</p>
           </details>
           <details>
             <summary><span>Will I need a licence key?</span><img src="/assets/icons/chevDown.svg" alt="" width="16" height="16" /></summary>
-            <p>Not during the beta: access and builds come directly from the founder. When licensing arrives with the public release, founding customers get it at no extra cost.</p>
+            <p>Not during the beta: access and builds come directly from me. When licensing arrives with the public release, founding customers get it at no extra cost.</p>
           </details>
           <details>
             <summary><span>How do updates work?</span><img src="/assets/icons/chevDown.svg" alt="" width="16" height="16" /></summary>
-            <p>The founder sends each new notarized build with release notes and update steps. Automatic updates come after the beta.</p>
+            <p>I send each new notarized build with release notes and update steps. Automatic updates come after the beta.</p>
           </details>
           <details>
             <summary><span>Does it move my samples?</span><img src="/assets/icons/chevDown.svg" alt="" width="16" height="16" /></summary>
             <p>No. {productName} indexes your files where they already live.</p>
+          </details>
+          <details>
+            <summary><span>What happens if you stop developing {productName}?</span><img src="/assets/icons/chevDown.svg" alt="" width="16" height="16" /></summary>
+            <p>The copy you have keeps working. It has no account, licence server or online check, so it never needs me or any server to run. Your audio files never move, and you can export every sound's ratings, favorites, tags, crates and notes to a CSV file at any time. If I ever stop, I'll email every customer at least 60 days ahead and publish a final build.</p>
           </details>
           <details>
             <summary><span>What if it doesn't work for my setup?</span><img src="/assets/icons/chevDown.svg" alt="" width="16" height="16" /></summary>
