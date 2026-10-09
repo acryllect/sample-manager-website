@@ -35,8 +35,6 @@ export const links = {
 
 export const text = {
   supportEmail: "help@samplelantern.com",
-  cohortStatus: "Applications open",
-  nextReviewDate: "19 October 2026",
   buildVersion: "0.9.0 (1)",
   supportedLibrarySize: "100,000",
   memoryRequirement: "8 GB or more, the least any Apple silicon Mac has",

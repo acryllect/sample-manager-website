@@ -5,7 +5,7 @@ import Footer from "../components/Footer.astro";
 import ShotWindow from "../components/ShotWindow.astro";
 import Wave from "../components/Wave.astro";
 import SupportEmail from "../components/SupportEmail.astro";
-import { site, links, text, applyHref, openPlaceholders, isPlaceholder } from "../config/site";
+import { site, links, applyHref, openPlaceholders, isPlaceholder } from "../config/site";
 
 // The demo block renders only once the video exists, so nothing is requested before then.
 const hasDemo = !isPlaceholder(links.demoVideo);
@@ -400,7 +400,6 @@ const steps = [
             <img src="/assets/app-icon-160.png" srcset="/assets/app-icon-160.png 2x, /assets/app-icon-240.png 3x" alt="" width="80" height="80" />
           </div>
           <h2 class="sl-heading__title" id="cta-title">You already own the sound. Find it.</h2>
-          <p class="cta__line">First cohort: about 10 places · {text.cohortStatus} · Next review {text.nextReviewDate}</p>
           <div class="sl-actions sl-actions--center">
             <a class="sl-button sl-button--primary" href={applyHref("closing")}>Apply for an invitation</a>
           </div>
