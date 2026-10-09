@@ -63,9 +63,9 @@ export const shots: Record<string, Shot> = {
   },
   S09: {
     id: "S09",
-    title: "Reference mode",
-    state: "Reference mode: adding a library in Reference mode",
-    alt: "Adding an existing folder to SampleLantern in Reference mode, so the files stay where they are.",
+    title: "Files stay put",
+    state: "Adding a folder: its files stay where they are",
+    alt: "Adding an existing folder to SampleLantern. The files stay where they are.",
     caption: "Index in place. Keep your files on your Mac.",
   },
   S10: {
