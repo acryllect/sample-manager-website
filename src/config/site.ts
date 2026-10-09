@@ -23,7 +23,7 @@ export const site = {
 /** Links. The first four are still open placeholders: replace the value with the real one, and leave
  *  the [BRACKET] until then. The other four are the site's own pages. */
 export const links = {
-  application: "[APPLICATION_URL]",
+  application: "https://tally.so/r/gDybaJ",
   demoVideo: "[DEMO_VIDEO_URL]",
   demoPoster: "[DEMO_POSTER]",
   demoCaptions: "[DEMO_CAPTIONS_URL]",
@@ -44,7 +44,7 @@ export const text = {
   foundingEntitlement: "[EXACT FOUNDING ENTITLEMENT]",
   refundPolicy: "[REFUND_POLICY]",
   paymentProvider: "[PAYMENT_PROVIDER]",
-  applicationFormProvider: "[APPLICATION_FORM_PROVIDER]",
+  applicationFormProvider: "Tally",
   termsLegalText: "[TERMS_LEGAL_TEXT]",
   privacyLegalText: "[PRIVACY_LEGAL_TEXT]",
 } as const;
