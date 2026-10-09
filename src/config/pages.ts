@@ -12,11 +12,11 @@ export const docPages: Record<string, readonly string[]> = {
   "/supported-setup/": [text.buildVersion, text.memoryRequirement, text.supportedLibrarySize],
   "/safety/": [text.supportEmail],
   "/support/": [text.supportEmail],
-  "/privacy/": [text.applicationFormProvider, text.paymentProvider, text.sellerDetails, text.privacyLegalText, text.supportEmail],
+  "/privacy/": [text.sellerDetails, text.supportEmail],
   // Its refund line links to /terms/, so it stays noindex until the refund policy is real.
   "/pricing/": [text.refundPolicy],
   "/changelog/": [],
-  "/terms/": [text.foundingEntitlement, text.paymentProvider, text.refundPolicy, text.termsLegalText, text.sellerDetails],
+  "/terms/": [text.foundingEntitlement, text.paymentProvider, text.refundPolicy, text.sellerDetails],
 };
 
 /** Pages that stay noindex and out of the sitemap for good: the thank-you page the application

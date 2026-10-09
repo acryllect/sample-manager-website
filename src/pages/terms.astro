@@ -1,9 +1,12 @@
 ---
 import DocPage from "../components/DocPage.astro";
 import DocSection from "../components/DocSection.astro";
-import { site, text, links } from "../config/site";
+import SupportEmail from "../components/SupportEmail.astro";
+import { site, text, links, legal, splitOnSupportEmail } from "../config/site";
 
 const { productName } = site;
+// Renders a string with each support address as a mailto link.
+const withEmail = (value: string) => splitOnSupportEmail(value).map((part) => (part === text.supportEmail ? { email: true } : { text: part }));
 ---
 
 <DocPage title="Founding beta terms" path="/terms/">
@@ -28,18 +31,18 @@ const { productName } = site;
   </DocSection>
 
   <DocSection id="payment" title="Payment">
-    <p>Payment is processed by {text.paymentProvider}.</p>
+    <p>Payment is processed by {text.paymentProvider}, my merchant of record. {text.paymentProvider} sells the licence, takes the payment, handles VAT and sends your receipt.</p>
   </DocSection>
 
   <DocSection id="refunds" title="Refunds">
-    <p>{text.refundPolicy}</p>
+    <p>{withEmail(text.refundPolicy).map((p) => ("email" in p ? <SupportEmail /> : p.text))}</p>
   </DocSection>
 
   <DocSection id="terms-of-use" title="Terms of use, warranty and liability">
-    <p>{text.termsLegalText}</p>
+    {legal.terms.map((p) => <p><strong>{p.lead}</strong> {p.body}</p>)}
   </DocSection>
 
   <DocSection id="seller" title="Seller">
-    <p>{text.sellerDetails}</p>
+    <p>{withEmail(text.sellerDetails).map((p) => ("email" in p ? <SupportEmail /> : p.text))}</p>
   </DocSection>
 </DocPage>
