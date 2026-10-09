@@ -1,28 +1,36 @@
 ---
 /**
- * ScreenshotFrame window. Shows the real capture when shot.src is set, otherwise a labelled
- * placeholder. Never a mock of the app. Only the hero shot passes `eager`; the rest lazy-load.
+ * ScreenshotFrame window. Shows the real capture once the shot is captured (data/shots.ts),
+ * otherwise a labelled placeholder. Never a mock of the app. The capture is served by astro:assets
+ * as AVIF and WebP with a JPEG fallback, at three widths. Only the hero shot passes `eager`; the
+ * rest lazy-load.
  */
-import type { Shot } from "../data/shots";
+import { Picture } from "astro:assets";
+import { shotImage, type Shot } from "../data/shots";
 
 interface Props {
   shot: Shot;
   eager?: boolean;
 }
 const { shot, eager = false } = Astro.props;
+const image = shotImage(shot);
 ---
 
 <div class="sl-shot__window" data-window={shot.id}>
   {
-    shot.src ? (
-      <img
-        src={shot.src}
+    image ? (
+      <Picture
+        src={image}
         alt={shot.alt}
+        formats={["avif", "webp"]}
+        fallbackFormat="jpg"
+        widths={[720, 1200, 2400]}
+        sizes="(max-width: 1200px) 100vw, 1200px"
+        width={image.width}
+        height={image.height}
         loading={eager ? "eager" : "lazy"}
         fetchpriority={eager ? "high" : undefined}
         decoding="async"
-        width="2400"
-        height="1500"
       />
     ) : (
       <div class="shot-ph" role="img" aria-label={`Placeholder for ${shot.id}. ${shot.alt}`}>

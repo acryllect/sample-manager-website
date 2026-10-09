@@ -228,12 +228,12 @@ After the domain is live, check by hand:
 
 - [ ] `https://samplelantern.com/` loads over HTTPS with a valid certificate
 - [ ] `https://www.samplelantern.com/` redirects to the apex
-- [ ] `/supported-setup/`, `/known-issues/`, `/safety/`, `/support/`, `/privacy/` and `/terms/` load (the footer and the app link to them). While a page still prints an open `[PLACEHOLDER]` it is `noindex` and absent from `/sitemap-0.xml`; see the README
+- [ ] `/supported-setup/`, `/known-issues/`, `/safety/`, `/support/`, `/privacy/`, `/terms/`, `/pricing/` and `/changelog/` load (the footer and the app link to them). While a page still prints an open `[PLACEHOLDER]` it is `noindex` and absent from `/sitemap-0.xml`; see the README
 - [ ] `/robots.txt` and `/sitemap-index.xml` are reachable
 - [ ] View source on `/` — no `[BRACKETED]` placeholder is left in any `href`
       or visible text you did not intend to ship (the build log lists the open
       ones), and no link points at a download or a public checkout
-- [ ] The only third-party request is Inter from Google Fonts
+- [ ] The page makes no third-party request (Inter is served from `/fonts/`)
 
 ### Smoke checklist (run after every deploy that touches config or headers)
 

@@ -15,9 +15,13 @@ export const site = {
   siteUrl: "https://samplelantern.com",
   owner: "Alessandro Pelosio",
   year: 2026,
+  /** The build customers have: the marketing version, without the build number. */
+  softwareVersion: "0.9.0",
   title: `${productName} founding beta: Find the sounds you already own`,
   description:
     "Apply for a small €59 paid beta of a private Mac sample library for producers, sound designers, and composers with substantial local libraries.",
+  ogImageAlt:
+    "SampleLantern: Find the sound. Skip the folders. Search results for metallic distorted impact in the app, on an Apple silicon Mac with macOS 14 or later.",
 } as const;
 
 /** Links. The first four are still open placeholders: replace the value with the real one, and leave

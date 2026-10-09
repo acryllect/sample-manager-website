@@ -13,6 +13,8 @@ export const docPages: Record<string, readonly string[]> = {
   "/safety/": [text.supportEmail],
   "/support/": [text.supportEmail],
   "/privacy/": [text.applicationFormProvider, text.paymentProvider, text.sellerDetails, text.privacyLegalText, text.supportEmail],
+  "/pricing/": [],
+  "/changelog/": [],
   "/terms/": [text.foundingEntitlement, text.paymentProvider, text.refundPolicy, text.termsLegalText, text.sellerDetails],
 };
 

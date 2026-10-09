@@ -2,8 +2,9 @@
 
 The founding paid-beta landing page for **SampleLantern**, a native macOS app for searching and
 organising large local sample libraries. One static page, plus six support and policy pages the app
-and the footer link to. No backend, no analytics, no cookie banner, no third-party scripts. Inter
-from Google Fonts is the only external request.
+and the footer link to, a pricing page and a changelog. No backend, no analytics, no cookie banner,
+no third-party scripts and no third-party requests: Inter is self-hosted from `public/fonts/`
+(rsms/inter v4.1, SIL Open Font License 1.1, `public/fonts/LICENSE.txt`).
 
 The page has one job: let a qualified visitor decide they fit, understand the pre-release
 trade-off, and apply for a purchase invitation. It has no download link and no trial.
@@ -16,7 +17,8 @@ trade-off, and apply for a purchase invitation. It has no download link and no t
   animated search field and the audition sweep.
 - The SampleLantern Web design system, copied in: `src/styles/tokens.css` (generated from the
   system's `tokens.json`) and `src/styles/bundle.css` (its `sl-*` components, with the Inter
-  `@import` removed because the font is linked from `<head>`). `src/styles/site.css` holds page
+  `@import` removed because the font is self-hosted: `@font-face` in `site.css`, preloaded from
+  `<head>`). `src/styles/site.css` holds page
   layout only.
 
 ## Run, build, test, deploy
@@ -65,13 +67,19 @@ closing.
 ## Screenshots and the demo video
 
 Until a capture exists, each screenshot is a labelled placeholder (shot ID and state). The page
-never mocks an app screen in HTML. To ship a capture, put a 16:10 crop under `public/screenshots/`
-and set `src` on that shot in `src/data/shots.ts`. Crop at 2400 x 1500: the hero window is 1,200 CSS
-px wide, so that is a sharp 2x. Only S01 (hero) loads eagerly; the rest lazy-load. Each shot appears
+never mocks an app screen in HTML. To ship a capture, put its 2400 x 1500 PNG master at
+`src/assets/shots/<ID>.png` and set `captured: true` on that shot in `src/data/shots.ts` (one line).
+The hero window is 1,200 CSS px wide, so 2400 is a sharp 2x. `astro:assets` builds AVIF, WebP and a
+JPEG fallback at 720, 1200 and 2400 px wide. Only S01 (hero) loads eagerly; the rest lazy-load. Each shot appears
 once: S01 hero, S05 S02 S06 S04 S10 S08 in the tour (in that order), S09 in the privacy section.
 Captures come from the notarized paid-beta build with the demo library. The demo video uses
 `links.demoVideo`, `links.demoPoster` and `links.demoCaptions`; it is a 16:9 frame that plays muted
 with captions on and is never behind a form.
+
+The social card is `public/og/home.png` (1200 x 630), built from S01, the app icon, the wordmark and
+the headline by `node scripts/make-og.mjs <dir>`, where `<dir>` holds `Inter-SemiBold.ttf` and
+`Inter-Medium.ttf` from the same Inter release (`extras/ttf/`). It uses sharp, which Astro already
+installs. Rerun it when S01 or the headline changes.
 
 ## Motion
 

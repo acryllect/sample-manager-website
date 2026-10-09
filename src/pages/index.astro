@@ -23,6 +23,25 @@ const next = [
   { title: "Projects", text: "Set a tempo and key, and audition sounds matched to them." },
   { title: "Automatic updates", text: "Updates arrive in the app. No more manual downloads." },
 ];
+// Measured facts, each with its conditions (search: RV-60a; no rescan: measured for MIRO-02;
+// indexing: my own library, B-117, 2026-10-08). Do not add a number without its measurement.
+const numbers = [
+  {
+    figure: "0.3 s",
+    title: "Search",
+    text: "On a test library of 100,000 sounds on an M3 Pro Mac, results appear about 0.3 seconds after your last keystroke.",
+  },
+  {
+    figure: "No rescan",
+    title: "Opening the app",
+    text: "Your catalog is kept between sessions. Opening the app doesn't rescan your folders.",
+  },
+  {
+    figure: "1 h 51 min",
+    title: "Indexing my own library",
+    text: "114,326 sounds, 286 GB, on my M3 Pro MacBook Pro. The first pass (tempo, key, type and waveforms) took about 10 minutes, then tagging by sound ran in the background for the rest. You can search while it works.",
+  },
+];
 const included = [
   "Private access to the founding beta",
   "Direct onboarding and support from me",
@@ -48,7 +67,7 @@ const steps = [
 <BaseLayout>
   <Header />
 
-  <main>
+  <main id="main">
     <!-- Hero -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="sl-container">
@@ -142,6 +161,26 @@ const steps = [
             </figure>
           )
         }
+      </div>
+    </section>
+
+    <!-- Numbers: measured facts only, each with its conditions. -->
+    <section class="sl-section" id="numbers" aria-labelledby="numbers-title">
+      <div class="sl-container">
+        <div class="sl-heading sl-heading--center section-intro" data-reveal>
+          <h2 class="sl-heading__title" id="numbers-title">How fast it is, measured.</h2>
+        </div>
+        <ul class="numbers" role="list">
+          {
+            numbers.map((n, i) => (
+              <li data-reveal style={`--i:${i}`}>
+                <p class="numbers__figure">{n.figure}</p>
+                <h3 class="numbers__title">{n.title}</h3>
+                <p class="numbers__text">{n.text}</p>
+              </li>
+            ))
+          }
+        </ul>
       </div>
     </section>
 
@@ -379,7 +418,7 @@ const steps = [
           </details>
           <details>
             <summary><span>What happens if you stop developing {productName}?</span><img src="/assets/icons/chevDown.svg" alt="" width="16" height="16" /></summary>
-            <p>The copy you have keeps working. It has no account, licence server or online check, so it never needs me or any server to run. Your audio files never move, and you can export every sound's ratings, favorites, tags, crates and notes to a CSV file at any time. If I ever stop, I'll email every customer at least 60 days ahead and publish a final build.</p>
+            <p>The copy you have keeps working. It has no account, licence server or online check, so it never needs me or any server to run. Your audio files never move, and you can export every sound's ratings, favourites, tags, crates and notes to a CSV file at any time. If I ever stop, I'll email every customer at least 60 days ahead and publish a final build.</p>
           </details>
           <details>
             <summary><span>What if it doesn't work for my setup?</span><img src="/assets/icons/chevDown.svg" alt="" width="16" height="16" /></summary>

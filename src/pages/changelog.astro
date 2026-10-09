@@ -1,0 +1,25 @@
+---
+import DocPage from "../components/DocPage.astro";
+import DocSection from "../components/DocSection.astro";
+import { site, links } from "../config/site";
+
+const { productName } = site;
+---
+
+<DocPage title="Changelog" path="/changelog/">
+  <Fragment slot="lead">Every founding-beta build, newest first.</Fragment>
+
+  <DocSection id="0-9-0-1" title="0.9.0 (1), 7 October 2026">
+    <p>The first founding-beta build. What it does:</p>
+    <ul>
+      <li>{productName} reads your folders in place. Files are never moved.</li>
+      <li>BPM, key, type, and tags for every sound, analysed on your Mac, with low-confidence values flagged.</li>
+      <li>Search that forgives typos: plain words, rough spellings, or exact filters like bpm:118-124.</li>
+      <li>Find similar: pick a close sound and get its nearest neighbours from the whole library.</li>
+      <li>Level-matched auditioning, with optional loudness normalisation, so quiet sounds get a fair hearing.</li>
+      <li>Crates, tags, and ratings: collect finds, tag and rate them, and leave your folders alone.</li>
+      <li>WAV, AIFF, and FLAC export. Exports are new files. Your originals stay as they are.</li>
+    </ul>
+    <p>What doesn't work yet in this build is on the <a href={links.knownIssues}>known issues</a> page.</p>
+  </DocSection>
+</DocPage>

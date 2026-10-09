@@ -1,0 +1,30 @@
+---
+import DocPage from "../components/DocPage.astro";
+import DocSection from "../components/DocSection.astro";
+import { applyHref, links } from "../config/site";
+---
+
+<DocPage title="Pricing" path="/pricing/">
+  <Fragment slot="lead">€59 once, after a 14-day trial on your own library. Prices include VAT.</Fragment>
+
+  <DocSection id="try-it-first" title="Try it first">
+    <p>Apply, and if your setup fits, I send you an invitation. You then get 14 days to try the full app on your own library.</p>
+  </DocSection>
+
+  <DocSection id="the-founding-price" title="The founding price">
+    <p>To keep it, you pay €59 once. That is the founding price, and it includes v1.</p>
+    <p>Later, the public price will be €99.</p>
+  </DocSection>
+
+  <DocSection id="your-macs" title="Your Macs">
+    <p>Use it on up to two of your Macs.</p>
+  </DocSection>
+
+  <DocSection id="vat-and-refunds" title="VAT and refunds">
+    <p>Prices include VAT. Refunds are covered in the <a href={links.terms}>founding beta terms</a>.</p>
+  </DocSection>
+
+  <div class="sl-actions doc__actions">
+    <a class="sl-button sl-button--primary" href={applyHref("pricing")}>Apply for an invitation</a>
+  </div>
+</DocPage>

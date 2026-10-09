@@ -39,7 +39,7 @@ const description = lead.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim() || 
 
 <BaseLayout title={`${title} · ${site.productName}`} description={description} noindex={noindex}>
   <Header />
-  <main class="doc sl-container">
+  <main class="doc sl-container" id="main">
     <div class:list={["doc__layout", { "doc__layout--toc": toc.length >= 4 }]}>
       {
         toc.length >= 4 && (

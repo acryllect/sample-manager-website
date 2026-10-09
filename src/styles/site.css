@@ -16,6 +16,17 @@
 }
 @media (max-width: 639px) { :root { --halo-reach: 24px; } }
 
+/* Inter, self-hosted from its official release (rsms/inter v4.1, SIL Open Font License 1.1, the
+   licence is public/fonts/LICENSE.txt). One variable file covers the opsz and wght axes the site
+   uses (400 to 600). */
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/InterVariable.woff2") format("woff2");
+}
+
 html { scroll-padding-top: calc(var(--toolbar-height) + var(--space-16)); }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 body { overflow-x: clip; }
@@ -27,6 +38,13 @@ body { overflow-x: clip; }
 
 /* One focus ring everywhere: 2px solid, 2px offset. */
 .sl-page :where(a, button, summary, video, [tabindex]):focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* Skip link: off-screen until focused. */
+.skip { position: absolute; left: var(--space-16); top: var(--space-8); z-index: 100; padding: var(--space-8) var(--space-16); border-radius: var(--radius-control); background: var(--cta-fill); color: var(--on-cta); font-weight: 500; text-decoration: none; transform: translateY(-200%); }
+.skip:focus { transform: none; }
+
+/* The secondary button gets a 1px boundary so its shape meets 3:1 against the page (WCAG 1.4.11). */
+.sl-button:not(.sl-button--primary) { box-shadow: inset 0 0 0 1px var(--strong-border); }
 
 .text-small { font-size: 15px; line-height: 22px; }
 .section-intro { margin-bottom: var(--space-48); }
@@ -55,6 +73,9 @@ body { overflow-x: clip; }
 }
 
 /* ScreenshotFrame placeholder: labelled with the shot ID and state, never a mock of the app. */
+/* A capture is a <picture>: its img fills the window like a bare img does. */
+.sl-shot__window > picture > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
 .shot-ph { box-sizing: border-box; width: calc(100% - var(--space-24)); height: calc(100% - var(--space-24)); margin: var(--space-12); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-8); padding: var(--space-16); border: 1px dashed var(--strong-border); border-radius: var(--radius-control); text-align: center; }
 .shot-ph__id { font-size: 13px; line-height: 16px; font-weight: 500; letter-spacing: .02em; color: var(--secondary-text); }
 .shot-ph__state { max-width: 44ch; font-size: 15px; line-height: 22px; color: var(--tertiary-text); text-wrap: balance; }
@@ -209,6 +230,8 @@ body { overflow-x: clip; }
 .faq summary { display: flex; align-items: center; justify-content: space-between; gap: var(--space-16); padding-block: var(--space-16); font-weight: 500; cursor: pointer; list-style: none; }
 .faq summary::-webkit-details-marker { display: none; }
 .faq summary:hover { color: var(--secondary-text); }
+/* A cue that is not colour alone: the question underlines on hover and keyboard focus. */
+.faq summary:hover > span, .faq summary:focus-visible > span { text-decoration: underline; text-decoration-color: var(--strong-border); text-underline-offset: 3px; }
 .faq summary > img { flex: none; transition: transform .15s ease; }
 .faq details[open] summary > img { transform: rotate(180deg); }
 .faq details p { max-width: var(--measure); padding-bottom: var(--space-24); color: var(--secondary-text); }
@@ -309,3 +332,14 @@ body { overflow-x: clip; }
 /* Scroll reveal: fade up once as an element enters; --i staggers siblings by 60ms. */
 .motion [data-reveal] { opacity: 0; transform: translateY(16px); transition: opacity .5s var(--ease-out), transform .5s var(--ease-out); transition-delay: calc(var(--i, 0) * 60ms); }
 .motion [data-reveal].is-in { opacity: 1; transform: none; }
+
+/* Numbers: three measured facts, each a figure, a title and its conditions. */
+.numbers { display: grid; gap: var(--space-24); }
+@media (min-width: 900px) { .numbers { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.numbers > li { padding: var(--space-24); border: 1px solid var(--hairline); border-radius: var(--radius-panel); background: var(--sidebar); }
+.numbers__figure { font-size: 32px; line-height: 40px; font-weight: 600; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.numbers__title { margin-top: var(--space-8); font-size: 15px; line-height: 20px; font-weight: 500; color: var(--secondary-text); }
+.numbers__text { margin-top: var(--space-12); font-size: 15px; line-height: 22px; color: var(--secondary-text); text-wrap: pretty; }
+
+/* A call to action at the end of a doc page. */
+.doc__actions { max-width: 680px; margin: var(--space-48) auto 0; }

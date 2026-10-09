@@ -1,5 +1,5 @@
 /* Synced from the SampleLantern Web design system (project/components/bundle.css). The Inter @import was
-   removed: the font is linked from <head> in BaseLayout.astro, the site's only external request. */
+   removed: Inter is self-hosted, declared in site.css and preloaded from <head> in BaseLayout.astro. */
 
 /* Page ground. Put .sl-page on <body>. */
 .sl-page { margin:0; background:var(--canvas); color:var(--primary-text); font-family:var(--font-sans); font-size:17px; line-height:26px; font-optical-sizing:auto; -webkit-font-smoothing:antialiased; }
