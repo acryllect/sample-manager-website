@@ -77,9 +77,10 @@ Captures come from the notarized paid-beta build with the demo library. The demo
 with captions on and is never behind a form.
 
 The social card is `public/og/home.png` (1200 x 630), built from S01, the app icon, the wordmark and
-the headline by `node scripts/make-og.mjs <dir>`, where `<dir>` holds `Inter-SemiBold.ttf` and
-`Inter-Medium.ttf` from the same Inter release (`extras/ttf/`). It uses sharp, which Astro already
-installs. Rerun it when S01 or the headline changes.
+the headline with a one-off sharp script (sharp is what Astro already installs), using
+`Inter-SemiBold.ttf` and `Inter-Medium.ttf` from the same Inter release (`extras/ttf/`). The script
+is kept with the WEB-03 evidence, outside this repository; rebuild the card when S01 or the
+headline changes.
 
 ## Motion
 
