@@ -13,7 +13,8 @@ export const docPages: Record<string, readonly string[]> = {
   "/safety/": [text.supportEmail],
   "/support/": [text.supportEmail],
   "/privacy/": [text.applicationFormProvider, text.paymentProvider, text.sellerDetails, text.privacyLegalText, text.supportEmail],
-  "/pricing/": [],
+  // Its refund line links to /terms/, so it stays noindex until the refund policy is real.
+  "/pricing/": [text.refundPolicy],
   "/changelog/": [],
   "/terms/": [text.foundingEntitlement, text.paymentProvider, text.refundPolicy, text.termsLegalText, text.sellerDetails],
 };

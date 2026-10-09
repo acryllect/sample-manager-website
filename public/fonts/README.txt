@@ -1,0 +1,1 @@
+InterVariable.woff2 is a subset of Inter 4.1 (rsms/inter, SIL Open Font License 1.1, see LICENSE.txt; no Reserved Font Name), keeping the wght and opsz axes, made with fontTools 4.66.1: pyftsubset InterVariable.woff2 --unicodes="U+0000-00FF,U+2000-206F,U+20AC,U+2318,U+25B8" --layout-features="*" --flavor=woff2 --output-file=InterVariable.woff2
