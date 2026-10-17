@@ -58,7 +58,7 @@ parameters only once the URL is real, and never any personal data.
 
 ## Page sections
 
-In order: hero (the silent loop, `public/media/samplelantern-loop-v1.mp4`), search ("Your library is bigger than your memory."), how it works (the tour,
+In order: hero (the silent loop, `https://media.samplelantern.com/samplelantern-loop-v1.mp4`), search ("Your library is bigger than your memory."), how it works (the tour,
 then the demo video), today and next (`id="beta-scope"`: today cards, planned items, what is not in
 the beta), privacy (S09), offer (`id="offer"`), who it's for and how joining works, FAQ (`id="faq"`),
 closing call to action. "Apply for an invitation" appears exactly four times: header, hero, offer,
@@ -78,8 +78,11 @@ frame with controls, `preload="none"` and no `playsinline` (an iPhone plays it f
 hero button plays it with sound; its captions track is available but off by default, because the
 lines are already on screen. It is never behind a form. The hero shows a silent 15-second loop
 instead of S01: muted, started from script only when motion is allowed (with `preload="none"` in
-the markup, so under Reduce Motion only its poster loads), with a Pause/Play button. Media files
-live in `public/media/` with a version in the name (`-v1`) and an immutable cache header.
+the markup, so under Reduce Motion only its poster loads), with a Pause/Play button. The film and the loop MP4s live on R2 at
+`https://media.samplelantern.com/`, because iOS plays video only from a server that answers byte-range
+requests (`206`) and Workers static assets do not; the CSP's `media-src` allows that host. The
+posters and the captions stay in `public/media/`. Every media file has a version in its name
+(`-v1`), and `public/media/` has an immutable cache header.
 
 The social card is `public/og/home.png` (1200 x 630), built from S01, the app icon, the wordmark and
 the headline with a one-off sharp script (sharp is what Astro already installs), using
