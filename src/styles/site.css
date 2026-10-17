@@ -1,6 +1,6 @@
 /* Page layout for the founding-beta landing page. Colours, type, space, radii and shadows come from
    tokens.css; components come from bundle.css. Nothing here invents a value the design system owns,
-   except the black shadows on the hero film and the closing icon, and the motion timings. Design-system classes changed here, and why:
+   except the black shadows on the hero film, its play button and the closing icon, and the motion timings. Design-system classes changed here, and why:
    .sl-nav (translucent header), .sl-section (tighter rhythm), .sl-search--large (animated field).
    The html classes "js" and "motion" are set by the inline script in BaseLayout: every
    hidden-before-reveal state below is behind "motion", so no JavaScript or reduced motion means
@@ -95,8 +95,8 @@ body { overflow-x: clip; }
 /* The hero film: a whole 16:9 frame with its own black ground, so no window frame, only the shots'
    corners. Its play button sits centred over the still; the triangle is nudged right to look centred. */
 .hero__film { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: var(--radius-panel); background: #000; box-shadow: 0 0 0 1px var(--hairline), var(--shadow-window), 0 0 calc(var(--halo-reach) * .75) calc(var(--halo-reach) * .125) rgb(0 0 0 / 55%); }
-.hero__play { position: absolute; top: 50%; left: 50%; display: grid; place-items: center; width: 72px; height: 72px; margin: -36px 0 0 -36px; padding: 0; border: 0; border-radius: 50%; background: rgb(255 255 255 / 92%); color: #0a0a0a; box-shadow: 0 8px 24px rgb(0 0 0 / 55%); cursor: pointer; transition: background-color .15s ease; }
-.hero__play:hover { background: rgb(255 255 255 / 100%); }
+.hero__play { position: absolute; top: 50%; left: 50%; display: grid; place-items: center; width: 72px; height: 72px; margin: -36px 0 0 -36px; padding: 0; border: 0; border-radius: 50%; background: color-mix(in srgb, var(--cta-fill) 92%, transparent); color: var(--on-cta); box-shadow: 0 8px 24px rgb(0 0 0 / 55%); cursor: pointer; transition: background-color .15s ease; }
+.hero__play:hover { background: var(--cta-fill); }
 .hero__play:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 .hero__play[hidden] { display: none; }
 .hero__play > svg { display: block; margin-left: 4px; fill: currentColor; }
