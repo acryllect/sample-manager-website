@@ -14,7 +14,7 @@ trade-off, and apply for a purchase invitation. It has no download link and no t
 - [Astro](https://astro.build) as a static build tool. It ships no client framework; the only
   JavaScript is inline: the contrast theme, the `js` / `motion` classes and the scroll reveal in
   `BaseLayout.astro`, and one script in `index.astro` for the tour tabs and auto-advance, the
-  animated search field and the audition sweep.
+  animated search field, the audition sweep, the hero loop's Pause/Play and the film button.
 - The SampleLantern Web design system, copied in: `src/styles/tokens.css` (generated from the
   system's `tokens.json`) and `src/styles/bundle.css` (its `sl-*` components, with the Inter
   `@import` removed because the font is self-hosted: `@font-face` in `site.css`, preloaded from
@@ -58,7 +58,7 @@ parameters only once the URL is real, and never any personal data.
 
 ## Page sections
 
-In order: hero (S01), search ("Your library is bigger than your memory."), how it works (the tour,
+In order: hero (the silent loop, `public/media/samplelantern-loop-v1.mp4`), search ("Your library is bigger than your memory."), how it works (the tour,
 then the demo video), today and next (`id="beta-scope"`: today cards, planned items, what is not in
 the beta), privacy (S09), offer (`id="offer"`), who it's for and how joining works, FAQ (`id="faq"`),
 closing call to action. "Apply for an invitation" appears exactly four times: header, hero, offer,
@@ -70,11 +70,16 @@ Until a capture exists, each screenshot is a labelled placeholder (shot ID and s
 never mocks an app screen in HTML. To ship a capture, put its 2400 x 1500 PNG master at
 `src/assets/shots/<ID>.png` and set `captured: true` on that shot in `src/data/shots.ts` (one line).
 The hero window is 1,200 CSS px wide, so 2400 is a sharp 2x. `astro:assets` builds AVIF, WebP and a
-JPEG fallback at 720, 1200 and 2400 px wide. Only S01 (hero) loads eagerly; the rest lazy-load. Each shot appears
-once: S01 hero, S05 S02 S06 S04 S10 S08 in the tour (in that order), S09 in the privacy section.
-Captures come from the notarized paid-beta build with the demo library. The demo video uses
-`links.demoVideo`, `links.demoPoster` and `links.demoCaptions`; it is a 16:9 frame that plays muted
-with captions on and is never behind a form.
+JPEG fallback at 720, 1200 and 2400 px wide. Every shot on the page lazy-loads. Each shot appears
+once: S05 S02 S06 S04 S10 S08 in the tour (in that order), S09 in the privacy section.
+Captures come from the notarized paid-beta build with the demo library. The demo video (the
+32-second film) uses `links.demoVideo`, `links.demoPoster` and `links.demoCaptions`; it is a 16:9
+frame with controls, `preload="none"` and no `playsinline` (an iPhone plays it full screen). The
+hero button plays it with sound; its captions track is available but off by default, because the
+lines are already on screen. It is never behind a form. The hero shows a silent 15-second loop
+instead of S01: muted, started from script only when motion is allowed (with `preload="none"` in
+the markup, so under Reduce Motion only its poster loads), with a Pause/Play button. Media files
+live in `public/media/` with a version in the name (`-v1`) and an immutable cache header.
 
 The social card is `public/og/home.png` (1200 x 630), built from S01, the app icon, the wordmark and
 the headline with a one-off sharp script (sharp is what Astro already installs), using
@@ -97,11 +102,9 @@ search field, the audition playhead sweep and the card hover.
 
 - Dark only. `data-theme="contrast"` is set on `<html>` when `prefers-contrast: more` matches.
 - The design system says LanternGlow appears exactly twice. The founder overrode that for this page
-  (WEB-01): `.sl-glow` is not used. `site.css` defines a page-level halo instead: a restrained light
-  behind the hero window only (at most 64px past its left, right and bottom edges, 24px on phones,
-  never above its top edge) and a small radial glow behind the closing icon only. No text, button
-  or control may overlap a glow, and there is no glow with Increase Contrast. `--halo-strength` in
-  `site.css` (`:root`) sets both; `0%` switches them off.
+  (WEB-01): `.sl-glow` is not used, and the page has no glow at all. The hero loop and the closing
+  icon both have black shadows instead (WEB-06, founder): the loop's reaches `--halo-reach` all round
+  (64px, 24px on phones), the icon's is a drop shadow that follows its rounded shape.
 - `site.css` also overrides three design-system classes, each noted at the top of the file: `.sl-nav`
   (translucent header), `.sl-section` (tighter section rhythm) and `.sl-search--large` (phone
   wrapping for the animated field).

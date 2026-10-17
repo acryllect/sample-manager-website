@@ -8,3 +8,8 @@
 # Inter's file name carries no hash: rename it if the font ever changes, or this caches the old one.
 /fonts/*
   Cache-Control: public, max-age=31536000
+
+# The film, the loop, their posters and captions. Each name carries its version (-v1); the next cut
+# is -v2, never a replacement under the same name.
+/media/*
+  Cache-Control: public, max-age=31536000, immutable
