@@ -85,8 +85,9 @@ const steps = [
         <div class="hero__shot" data-rise-shot>
           <div class="halo" aria-hidden="true"></div>
           <!-- The silent loop. No autoplay attribute: the script starts it only when motion is allowed,
-               so with Reduce Motion the poster is all that shows. -->
-          <video class="hero__loop" muted loop playsinline preload="auto" poster="/media/samplelantern-loop-v1-poster.jpg" width="1920" height="1080" aria-hidden="true" data-hero-loop>
+               and preload="none" keeps it from
+               downloading, so with Reduce Motion the poster is all that shows or loads. -->
+          <video class="hero__loop" muted loop playsinline preload="none" poster="/media/samplelantern-loop-v1-poster.jpg" width="1920" height="1080" aria-hidden="true" data-hero-loop>
             <source src="/media/samplelantern-loop-v1.mp4" type="video/mp4" />
           </video>
           <button type="button" class="sl-button hero__pause" data-loop-pause aria-label="Pause the loop" hidden>Pause</button>
@@ -655,6 +656,7 @@ const steps = [
             if (loop.paused) playLoop(); else loop.pause();
           });
           loopPause.hidden = false;
+          loop.preload = "auto";
           playLoop();
           stopLoop = function () {
             loop.pause();
