@@ -28,7 +28,7 @@ export const site = {
  *  the [BRACKET] until then. The other four are the site's own pages. */
 export const links = {
   application: "https://tally.so/r/gDybaJ",
-  demoVideo: "/media/samplelantern-film-v1.mp4",
+  demoVideo: "https://media.samplelantern.com/samplelantern-film-v1.mp4",
   demoPoster: "/media/samplelantern-film-v1-poster.jpg",
   demoCaptions: "/media/samplelantern-film-v1.en.vtt",
   knownIssues: "/known-issues/",
