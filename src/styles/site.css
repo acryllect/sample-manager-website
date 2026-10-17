@@ -1,6 +1,6 @@
 /* Page layout for the founding-beta landing page. Colours, type, space, radii and shadows come from
    tokens.css; components come from bundle.css. Nothing here invents a value the design system owns,
-   except the halo (see "Halo") and the motion timings. Design-system classes changed here, and why:
+   except the black shadows on the hero loop and the closing icon, and the motion timings. Design-system classes changed here, and why:
    .sl-nav (translucent header), .sl-section (tighter rhythm), .sl-search--large (animated field).
    The html classes "js" and "motion" are set by the inline script in BaseLayout: every
    hidden-before-reveal state below is behind "motion", so no JavaScript or reduced motion means
@@ -8,10 +8,8 @@
 
 :root {
   --ease-out: cubic-bezier(.22, .61, .36, 1);
-  /* The halo behind the hero window and the app icon. --halo-strength is the alpha of the light at its
-     strongest visible point: set it to 0% to switch every halo off. --halo-reach is how far the hero
-     halo extends past the window's left, right and bottom edges (never past its top edge). */
-  --halo-strength: 18%;
+  /* --halo-reach sets how far the hero loop's black shadow reaches past its edges, all round. The page
+     has no glow. */
   --halo-reach: 64px;
 }
 @media (max-width: 639px) { :root { --halo-reach: 24px; } }
@@ -80,16 +78,11 @@ body { overflow-x: clip; }
 .shot-ph__id { font-size: 13px; line-height: 16px; font-weight: 500; letter-spacing: .02em; color: var(--secondary-text); }
 .shot-ph__state { max-width: 44ch; font-size: 15px; line-height: 22px; color: var(--tertiary-text); text-wrap: balance; }
 
-/* The hero loop carries its own black shadow (.hero__loop below); the closing icon keeps a small
-   radial glow, set by --halo-strength. */
+/* The hero loop has a black shadow (.hero__loop below); the closing icon has one too. Neither glows. */
 .hero__shot { position: relative; isolation: isolate; }
-/* Closing icon: a small radial glow that ends 8px above the heading. */
+/* Closing icon: a black drop shadow that follows the icon's rounded shape. */
 .cta__icon { position: relative; isolation: isolate; width: 80px; height: 80px; margin-bottom: 48px; }
-.cta__icon > img { display: block; width: 80px; height: 80px; }
-.icon-halo { position: absolute; z-index: -1; inset: -40px; pointer-events: none; background: radial-gradient(closest-side, color-mix(in srgb, var(--lantern-glow) calc(var(--halo-strength) * 2), transparent), color-mix(in srgb, var(--lantern-glow) calc(var(--halo-strength) * .8), transparent) 50%, transparent); }
-/* Increase Contrast: no glow at all. */
-:root[data-theme="contrast"] .icon-halo { display: none; }
-@media (prefers-contrast: more) { :root:not([data-theme]) .icon-halo { display: none; } }
+.cta__icon > img { display: block; width: 80px; height: 80px; filter: drop-shadow(0 12px 24px rgb(0 0 0 / 55%)); }
 
 /* Hero */
 .hero { padding: var(--space-48) 0 var(--space-32); text-align: center; overflow-x: clip; }

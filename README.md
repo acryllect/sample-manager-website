@@ -102,10 +102,9 @@ search field, the audition playhead sweep and the card hover.
 
 - Dark only. `data-theme="contrast"` is set on `<html>` when `prefers-contrast: more` matches.
 - The design system says LanternGlow appears exactly twice. The founder overrode that for this page
-  (WEB-01): `.sl-glow` is not used. The only glow is a small radial one behind the closing icon
-  (`.icon-halo`). No text, button or control may overlap it, and it is off with Increase Contrast.
-  `--halo-strength` in `site.css` (`:root`) sets it; `0%` switches it off. The hero loop has no glow:
-  it has a black shadow all round (WEB-06, founder), reaching `--halo-reach` (64px, 24px on phones).
+  (WEB-01): `.sl-glow` is not used, and the page has no glow at all. The hero loop and the closing
+  icon both have black shadows instead (WEB-06, founder): the loop's reaches `--halo-reach` all round
+  (64px, 24px on phones), the icon's is a drop shadow that follows its rounded shape.
 - `site.css` also overrides three design-system classes, each noted at the top of the file: `.sl-nav`
   (translucent header), `.sl-section` (tighter section rhythm) and `.sl-search--large` (phone
   wrapping for the animated field).
