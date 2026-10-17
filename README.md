@@ -14,7 +14,7 @@ trade-off, and apply for a purchase invitation. It has no download link and no t
 - [Astro](https://astro.build) as a static build tool. It ships no client framework; the only
   JavaScript is inline: the contrast theme, the `js` / `motion` classes and the scroll reveal in
   `BaseLayout.astro`, and one script in `index.astro` for the tour tabs and auto-advance, the
-  animated search field and the audition sweep.
+  animated search field, the audition sweep, the hero loop's Pause/Play and the film button.
 - The SampleLantern Web design system, copied in: `src/styles/tokens.css` (generated from the
   system's `tokens.json`) and `src/styles/bundle.css` (its `sl-*` components, with the Inter
   `@import` removed because the font is self-hosted: `@font-face` in `site.css`, preloaded from

@@ -103,6 +103,12 @@ body { overflow-x: clip; }
 .hero .sl-actions { margin-top: 40px; }
 .hero__req { margin-top: var(--space-24); color: var(--tertiary-text); }
 .hero__shot { margin-top: var(--space-64); }
+/* The hero loop: a whole 16:9 frame with its own black ground, so no window frame, only the shots'
+   corners. Its Pause/Play button sits over the bottom-right corner and shows only with motion. */
+.hero__loop { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: var(--radius-panel); background: #000; box-shadow: 0 0 0 1px var(--hairline), var(--shadow-window); }
+.hero__pause { display: none; position: absolute; right: var(--space-12); bottom: var(--space-12); height: 32px; padding: 0 var(--space-12); color: var(--secondary-text); }
+.hero__pause:hover { color: var(--primary-text); }
+.motion .hero__pause:not([hidden]) { display: inline-flex; }
 
 /* Search */
 .search-demo { box-sizing: border-box; max-width: 720px; margin-inline: auto; }
