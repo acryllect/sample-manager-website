@@ -29,7 +29,7 @@ export const site = {
 export const links = {
   application: "https://tally.so/r/gDybaJ",
   demoVideo: "https://media.samplelantern.com/samplelantern-film-v1.mp4",
-  demoPoster: "/media/samplelantern-film-v1-poster.jpg",
+  demoPoster: "/media/samplelantern-film-v1-hero.jpg",
   demoCaptions: "/media/samplelantern-film-v1.en.vtt",
   knownIssues: "/known-issues/",
   supportedSetup: "/supported-setup/",

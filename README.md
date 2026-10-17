@@ -14,7 +14,7 @@ trade-off, and apply for a purchase invitation. It has no download link and no t
 - [Astro](https://astro.build) as a static build tool. It ships no client framework; the only
   JavaScript is inline: the contrast theme, the `js` / `motion` classes and the scroll reveal in
   `BaseLayout.astro`, and one script in `index.astro` for the tour tabs and auto-advance, the
-  animated search field, the audition sweep, the hero loop's Pause/Play and the film button.
+  animated search field, the audition sweep and the hero film's play button.
 - The SampleLantern Web design system, copied in: `src/styles/tokens.css` (generated from the
   system's `tokens.json`) and `src/styles/bundle.css` (its `sl-*` components, with the Inter
   `@import` removed because the font is self-hosted: `@font-face` in `site.css`, preloaded from
@@ -58,8 +58,7 @@ parameters only once the URL is real, and never any personal data.
 
 ## Page sections
 
-In order: hero (the silent loop, `https://media.samplelantern.com/samplelantern-loop-v1.mp4`), search ("Your library is bigger than your memory."), how it works (the tour,
-then the demo video), today and next (`id="beta-scope"`: today cards, planned items, what is not in
+In order: hero (the 32-second film, `links.demoVideo`), search ("Your library is bigger than your memory."), how it works (the tour), today and next (`id="beta-scope"`: today cards, planned items, what is not in
 the beta), privacy (S09), offer (`id="offer"`), who it's for and how joining works, FAQ (`id="faq"`),
 closing call to action. "Apply for an invitation" appears exactly four times: header, hero, offer,
 closing.
@@ -72,16 +71,17 @@ never mocks an app screen in HTML. To ship a capture, put its 2400 x 1500 PNG ma
 The hero window is 1,200 CSS px wide, so 2400 is a sharp 2x. `astro:assets` builds AVIF, WebP and a
 JPEG fallback at 720, 1200 and 2400 px wide. Every shot on the page lazy-loads. Each shot appears
 once: S05 S02 S06 S04 S10 S08 in the tour (in that order), S09 in the privacy section.
-Captures come from the notarized paid-beta build with the demo library. The demo video (the
-32-second film) uses `links.demoVideo`, `links.demoPoster` and `links.demoCaptions`; it is a 16:9
-frame with controls, `preload="none"` and no `playsinline` (an iPhone plays it full screen). The
-hero button plays it with sound; its captions track is available but off by default, because the
-lines are already on screen. It is never behind a form. The hero shows a silent 15-second loop
-instead of S01: muted, started from script only when motion is allowed (with `preload="none"` in
-the markup, so under Reduce Motion only its poster loads), with a Pause/Play button. The film and the loop MP4s live on R2 at
+Captures come from the notarized paid-beta build with the demo library. The hero holds the demo
+video (the 32-second film) in place of S01. It uses `links.demoVideo`, `links.demoPoster` (the hero
+still) and `links.demoCaptions`; it is a 16:9 frame with `preload="none"`, so only the still loads
+until someone presses play. A play button sits centred over the still; one click plays the film
+with sound and shows the controls, and at the end the still and the button come back. There is no
+`playsinline`, so an iPhone plays it full screen. Its captions track is available but off by
+default, because the lines are already on screen. Without scripts the markup's `controls` stay and
+the play button stays hidden. It is never behind a form. The film MP4 lives on R2 at
 `https://media.samplelantern.com/`, because iOS plays video only from a server that answers byte-range
 requests (`206`) and Workers static assets do not; the CSP's `media-src` allows that host. The
-posters and the captions stay in `public/media/`. Every media file has a version in its name
+still and the captions stay in `public/media/`. Every media file has a version in its name
 (`-v1`), and `public/media/` has an immutable cache header.
 
 The social card is `public/og/home.png` (1200 x 630), built from S01, the app icon, the wordmark and
@@ -105,8 +105,8 @@ search field, the audition playhead sweep and the card hover.
 
 - Dark only. `data-theme="contrast"` is set on `<html>` when `prefers-contrast: more` matches.
 - The design system says LanternGlow appears exactly twice. The founder overrode that for this page
-  (WEB-01): `.sl-glow` is not used, and the page has no glow at all. The hero loop and the closing
-  icon both have black shadows instead (WEB-06, founder): the loop's reaches `--halo-reach` all round
+  (WEB-01): `.sl-glow` is not used, and the page has no glow at all. The hero film and the closing
+  icon both have black shadows instead (WEB-06, founder): the film's reaches `--halo-reach` all round
   (64px, 24px on phones), the icon's is a drop shadow that follows its rounded shape.
 - `site.css` also overrides three design-system classes, each noted at the top of the file: `.sl-nav`
   (translucent header), `.sl-section` (tighter section rhythm) and `.sl-search--large` (phone
