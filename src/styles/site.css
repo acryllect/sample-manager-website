@@ -80,20 +80,16 @@ body { overflow-x: clip; }
 .shot-ph__id { font-size: 13px; line-height: 16px; font-weight: 500; letter-spacing: .02em; color: var(--secondary-text); }
 .shot-ph__state { max-width: 44ch; font-size: 15px; line-height: 22px; color: var(--tertiary-text); text-wrap: balance; }
 
-/* Halo. A page-level light that replaces .sl-glow (whose ::before spilled 40% above and below its
-   element). The .halo element is the halo's exact box: the hero window plus --halo-reach on the left,
-   right and bottom, and nothing above the window's top edge. Its content is clipped to that box, so no
-   text can sit under it, and a mask fades it in from the top edge. */
+/* The hero loop carries its own black shadow (.hero__loop below); the closing icon keeps a small
+   radial glow, set by --halo-strength. */
 .hero__shot { position: relative; isolation: isolate; }
-.halo { position: absolute; z-index: -1; inset: 0 calc(var(--halo-reach) * -1) calc(var(--halo-reach) * -1); overflow: hidden; pointer-events: none; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 96px); mask-image: linear-gradient(to bottom, transparent, #000 96px); }
-.halo::before { content: ""; position: absolute; inset: 0 var(--halo-reach) var(--halo-reach); border-radius: var(--radius-panel); box-shadow: 0 0 calc(var(--halo-reach) * .75) calc(var(--halo-reach) * .125) color-mix(in srgb, var(--lantern-glow) calc(var(--halo-strength) * 2.4), transparent); }
 /* Closing icon: a small radial glow that ends 8px above the heading. */
 .cta__icon { position: relative; isolation: isolate; width: 80px; height: 80px; margin-bottom: 48px; }
 .cta__icon > img { display: block; width: 80px; height: 80px; }
 .icon-halo { position: absolute; z-index: -1; inset: -40px; pointer-events: none; background: radial-gradient(closest-side, color-mix(in srgb, var(--lantern-glow) calc(var(--halo-strength) * 2), transparent), color-mix(in srgb, var(--lantern-glow) calc(var(--halo-strength) * .8), transparent) 50%, transparent); }
 /* Increase Contrast: no glow at all. */
-:root[data-theme="contrast"] :is(.halo, .icon-halo) { display: none; }
-@media (prefers-contrast: more) { :root:not([data-theme]) :is(.halo, .icon-halo) { display: none; } }
+:root[data-theme="contrast"] .icon-halo { display: none; }
+@media (prefers-contrast: more) { :root:not([data-theme]) .icon-halo { display: none; } }
 
 /* Hero */
 .hero { padding: var(--space-48) 0 var(--space-32); text-align: center; overflow-x: clip; }
@@ -105,7 +101,7 @@ body { overflow-x: clip; }
 .hero__shot { margin-top: var(--space-64); }
 /* The hero loop: a whole 16:9 frame with its own black ground, so no window frame, only the shots'
    corners. Its Pause/Play button sits over the bottom-right corner and shows only with motion. */
-.hero__loop { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: var(--radius-panel); background: #000; box-shadow: 0 0 0 1px var(--hairline), var(--shadow-window); }
+.hero__loop { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: var(--radius-panel); background: #000; box-shadow: 0 0 0 1px var(--hairline), var(--shadow-window), 0 0 calc(var(--halo-reach) * .75) calc(var(--halo-reach) * .125) rgb(0 0 0 / 55%); }
 .hero__pause { display: none; position: absolute; right: var(--space-12); bottom: var(--space-12); height: 32px; padding: 0 var(--space-12); color: var(--secondary-text); }
 .hero__pause:hover { color: var(--primary-text); }
 .motion .hero__pause:not([hidden]) { display: inline-flex; }
