@@ -7,7 +7,7 @@ import Wave from "../components/Wave.astro";
 import SupportEmail from "../components/SupportEmail.astro";
 import { site, links, applyHref, openPlaceholders, isPlaceholder } from "../config/site";
 
-// The demo block renders only once the video exists, so nothing is requested before then.
+// The hero film renders only once the video exists, so nothing is requested before then.
 const hasDemo = !isPlaceholder(links.demoVideo);
 import { shots, tour } from "../data/shots";
 
@@ -79,17 +79,25 @@ const steps = [
         </div>
         <div class="sl-actions sl-actions--center" data-rise style="--i:2">
           <a class="sl-button sl-button--primary" href={applyHref("hero")}>Apply for an invitation</a>
-          {hasDemo && <a class="sl-button" href="#demo" data-demo-link>Watch the 32-second film</a>}
         </div>
         <p class="text-small hero__req" data-rise style="--i:3">Apple silicon · macOS 14 or later</p>
         <div class="hero__shot" data-rise-shot>
-          <!-- The silent loop. No autoplay attribute: the script starts it only when motion is allowed,
-               and preload="none" keeps it from
-               downloading, so with Reduce Motion the poster is all that shows or loads. -->
-          <video class="hero__loop" muted loop playsinline preload="none" poster="/media/samplelantern-loop-v1-poster.jpg" width="1920" height="1080" aria-hidden="true" data-hero-loop>
-            <source src="https://media.samplelantern.com/samplelantern-loop-v1.mp4" type="video/mp4" />
-          </video>
-          <button type="button" class="sl-button hero__pause" data-loop-pause aria-label="Pause the loop" hidden>Pause</button>
+          <!-- The film. preload="none": only the still loads until someone presses play. No
+               playsinline, so an iPhone plays it full screen. The script swaps the markup's
+               controls for the play button; without scripts the controls stay. -->
+          {
+            hasDemo && (
+              <>
+                <video class="hero__film" controls preload="none" poster={links.demoPoster} width="1920" height="1080" aria-label="The SampleLantern film, 32 seconds" data-hero-film>
+                  <source src={links.demoVideo} type="video/mp4" />
+                  <track kind="captions" src={links.demoCaptions} srclang="en" label="English" />
+                </video>
+                <button type="button" class="hero__play" aria-label="Play the SampleLantern film, 32 seconds" data-hero-play hidden>
+                  <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z" /></svg>
+                </button>
+              </>
+            )
+          }
         </div>
       </div>
     </section>
@@ -153,19 +161,6 @@ const steps = [
             }
           </div>
         </div>
-
-        {
-          hasDemo && (
-            <figure class="sl-shot tour__video" id="demo" data-reveal>
-              <div class="sl-shot__window">
-                <video controls preload="none" poster={links.demoPoster} aria-label="The SampleLantern film, 32 seconds" data-demo>
-                  <source src={links.demoVideo} type="video/mp4" />
-                  <track kind="captions" src={links.demoCaptions} srclang="en" label="English" />
-                </video>
-              </div>
-            </figure>
-          )
-        }
       </div>
     </section>
 
@@ -635,42 +630,12 @@ const steps = [
           }
         }
 
-        // The hero loop plays only when motion is allowed; its Pause/Play button shows only then.
-        var loop = document.querySelector("[data-hero-loop]");
-        var loopPause = document.querySelector("[data-loop-pause]");
-        var stopLoop = function () {};
-        if (loop && loopPause && motion) {
-          var setLoopLabel = function () {
-            loopPause.textContent = loop.paused ? "Play" : "Pause";
-            loopPause.setAttribute("aria-label", loop.paused ? "Play the loop" : "Pause the loop");
-          };
-          var playLoop = function () {
-            var p = loop.play();
-            if (p && p.catch) p.catch(setLoopLabel);
-          };
-          loop.addEventListener("play", setLoopLabel);
-          loop.addEventListener("pause", setLoopLabel);
-          loopPause.addEventListener("click", function () {
-            if (loop.paused) playLoop(); else loop.pause();
-          });
-          loopPause.hidden = false;
-          loop.preload = "auto";
-          playLoop();
-          stopLoop = function () {
-            loop.pause();
-            var hadFocus = document.activeElement === loopPause;
-            loopPause.hidden = true;
-            if (hadFocus) loopPause.blur();
-          };
-        }
-
         // Reduced motion switched on mid-visit: show everything, stop everything.
         if (reduce.addEventListener) {
           reduce.addEventListener("change", function () {
             if (!reduce.matches) return;
             root.classList.remove("motion");
             stopAuto();
-            stopLoop();
             finishSearch();
           });
         }
@@ -679,15 +644,28 @@ const steps = [
         if (window.console) console.error(err);
       }
 
-      // "Watch the 32-second film" jumps to the film and plays it with sound: the click is the user
-      // gesture. If the browser still refuses, the controls stay and it is never retried muted.
-      var link = document.querySelector("[data-demo-link]");
-      var video = document.querySelector("[data-demo]");
-      if (link && video) {
-        link.addEventListener("click", function () {
-          video.muted = false;
-          var p = video.play();
+      // The hero film: the script swaps the markup's controls for the play button. One click plays
+      // it with sound and shows the controls; if the browser refuses, the controls stay and it is
+      // never retried muted. At the end the still and the button come back.
+      var film = document.querySelector("[data-hero-film]");
+      var play = document.querySelector("[data-hero-play]");
+      if (film && play) {
+        film.controls = false;
+        play.hidden = false;
+        play.addEventListener("click", function () {
+          film.controls = true;
+          film.muted = false;
+          var p = film.play();
           if (p && p.catch) p.catch(function () {});
+          play.hidden = true;
+          film.focus();
+        });
+        film.addEventListener("ended", function () {
+          film.controls = false;
+          var hadFocus = document.activeElement === film;
+          film.load();
+          play.hidden = false;
+          if (hadFocus) play.focus();
         });
       }
     })();

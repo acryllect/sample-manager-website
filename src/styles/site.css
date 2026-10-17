@@ -1,6 +1,6 @@
 /* Page layout for the founding-beta landing page. Colours, type, space, radii and shadows come from
    tokens.css; components come from bundle.css. Nothing here invents a value the design system owns,
-   except the black shadows on the hero loop and the closing icon, and the motion timings. Design-system classes changed here, and why:
+   except the black shadows on the hero film and the closing icon, and the motion timings. Design-system classes changed here, and why:
    .sl-nav (translucent header), .sl-section (tighter rhythm), .sl-search--large (animated field).
    The html classes "js" and "motion" are set by the inline script in BaseLayout: every
    hidden-before-reveal state below is behind "motion", so no JavaScript or reduced motion means
@@ -8,7 +8,7 @@
 
 :root {
   --ease-out: cubic-bezier(.22, .61, .36, 1);
-  /* --halo-reach sets how far the hero loop's black shadow reaches past its edges, all round. The page
+  /* --halo-reach sets how far the hero film's black shadow reaches past its edges, all round. The page
      has no glow. */
   --halo-reach: 64px;
 }
@@ -78,7 +78,7 @@ body { overflow-x: clip; }
 .shot-ph__id { font-size: 13px; line-height: 16px; font-weight: 500; letter-spacing: .02em; color: var(--secondary-text); }
 .shot-ph__state { max-width: 44ch; font-size: 15px; line-height: 22px; color: var(--tertiary-text); text-wrap: balance; }
 
-/* The hero loop has a black shadow (.hero__loop below); the closing icon has one too. Neither glows. */
+/* The hero film has a black shadow (.hero__film below); the closing icon has one too. Neither glows. */
 .hero__shot { position: relative; isolation: isolate; }
 /* Closing icon: a black drop shadow that follows the icon's rounded shape. */
 .cta__icon { position: relative; isolation: isolate; width: 80px; height: 80px; margin-bottom: 48px; }
@@ -92,12 +92,14 @@ body { overflow-x: clip; }
 .hero .sl-actions { margin-top: 40px; }
 .hero__req { margin-top: var(--space-24); color: var(--tertiary-text); }
 .hero__shot { margin-top: var(--space-64); }
-/* The hero loop: a whole 16:9 frame with its own black ground, so no window frame, only the shots'
-   corners. Its Pause/Play button sits over the bottom-right corner and shows only with motion. */
-.hero__loop { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: var(--radius-panel); background: #000; box-shadow: 0 0 0 1px var(--hairline), var(--shadow-window), 0 0 calc(var(--halo-reach) * .75) calc(var(--halo-reach) * .125) rgb(0 0 0 / 55%); }
-.hero__pause { display: none; position: absolute; right: var(--space-12); bottom: var(--space-12); height: 32px; padding: 0 var(--space-12); color: var(--secondary-text); }
-.hero__pause:hover { color: var(--primary-text); }
-.motion .hero__pause:not([hidden]) { display: inline-flex; }
+/* The hero film: a whole 16:9 frame with its own black ground, so no window frame, only the shots'
+   corners. Its play button sits centred over the still; the triangle is nudged right to look centred. */
+.hero__film { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: var(--radius-panel); background: #000; box-shadow: 0 0 0 1px var(--hairline), var(--shadow-window), 0 0 calc(var(--halo-reach) * .75) calc(var(--halo-reach) * .125) rgb(0 0 0 / 55%); }
+.hero__play { position: absolute; top: 50%; left: 50%; display: grid; place-items: center; width: 72px; height: 72px; margin: -36px 0 0 -36px; padding: 0; border: 0; border-radius: 50%; background: rgb(255 255 255 / 92%); color: #0a0a0a; box-shadow: 0 8px 24px rgb(0 0 0 / 55%); cursor: pointer; transition: background-color .15s ease; }
+.hero__play:hover { background: rgb(255 255 255 / 100%); }
+.hero__play:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.hero__play[hidden] { display: none; }
+.hero__play > svg { display: block; margin-left: 4px; fill: currentColor; }
 
 /* Search */
 .search-demo { box-sizing: border-box; max-width: 720px; margin-inline: auto; }
@@ -137,8 +139,6 @@ body { overflow-x: clip; }
 .js .tour__stage { display: grid; }
 .js .tour__panel { grid-area: 1 / 1; margin-top: 0; opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility 0s linear .25s; }
 .js .tour__panel.is-active { opacity: 1; visibility: visible; transition: opacity .25s ease, visibility 0s; }
-.tour__video { max-width: 800px; margin: var(--space-64) auto 0; }
-.tour__video .sl-shot__window { aspect-ratio: 16 / 9; }
 
 /* Today and next */
 .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-16); margin-top: 0; }
